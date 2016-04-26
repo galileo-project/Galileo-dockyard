@@ -73,7 +73,7 @@ class Mongo:
             else:
                 return _id
         except:
-            return None
+            return ""
 
     def clear(self):
         self.__data.clear()
