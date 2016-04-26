@@ -3,7 +3,7 @@ from dockyard.const import APIStatus
 
 class BaseHandler(RequestHandler):
     def initialize(self):
-        pass
+        RequestHandler.initialize(self)
 
     def error(self, status):
         self.export(None, status)
