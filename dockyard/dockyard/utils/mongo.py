@@ -5,15 +5,14 @@ from dockyard.const import MID
 
 class Mongo:
     def __init__(self):
-        self.__table_name = self.__class__.__name__
-        self.__db         = GLOBAL.mongo()
-        self.__table      = self.__db[self.__table_name]
-        self.__data       = {}
-        self.__list       = []
-        self.__index      = 0
-        self.__update_set = {}
-        self.__update       = False
-        self.__save       = False
+        self.__table_name  = self.__class__.__name__
+        self.__db          = GLOBAL.mongo()
+        self.__table       = self.__db[self.__table_name]
+        self.__data        = {}
+        self.__list        = []
+        self.__index       = 0
+        self.__update_data = {}
+        self.__update_list = []
 
     def __del__(self):
         self.flush()
@@ -22,7 +21,6 @@ class Mongo:
         return self.__data.get(item, None)
 
     def __setattr__(self, key, value):
-        self.__save            = True
         self.__update_set[key] = value
         self.__data[key]       = value
 
@@ -78,8 +76,6 @@ class Mongo:
             return None
 
     def clear(self):
-        self.__update = False
-        self.__save   = False
         self.__data.clear()
         self.__list.clear()
 
@@ -87,14 +83,13 @@ class Mongo:
         return len(self.__list)
 
     def append(self, data):
-        self.__save = True
         self.__list.append(data)
+        self.__update_list.append(data)
 
     def get_raw(self):
         return self.__data or self.__list
 
     def set_raw(self, data):
-        self.__save = True
         if isinstance(data, list):
             self.__list = data
         elif isinstance(data, dict):
@@ -111,7 +106,6 @@ class Mongo:
         return self
 
     def find_one(self, query):
-        self.__update = True
         self.__data   = self.__table.find_one(query)
         return self
 
@@ -119,14 +113,14 @@ class Mongo:
         return self.find({}, skip, limit, order)
 
     def flush(self):
-        if self.__save:
-            if self.__data:
-                if self.__update and self.__update_set and self.id:
-                    self.__table.update_one({MID: self.id}, self.__update_set)
-                else:
-                    self.__table.insert_one(self.__data)
-            if self.__list:
-                self.__table.insert_many(self.__list)
+        if self.__update_data:
+            if self.id:
+                self.__table.update_one({MID: self.id}, self.__update_data)
+            else:
+                self.__table.insert_one(self.__update_data)
+
+        if self.__update_list:
+            self.__table.insert_many(self.__update_list)
 
     def exists(self, query = None):
         if query:
