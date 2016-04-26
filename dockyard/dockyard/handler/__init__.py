@@ -1,3 +1,6 @@
-class BaseHandler:
-    def __init__(self):
+from tornado.web import RequestHandler
+
+class BaseHandler(RequestHandler):
+    def initialize(self):
         pass
+    

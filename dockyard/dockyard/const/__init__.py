@@ -1,1 +1,4 @@
-from dockyard.const.status import Status
+MID = "_id"
+
+
+from dockyard.const.status import ExpStatus, APIStatus
