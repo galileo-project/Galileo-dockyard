@@ -1,7 +1,7 @@
 from dockyard.var import GLOBAL
+from dockyard.const import MID
 from bson.objectid import ObjectId
 import pymongo
-from dockyard.const import MID
 
 class Mongo:
     def __init__(self):
