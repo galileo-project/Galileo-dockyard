@@ -3,6 +3,11 @@ ExpStatus = {
 }
 
 APIStatus = {
-    "STAT_API_SUCCESS":            (0,  None),
-    "STAT_API_UNKNOWN_ERROR":      (1,  "Unknown error"),
+    "STAT_API_SUCCESS":             (0,         None),
+    "STAT_API_UNKNOWN_ERROR":       (1,         "Unknown error"),
+    "STAT_API_DATA_INVALID":        (2,         "Data invalid"),
+
+    "STAT_API_USER_EXIST":          (10001,     "User email already exist"),
+    "STAT_API_USER_UNEXIST":        (10002,     "User not exist"),
+    "STAT_API_USER_LOGIN":          (10003,     "User not login"),
 }

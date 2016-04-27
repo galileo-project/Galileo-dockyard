@@ -1,13 +1,16 @@
 from dockyard.var import GLOBAL
-from dockyard.const import MID
+from dockyard.const import MID, MDELETE, MCREATE, MUPDATE
 from bson.objectid import ObjectId
 import pymongo
+import time
 
 class Mongo:
+    MID = MID
+
     def __init__(self):
-        self.__table_name  = self.__class__.__name__
+        __table_name       = self.__class__.__name__
         self.__db          = GLOBAL.mongo()
-        self.__table       = self.__db[self.__table_name]
+        self.__table       = self.__db[__table_name]
         self.__data        = {}
         self.__list        = []
         self.__index       = 0
@@ -17,22 +20,17 @@ class Mongo:
     def __del__(self):
         self.flush()
 
-    def __getattr__(self, item):
-        return self.__data.get(item, None)
-
-    def __setattr__(self, key, value):
-        self.__update_set[key] = value
-        self.__data[key]       = value
-
     def __getitem__(self, item):
-        return self.__getattr__(item)
+        return self.__data[item]
 
     def __setitem__(self, key, value):
-        self.__setattr__(key, value)
+        self.__update_data[key] = value
+        self.__data[key]        = value
 
     def __delattr__(self, item):
         try:
             del self.__data[item]
+            del self.__update_data[item]
         except KeyError:
             pass
 
@@ -52,6 +50,22 @@ class Mongo:
 
     def __len__(self):
         return self.count()
+
+    def __bool__(self):
+        return self.exists()
+
+    def wrapper(self):
+        self[MDELETE] = False
+        self[MCREATE] = time.time()
+        self[MUPDATE] = self[MCREATE]
+
+    def unwrapper(self, data):
+        if not data:
+            return {}
+        del data[MDELETE]
+        del data[MUPDATE]
+        del data[MCREATE]
+        return data
 
     @property
     def id(self):
@@ -75,6 +89,9 @@ class Mongo:
         except:
             return ""
 
+    def remove(self):
+        self[MDELETE] = True
+
     def clear(self):
         self.__data.clear()
         self.__list.clear()
@@ -87,7 +104,7 @@ class Mongo:
         self.__update_list.append(data)
 
     def get_raw(self):
-        return self.__data or self.__list
+        return self.__list or self.__data
 
     def set_raw(self, data):
         if isinstance(data, list):
@@ -96,6 +113,7 @@ class Mongo:
             self.__data = data
 
     def find(self, query = None, skip = None, limit = None, order = None):
+        query[MDELETE] = False
         self.__list = self.__table.find(query)
         if order is not None:
             self.__list.sort(order)
@@ -106,7 +124,8 @@ class Mongo:
         return self
 
     def find_one(self, query):
-        self.__data   = self.__table.find_one(query)
+        query[MDELETE] = False
+        self.__data   = self.unwrapper(self.__table.find_one(query))
         return self
 
     def all(self, skip = None, limit = None, order = None):
@@ -123,9 +142,9 @@ class Mongo:
             self.__table.insert_many(self.__update_list)
 
     def exists(self, query = None):
-        if query:
+        if query or self.__update_data:
             self.clear()
-            self.find_one(query)
+            self.find_one(query or self.__update_data)
 
         if self.__data or self.__list:
             return True

@@ -7,14 +7,26 @@ from dockyard.var import GLOBAL
 
 def main(options):
     GLOBAL.mongo(options.mongo_host, options.mongo_port, options.database)
-    app = Application(routes)
-    app.listen(8080)
+
+    settings = {"login_url"     : "/auth/login",
+                "debug"         : options.debug,
+                "cookie_secret" : "233"}
+    app = Application(routes, **settings)
+    server = httpserver.HTTPServer(app)
+    server.bind(options.port, options.address)
+    server.start(options.process)
+
     IOLoop.instance().start()
 
 if __name__ == "__main__":
-    define("mongo_host",    "127.0.0.1",    str,    "mongodb host")
-    define("mongo_port",    27017,          int,    "mongodb port")
-    define("database",      "dockyard",     str,    "mongodb name")
+    define("address",       "127.0.0.1",        str,    "dockyard address")
+    define("port",          8080,               int,    "dockyard port")
+    define("process",       1,                  int,    "process")
+    define("debug",         True,               bool,   "debug")
+
+    define("mongo_host",    "127.0.0.1",        str,    "mongodb host")
+    define("mongo_port",    27017,              int,    "mongodb port")
+    define("database",      "dockyard",         str,    "mongodb name")
 
     options.parse_command_line()
     main(options)
