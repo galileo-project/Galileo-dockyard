@@ -21,7 +21,7 @@ class Mongo:
         self.flush()
 
     def __getitem__(self, item):
-        return self.__data[item]
+        return self.__data.get(item, None)
 
     def __setitem__(self, key, value):
         self.__update_data[key] = value
@@ -54,17 +54,25 @@ class Mongo:
     def __bool__(self):
         return self.exists()
 
-    def wrapper(self):
-        self[MDELETE] = False
-        self[MCREATE] = time.time()
-        self[MUPDATE] = self[MCREATE]
+    def wrapper(self, data):
+        data[MUPDATE] = time.time()
+
+        if not MDELETE in data:
+            data[MDELETE] = False
+
+        if not MCREATE in data:
+            data[MCREATE] = data[MUPDATE]
+        return data
 
     def unwrapper(self, data):
         if not data:
             return {}
-        del data[MDELETE]
-        del data[MUPDATE]
-        del data[MCREATE]
+        try:
+            del data[MDELETE]
+            del data[MUPDATE]
+            del data[MCREATE]
+        except KeyError:
+            pass
         return data
 
     @property
@@ -131,19 +139,27 @@ class Mongo:
     def all(self, skip = None, limit = None, order = None):
         return self.find({}, skip, limit, order)
 
-    def flush(self):
+    def __save_data(self):
+        self.__update_data = self.wrapper(self.__update_data)
+
         if self.__update_data:
             if self.id:
-                self.__table.update_one({MID: self.id}, self.__update_data)
+                self.__table.update_one({MID: self.id}, {"$set": self.__update_data})
             else:
-                self.__table.insert_one(self.__update_data)
+                self.__data[MID] = self.__table.insert_one(self.__update_data).inserted_id
+            self.__update_data = {}
 
-        if self.__update_list:
-            self.__table.insert_many(self.__update_list)
+    def __save_list(self):
+        for data in self.__update_list:
+            data = self.wrapper(data)
+            self.__table.insert_one(data)
+
+    def flush(self):
+        self.__save_data()
+        self.__save_list()
 
     def exists(self, query = None):
         if query or self.__update_data:
-            self.clear()
             self.find_one(query or self.__update_data)
 
         if self.__data or self.__list:

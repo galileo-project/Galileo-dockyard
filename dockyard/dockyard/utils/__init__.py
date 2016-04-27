@@ -2,7 +2,7 @@ from hashlib import md5, sha1
 
 def encrypt(data):
     if data is None:
-        return None
+        return data
 
     data     = data.encode()
     md5_str  = md5(data).hexdigest().encode()

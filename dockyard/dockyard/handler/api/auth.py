@@ -1,8 +1,11 @@
 from dockyard.handler import BaseHandler
 from dockyard.const import APIStatus
 from dockyard.utils import encrypt
+from tornado.gen import coroutine
 
 class ApiAuthHandeler(BaseHandler):
+
+    @coroutine
     def post(self, *args, **kwargs):
         self.parse_arg_str("user_email")
         self.parse_arg_str("user_pwd")

@@ -2,15 +2,16 @@ from tornado.web import RequestHandler
 from tornado.gen import coroutine
 from dockyard.const import APIStatus
 from dockyard.model.user import User
-from dockyard.utils.exception import DataInvalidException
 
 class BaseHandler(RequestHandler):
     def initialize(self):
         RequestHandler.initialize(self)
+        self._user = None
 
     @coroutine
     def prepare(self):
         self.data = {}
+
 
     def parse_arg(self, field, must):
         ret = self.get_argument(field, None)
@@ -69,9 +70,13 @@ class BaseHandler(RequestHandler):
 
     @property
     def user(self):
-        user_id_cookie = self.get_secure_cookie("user")
-        if user_id_cookie:
-            user = User().get_by_id(user_id_cookie)
-            if user:
-                return user
-        return User()
+        if self._user is None:
+            user_id_cookie = self.get_secure_cookie("user")
+            if user_id_cookie:
+                user = User().get_by_id(user_id_cookie)
+                if user:
+                    self._user = user
+                    return self._user
+            self._user = User()
+
+        return self._user
