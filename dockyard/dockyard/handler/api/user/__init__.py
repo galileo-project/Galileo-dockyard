@@ -1,6 +1,7 @@
 from dockyard.handler import BaseHandler
 from dockyard.const.status import APIStatus
 from dockyard.utils.wrapper import auth
+from dockyard.utils import encrypt
 
 class ApiUserHandeler(BaseHandler):
     @auth
@@ -28,7 +29,7 @@ class ApiUserHandeler(BaseHandler):
         self.parse_arg_str("user_pwd",  must=False)
 
         self.user["user_name"] = self.data["user_name"]
-        self.user["user_pwd"]  = self.data["user_pwd"]
+        self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
 
         return self.success(self.user.get_raw())
 
