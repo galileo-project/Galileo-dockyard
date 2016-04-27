@@ -3,5 +3,18 @@ MDELETE     = "__deleted__"
 MCREATE     = "__create__"
 MUPDATE     = "__update__"
 
+LOG_WARN    = "warn"
+LOG_FATAL   = "warn"
+LOG_SUCCESS = "warn"
+LOG_ERROR   = "warn"
+LOG_PUT     = "put"
+LOG_RAW     = "raw"
+
+LOG_LEVEL   = {LOG_ERROR:      "_error",
+               LOG_FATAL:      "_fatal",
+               LOG_SUCCESS:    "_success",
+               LOG_WARN:       "_warn",
+               LOG_PUT:        "_put",
+               LOG_RAW:        "_raw"}
 
 from dockyard.const.status import ExpStatus, APIStatus
