@@ -3,7 +3,7 @@ import shlex
 import re
 import os
 
-class Operation(object):
+class SysOperation(object):
     _RE_CD = re.compile(r"cd\s([\w\d_\/\s\~\.]+)")
 
     @classmethod
@@ -203,3 +203,9 @@ class Operation(object):
                 res = res or True
 
         return res
+
+class GitOperation(SysOperation):
+    pass
+
+class DockerOperation(SysOperation):
+    pass
