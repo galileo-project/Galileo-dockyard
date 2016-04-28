@@ -1,3 +1,5 @@
+from dockyard.var import GLOBAL
+from dockyard.const import LogStatus
 from subprocess import Popen, PIPE
 import shlex
 import re
@@ -138,6 +140,7 @@ class SysOperation(object):
 
     @classmethod
     def __exec(cls, cmd, cwd = None, *args, **kwargs):
+        GLOBAL.log.puts(cmd)
         if "&&" in cmd:
             cmds = cmd.split("&&")
             ret = False
@@ -153,14 +156,21 @@ class SysOperation(object):
 
         cmd_args = shlex.split(cmd)
         p = Popen(cmd_args, cwd = cwd, stderr=PIPE, stdout=PIPE, shell=False)
-        return cls.__parser(p, *args, **kwargs)
+        ret, msg =  cls.__parser(p, *args, **kwargs)
+        if ret:
+            GLOBAL.log.success(msg)
+        else:
+            GLOBAL.log.error(msg)
+        return ret, msg
 
     @classmethod
     def string_clean(cls, strings):
         if isinstance(strings, list):
             ret = []
             for string in strings:
-                ret.append(cls.string_clean(string))
+                clean_str = cls.string_clean(string)
+                if clean_str:
+                    ret.append(clean_str)
             return ret
         else:
             if isinstance(strings, str):
@@ -176,33 +186,23 @@ class SysOperation(object):
         else:
             return None
 
-    @staticmethod
-    def __parser(process, ret = True, output = False, *args, **kwargs):
-        res = False
+    @classmethod
+    def __parser(cls, process, *args, **kwargs):
         process.wait()
         code = process.poll()
 
         if not isinstance(code, int):
-            Log.fatal(Status["STAT_EXEC_ERROR"])
+            GLOBAL.log.fatal(LogStatus["STAT_LOG_EXEC_ERROR"])
+            return False, []
 
         out_strs = [line.decode() for line in process.stdout.readlines()]
         err_strs = [line.decode() for line in process.stderr.readlines()]
 
-        if ret:
-            if code != 0:
-                res = False
-            else:
-                res = out_strs or True
+        if code != 0:
+            return False, cls.string_clean(err_strs)
+        else:
+            return True, cls.string_clean(out_strs)
 
-        if output:
-            if code != 0:
-                puts("\n".join(err_strs))
-                res = res or False
-            else:
-                puts("\n".join(out_strs))
-                res = res or True
-
-        return res
 
 class GitOperation(SysOperation):
     pass

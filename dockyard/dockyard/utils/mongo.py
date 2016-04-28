@@ -24,8 +24,9 @@ class Mongo:
         return self.__data.get(item, None)
 
     def __setitem__(self, key, value):
-        self.__update_data[key] = value
-        self.__data[key]        = value
+        if not value == self[key] and not value is None:
+            self.__update_data[key] = value
+            self.__data[key]        = value
 
     def __delattr__(self, item):
         try:
@@ -157,6 +158,7 @@ class Mongo:
     def flush(self):
         self.__save_data()
         self.__save_list()
+        self.clear()
 
     def exists(self, query = None):
         if query or self.__update_data:

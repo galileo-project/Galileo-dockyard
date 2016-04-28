@@ -29,11 +29,15 @@ class ApiUserHandeler(BaseHandler):
     @auth
     @coroutine
     def put(self, *args, **kwargs):
-        self.parse_arg_str("user_name", must=False)
-        self.parse_arg_str("user_pwd",  must=False)
+        self.parse_arg_str("user_pwd")
 
-        self.user["user_name"] = self.data["user_name"]
-        self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
+        if not self.data["user_pwd"]:
+            return self.error(APIStatus["STAT_API_PWD_EMPTY"])
+
+        if self.user:
+            self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
+        else:
+            return self.error(APIStatus["STAT_API_USER_UNEXIST"])
 
         return self.success(self.user.get_raw())
 
