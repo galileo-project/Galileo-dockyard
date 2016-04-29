@@ -1,15 +1,17 @@
 (function(){
     "use strict"
     angular
-        .module("dockyard.controller", [])
-        .controller("HomeController", HomeController);
+        .module("dockyard.core")
+        .controller("homeCtrl", homeCtrl);
 
 
        /**************************
        *        Controllers      *
        ***************************/
-        function HomeController() {
-            var vm = $scope
+        function homeCtrl() {
+            var vm  = this;
+
+            vm.name = "hello"
         }
 
 })()

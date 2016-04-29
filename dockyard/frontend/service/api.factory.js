@@ -1,7 +1,7 @@
 (function(){
     "use strict";
     angular
-        .module("dockyard.factory")
+        .module("dockyard.factory", [])
         .factory("getUser", getUser);
 
 

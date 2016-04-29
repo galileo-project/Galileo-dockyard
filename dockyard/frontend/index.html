@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dockyard">
+<head>
+    <meta charset="UTF-8">
+    <title>Galileo dockyard</title>
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="app.route.js"></script>
+    <script src="app.config.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.core.js"></script>
+
+    <script src="service/api.factory.js"></script>
+
+    <script src="sections/home/home.controller.js"></script>
+    <link rel="stylesheet" href="sections/home/home.css">
+
+    <script src="sections/login/login.controller.js"></script>
+    <link rel="stylesheet" href="sections/login/login.css">
+
+</head>
+<body>
+    <div ng-view>
+        <noscript>
+          <div style="width: 60%; margin: auto;">
+            <div>
+              <h1>Oops!</h1>
+              <p>Looks like you have JavaScript disabled.</p>
+              <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
+              <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
+              <h3>Thank you!</h3>
+            </div>
+          </div>
+        </noscript>
+    </div>
+</body>
+</html>

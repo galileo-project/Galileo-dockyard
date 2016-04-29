@@ -1,7 +1,7 @@
 (function(){
     "use strict";
     angular
-        .module("dockyard.config")
+        .module("dockyard.config", [])
         .config(configs);
 
 
