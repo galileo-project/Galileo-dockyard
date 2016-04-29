@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dockyard">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Galileo dockyard</title>
+
+    <script src="assets/plugins/angular/angular.min.js"></script>
+    <script src="assets/plugins/angular/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="app.route.js"></script>
+    <script src="app.config.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.core.js"></script>
+
+    <script src="service/api.factory.js"></script>
+    <script src="service/ui.factory.js"></script>
+    <script src="service/app.val.js"></script>
+
+    <script src="layout/home/home.controller.js"></script>
+    <link rel="stylesheet" href="layout/home/home.css">
+
+    <script src="layout/login/login.controller.js"></script>
+    <link rel="stylesheet" href="layout/login/login.css">
+
+</head>
+<body>
+    <header ng-include="'layout/header/header.include.html'"></header>
+    <aside ng-show="PageValues.asideShow" ng-include="'layout/aside/aside.include.html'"></aside>
+    <div class="container" ng-view>
+        <noscript>
+          <div style="width: 60%; margin: auto;">
+            <div>
+              <h1>Oops!</h1>
+              <p>Looks like you have JavaScript disabled.</p>
+              <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
+              <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
+              <h3>Thank you!</h3>
+            </div>
+          </div>
+        </noscript>
+    </div>
+</body>
+</html>

@@ -2,16 +2,19 @@
     "use strict"
     angular
         .module("dockyard.core")
-        .controller("homeCtrl", homeCtrl);
+        .controller("homeCtrl", ["sidebarFct", homeCtrl]);
 
 
        /**************************
        *        Controllers      *
        ***************************/
-        function homeCtrl() {
+        function homeCtrl(sidebarFct) {
+            sidebarFct.show();
             var vm  = this;
 
-            vm.name = "hello"
+            vm.name = "home";
+
+
         }
 
-})()
+})();
