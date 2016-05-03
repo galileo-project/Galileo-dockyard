@@ -13,7 +13,6 @@
      ***********************/
     function sidebarFct() {
         //var sideBar = angular.element("aside");
-        console.log(angular.element)
 
         return {
             hide: hide,
