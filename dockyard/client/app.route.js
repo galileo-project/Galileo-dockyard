@@ -17,9 +17,14 @@
             .when("/login", {
                 templateUrl:    "layout/login/login.tpl.html",
                 controller:     "loginCtrl",
-                controllerAs :  "login",
+                controllerAs :  "login"
+            })
+            .when("/signup", {
+                templateUrl:    "layout/signup/signup.tpl.html",
+                controller:     "signupCtrl",
+                controllerAs :  "signup"
             })
             .otherwise("/");
     }
 
-})()
+})();

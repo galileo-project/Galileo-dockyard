@@ -21,15 +21,15 @@
     <script src="service/app.val.js"></script>
 
     <script src="layout/home/home.controller.js"></script>
-    <link rel="stylesheet" href="layout/home/home.css">
-
     <script src="layout/login/login.controller.js"></script>
-    <link rel="stylesheet" href="layout/login/login.css">
-
+    <script src="layout/signup/signup.controller.js"></script>
+    <script src="layout/aside/sidebar.controller.js"></script>
+    <script src="layout/msgbox/msgbox.controller.js"></script>
 </head>
 <body>
     <header ng-include="'layout/header/header.include.html'"></header>
-    <aside  ng-include="'layout/aside/aside.include.html'"></aside>
+    <aside ng-controller="sidebarCtrl as sidebar" ng-include="sidebar.sidebarURL"></aside>
+    <div ng-controller="msgBoxCtrl as msgBox" ng-include="'layout/msgbox/msgbox.tpl.html'"></div>
     <div class="container" ng-view>
         <noscript>
           <div style="width: 60%; margin: auto;">

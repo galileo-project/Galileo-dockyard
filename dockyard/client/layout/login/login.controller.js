@@ -1,5 +1,5 @@
 (function(){
-    "use strict"
+    "use strict";
     angular
         .module("dockyard.core")
         .controller("loginCtrl", loginCtrl);
@@ -13,4 +13,4 @@
             vm.name = "login"
         }
 
-})()
+})();

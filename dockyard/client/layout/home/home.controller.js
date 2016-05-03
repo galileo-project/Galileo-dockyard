@@ -1,19 +1,18 @@
 (function(){
-    "use strict"
+    "use strict";
     angular
         .module("dockyard.core")
-        .controller("homeCtrl", ["sidebarFct", homeCtrl]);
+        .controller("homeCtrl", ["getUserService", homeCtrl]);
 
 
        /**************************
        *        Controllers      *
        ***************************/
-        function homeCtrl(sidebarFct) {
-            sidebarFct.show();
+        function homeCtrl(getUserService) {
             var vm  = this;
 
             vm.name = "home";
-
+            getUserService.getData();
 
         }
 
