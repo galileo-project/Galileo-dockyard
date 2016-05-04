@@ -12,9 +12,9 @@ class Log(Mongo):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL: LOG_LEVEL[LOG_WARN],
-                    self.MSG:     msg,
-                    self.ORIGIN: origin}
+            data = {self.LEVEL:     LOG_LEVEL[LOG_WARN],
+                    self.MSG:       msg,
+                    self.ORIGIN:    origin}
             self.append(data)
         self.flush()
 
@@ -23,9 +23,9 @@ class Log(Mongo):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL: LOG_LEVEL[LOG_FATAL],
-                    self.MSG:     msg,
-                    self.ORIGIN: origin}
+            data = {self.LEVEL:     LOG_LEVEL[LOG_FATAL],
+                    self.MSG:       msg,
+                    self.ORIGIN:    origin}
             self.append(data)
         self.flush()
 
@@ -34,9 +34,9 @@ class Log(Mongo):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL: LOG_LEVEL[LOG_PUTS],
-                    self.MSG:     msg,
-                    self.ORIGIN: origin}
+            data = {self.LEVEL:     LOG_LEVEL[LOG_PUTS],
+                    self.MSG:       msg,
+                    self.ORIGIN:    origin}
             self.append(data)
         self.flush()
 
@@ -45,9 +45,9 @@ class Log(Mongo):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL: LOG_LEVEL[LOG_SUCCESS],
-                    self.MSG:     msg,
-                    self.ORIGIN: origin}
+            data = {self.LEVEL:     LOG_LEVEL[LOG_SUCCESS],
+                    self.MSG:       msg,
+                    self.ORIGIN:    origin}
             self.append(data)
         self.flush()
 
@@ -56,8 +56,8 @@ class Log(Mongo):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL: LOG_LEVEL[LOG_ERROR],
-                    self.MSG:     msg,
-                    self.ORIGIN: origin}
+            data = {self.LEVEL:     LOG_LEVEL[LOG_ERROR],
+                    self.MSG:       msg,
+                    self.ORIGIN:    origin}
             self.append(data)
         self.flush()

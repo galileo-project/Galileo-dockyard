@@ -3,6 +3,7 @@ ExpStatus = {
 }
 
 APIStatus = {
+    #ERROR
     "STAT_API_SUCCESS":             (0,         None),
     "STAT_API_UNKNOWN_ERROR":       (1,         "Unknown error"),
     "STAT_API_DATA_INVALID":        (2,         "Data invalid"),
@@ -12,6 +13,8 @@ APIStatus = {
     "STAT_API_USER_LOGIN":          (10003,     "User not login"),
     "STAT_API_USER_PWD_ERR":        (10004,     "User password error"),
     "STAT_API_PWD_EMPTY":           (10005,     "User password empty"),
+
+    #WARN
 }
 
 LogStatus = {
