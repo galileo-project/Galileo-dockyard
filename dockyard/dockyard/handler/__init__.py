@@ -8,10 +8,16 @@ class BaseHandler(RequestHandler):
         RequestHandler.initialize(self)
         self._user = None
 
+    def set_default_headers(self):
+        origin = self.request.headers.get('Origin', '*')
+        self.set_header('Access-Control-Allow-Origin',      origin)
+        self.set_header('Access-Control-Allow-Methods',     'OPTIONS, HEAD, POST, DELETE, PUT, GET')
+        self.set_header('Access-Control-Allow-Headers',     'Accept, Content-Type')
+
     @coroutine
     def prepare(self):
+        self.finished = False
         self.data = {}
-
 
     def parse_arg(self, field, must):
         ret = self.get_argument(field, None)
@@ -48,7 +54,6 @@ class BaseHandler(RequestHandler):
 
     def data_invalid(self):
         self.error(APIStatus["STAT_API_DATA_INVALID"])
-        self.finish()
 
     def error(self, status = None):
         if not status:
@@ -66,7 +71,11 @@ class BaseHandler(RequestHandler):
         self.raw_export(data)
 
     def raw_export(self, data):
-        self.write(data)
+        print(self.data)
+        if not self.finished:
+            self.write(data)
+            self.finished = True
+            self.finish()
 
     @property
     def user(self):

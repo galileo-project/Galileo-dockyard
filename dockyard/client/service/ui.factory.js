@@ -5,13 +5,14 @@
     "use strict";
     angular
         .module("dockyard.factory.ui", [])
-        .factory("msgFct", ["$rootScope", msgFct]);
+        .factory("msgService",      ["$rootScope", msgService])
+        .factory("loadingService",  ["$rootScope", loadingService]);
 
 
     /**********************
      *       functions     *
      ***********************/
-    function msgFct($rootScope) {
+    function msgService($rootScope) {
         var msgService = {};
 
         msgService.message    = "";
@@ -22,6 +23,7 @@
         msgService.success  = handleSuccess;
         msgService.info     = handleInfo;
 
+        return msgService;
 
         function handleError(msg) {
             msgService.message = msg;
@@ -53,7 +55,29 @@
         function sendMsg() {
             $rootScope.$broadcast("handleMsg");
         }
+    }
 
-        return msgService
+    function loadingService($rootScope) {
+        var loadingService = {};
+
+        loadingService.visible = false;
+        loadingService.show = show;
+        loadingService.hide = hide;
+
+        return loadingService;
+
+        function show() {
+            loadingService.visible = true;
+            sendEvent();
+        }
+
+        function hide() {
+            loadingService.visible = false;
+            sendEvent();
+        }
+        
+        function sendEvent() {
+            $rootScope.$broadcast("handleLoading")
+        }
     }
 })();

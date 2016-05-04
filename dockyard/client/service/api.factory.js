@@ -17,80 +17,127 @@
 
     angular
         .module("dockyard.factory.api", [])
-        .factory("getUserService",      getUserService)
-        .factory("signUpService",       signUpService)
-        .factory("chPwdService",        chPwdService)
-        .factory("delUserService",      delUserService)
-        .factory("getAppService",       getAppService)
-        .factory("getAppsService",      getAppsService);
+        .factory("dataService",      dataService);
 
 
     /**********************
     *       functions     *
     ***********************/
-    function getUserService($http, msgFct) {
-        return {getData: getData};
-
-        function getData() {
-            var ret = $http.get(GET_USER).then(apiHandleSuccess, apiHandleError);
-            console.log(ret.$$state);
-            console.log(ret.$$state.value);
-            return unwrapperMsg(ret);
-        }
-    }
-
-    function signUpService() {
-        return apiPost(USER_SIGNUP);
-    }
-
-    function chPwdService() {
-
-    }
-
-    function delUserService() {
-
-    }
-
-    function getAppService() {
-
-    }
-
-    function getAppsService() {
-
-    }
-
-
-    /**************************
-    *       Common function   *
-    * *************************/
-
-    function apiHandleError(msg) {
-        return wrapperMsg(true, "error");
-    }
-
-    function apiHandleSuccess(msg) {
-        if(msg.code !== 0){
-            return apiHandleError(msg.error);
-        } else {
-            return wrapperMsg(false, msg.msg);
-        }
-    }
-
-    function wrapperMsg(err, msg) {
+    function dataService($http, msgService, loadingService, $httpParamSerializerJQLike) {
         return {
-            err: err,
-            msg: msg
+            userLogin:      userLogin,
+            userSignUp:     userSignUp,
+            userChPwd:      userChPwd,
+            userDelete:     userDelete,
+            getUser:        getUser,
+            getApps:        getApps,
+            getApp:         getApp
         };
-    }
 
-    function unwrapperMsg(msg, msgFct) {
-        if(msg.err == true){
-            msgFct.error(msg.msg);
-            return false;
-        } else {
-            return msg.msg;
+
+        /***************************
+         *      api functions      *
+         ***************************/
+
+
+        function userLogin(data) {
+            return apiPost(USER_LOGIN, data);
+        }
+
+        function userSignUp(data) {
+            return apiPost(USER_SIGNUP, data);
+        }
+
+        function userChPwd() {
+
+        }
+
+        function userDelete() {
+
+        }
+
+        function getUser() {
+            return apiGet(GET_USER);
+        }
+
+        function getApps() {
+
+        }
+
+        function getApp() {
+
+        }
+
+        /**************************
+         *       Common function   *
+         * *************************/
+
+        //api functions
+        function apiGet(url) {
+            loadingService.show();
+
+            var ret = $http.get(url).then(function (response) {
+                return response.data;
+            }, function (response) {
+                return response;
+            });
+
+            return ret.then(apiHandleSuccess, apiHandleError)
+        }
+
+        function apiPost(url, data) {
+            loadingService.show();
+
+            var ret = $http({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method:  'POST',
+                url:     url,
+                data:    $httpParamSerializerJQLike(data)
+            }).then(function (response) {
+                return response.data;
+            }, function (response) {
+                return response;
+            });
+
+            return ret.then(apiHandleSuccess, apiHandleError);
+        }
+
+        // msg handle
+        function apiHandleError(msg) {
+            var err, code;
+            loadingService.hide();
+
+            if(msg.status === -1) {
+                err  = "Unknown error";
+                code = 1;
+            } else {
+                err  = msg.error;
+                code = msg.code;
+            }
+
+            if(code < 2000){
+                msgService.error(err);
+            } else {
+                msgService.warn(err);
+            }
+
+            return wrapperMsg(true, err);
+        }
+
+        function apiHandleSuccess(msg) {
+            loadingService.hide();
+            if(msg.code !== 0){
+                return apiHandleError(msg);
+            } else {
+                return wrapperMsg(false, msg.msg);
+            }
+        }
+
+        function wrapperMsg(err, msg) {
+            return {
+                err: err,
+                msg: msg
+            };
         }
     }
-
-
 })();

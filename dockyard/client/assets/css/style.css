@@ -36,9 +36,9 @@
     padding: 3px;
     cursor: pointer;
     line-height: 60px;
-    background-color: #f1f1f1;
     border-width: 0 0 0 10px;
     border-style: solid;
+    background-color: #fefefe;
     box-shadow: 0 0 10px #bababa;
 }
 
@@ -60,4 +60,17 @@
 
 .msgInfo {
     border-color: #ffffff;
+}
+
+/**************************
+*     loading style       *
+***************************/
+.loading{
+    height: 100%;
+    width:100%;
+    position: fixed;
+    top: 0;
+    padding: 100px;
+    background-color: rgba(255, 255, 255, 0.4);
+    text-align: center;
 }

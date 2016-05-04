@@ -1,5 +1,4 @@
 from pymongo.mongo_client import MongoClient
-from dockyard.model.logs import Log
 from dockyard.const.status import ExpStatus
 
 class Global:
@@ -19,6 +18,7 @@ class Global:
     def log(self):
         _name = "log"
         if not self.__data.get(_name):
+            from dockyard.model.logs import Log
             self.__data[_name] = Log()
         return self.__data[_name]
 

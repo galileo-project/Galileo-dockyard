@@ -2,17 +2,19 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("homeCtrl", ["getUserService", homeCtrl]);
+        .controller("homeCtrl", ["dataService", homeCtrl]);
 
 
        /**************************
        *        Controllers      *
        ***************************/
-        function homeCtrl(getUserService) {
+        function homeCtrl(dataService) {
             var vm  = this;
 
             vm.name = "home";
-            getUserService.getData();
+            dataService.getUser().then(function (msg) {
+                vm.test = msg;
+            });
 
         }
 
