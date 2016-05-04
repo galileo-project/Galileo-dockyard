@@ -5,7 +5,14 @@ from tornado.gen import coroutine
 
 class ApiAuthHandeler(BaseHandler):
     @coroutine
-    def post(self, *args, **kwargs):
+    def post(self, path):
+        if path == "login": self.login()
+
+    @coroutine
+    def get(self, path):
+        if path == "logout":    self.logout()
+
+    def login(self):
         self.parse_arg_str("user_name")
         self.parse_arg_str("user_pwd")
 
@@ -16,5 +23,9 @@ class ApiAuthHandeler(BaseHandler):
         if self.user["user_pwd"] != encrypt(self.data["user_pwd"]):
             return self.error(APIStatus["STAT_API_USER_PWD_ERR"])
 
-        self.set_secure_cookie("user", self.user.str_id)
+        self.set_user_cookie()
+        self.success()
+
+    def logout(self):
+        self.del_user_cookie()
         self.success()

@@ -89,3 +89,9 @@ class BaseHandler(RequestHandler):
             self._user = User()
 
         return self._user
+
+    def set_user_cookie(self):
+        self.set_secure_cookie("user", self.user.str_id)
+
+    def del_user_cookie(self):
+        self.set_secure_cookie("user", "", -1)

@@ -24,6 +24,7 @@ class ApiUserHandeler(BaseHandler):
             self.user.clear()
             return self.error(APIStatus["STAT_API_USER_EXIST"])
 
+        self.set_user_cookie()
         return self.success(self.user.get_raw())
 
     @auth
