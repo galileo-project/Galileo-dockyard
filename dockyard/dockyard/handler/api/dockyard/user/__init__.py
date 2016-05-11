@@ -12,9 +12,9 @@ class ApiUserHandeler(BaseHandler):
 
     @coroutine
     def post(self, *args, **kwargs):
-        self.parse_arg_str("user_name")
-        self.parse_arg_str("user_pwd")
-        self.parse_arg_str("user_email")
+        self.parse_arg_str("user_name",     True)
+        self.parse_arg_str("user_pwd",      True)
+        self.parse_arg_str("user_email",    True)
 
         self.user["user_email"] = self.data["user_email"]
         self.user["user_name"]  = self.data["user_name"]
@@ -30,13 +30,11 @@ class ApiUserHandeler(BaseHandler):
     @auth
     @coroutine
     def put(self, *args, **kwargs):
-        self.parse_arg_str("user_pwd")
-
-        if not self.data["user_pwd"]:
-            return self.error(APIStatus["STAT_API_PWD_EMPTY"])
+        self.parse_arg_str("user_pwd", False)
 
         if self.user:
-            self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
+            if self.data["user_pwd"]:
+                self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
         else:
             return self.error(APIStatus["STAT_API_USER_UNEXIST"])
 

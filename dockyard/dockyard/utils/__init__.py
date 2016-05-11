@@ -1,7 +1,7 @@
 from hashlib import md5, sha1
 
 def encrypt(data):
-    if data is None:
+    if not data:
         return data
 
     data     = data.encode()

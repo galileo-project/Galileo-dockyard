@@ -25,24 +25,24 @@ class BaseHandler(RequestHandler):
             self.data_invalid()
         return ret
 
-    def parse_arg_str(self, field, default = "", must = True):
+    def parse_arg_str(self, field, must, default = ""):
         ret = self.parse_arg(field, must)
         self.data[field] = default if ret is None else ret
         return ret
 
-    def parse_arg_int(self, field, default = 0, must = True):
+    def parse_arg_int(self, field, must, default = 0):
         ret = self.parse_arg(field, must)
         try:
             if ret is None:
-                ret = 0
+                ret = default
             else:
                 ret = int(ret)
         except:
-            ret = 0
+            ret = default
         self.data[field] = ret
         return ret
 
-    def parse_arg_bool(self, field, default = False, must = True):
+    def parse_arg_bool(self, field, must, default = False):
         ret = self.parse_arg(field, must)
         if ret is None:
             ret = default

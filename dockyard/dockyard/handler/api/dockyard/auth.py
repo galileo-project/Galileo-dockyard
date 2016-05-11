@@ -6,10 +6,14 @@ from tornado.gen import coroutine
 class ApiAuthHandeler(BaseHandler):
     @coroutine
     def post(self, path):
-        if path == "login": self.login()
+        if path == "login":     self.login()
 
     @coroutine
     def get(self, path):
+        pass
+
+    @coroutine
+    def delete(self, path):
         if path == "logout":    self.logout()
 
     def login(self):

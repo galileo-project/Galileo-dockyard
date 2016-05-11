@@ -3,7 +3,7 @@ from dockyard.const.status import APIStatus
 from dockyard.utils.wrapper import auth
 from tornado.gen import coroutine
 
-class ApiAppHandeler(BaseHandler):
+class ApiUserAppHandeler(BaseHandler):
     @coroutine
     def get(self, path, *args, **kwargs):
         if path == "list":  return self.get_apps()
@@ -27,4 +27,7 @@ class ApiAppHandeler(BaseHandler):
         pass
 
     def get_apps(self):
+        pass
+
+    def get_status(self):
         pass

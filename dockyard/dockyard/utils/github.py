@@ -40,3 +40,6 @@ class GitHubClient:
 
     def get_repos(self):
         pass
+
+    def get_orgs(self):
+        pass

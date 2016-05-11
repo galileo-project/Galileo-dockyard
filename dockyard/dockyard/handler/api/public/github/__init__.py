@@ -31,3 +31,6 @@ class PublicGitHubHandeler(BaseHandler):
         self.user["github_token_type"]   = ret["token_type"]
 
         self.success()
+
+    def push_repos(self):
+        pass
