@@ -25,7 +25,7 @@ class __GlobalVar:
     def __init__(self):
         self.__data = {}
 
-    def mongo(self, host = None, port = None, database = None):
+    def mongo(self, host=None, port=None, database=None):
         _name = "mongo"
         if not self.__data.get(_name):
             from pymongo.mongo_client import MongoClient
@@ -49,5 +49,10 @@ class __GlobalVar:
         log.set_origin(user.id)
         return log
 
+    def app_log(self, app):
+        from dockyard.model.logs import Log
+        log = Log()
+        log.set_origin(app.id)
+        return log
 
 GLOBAL = __GlobalVar()

@@ -2,12 +2,14 @@ from tornado.web import RequestHandler
 from tornado.gen import coroutine
 from dockyard.const import APIStatus
 from dockyard.model.user import User
+from dockyard.model.sys.manager import Manager
 
 
 class BaseHandler(RequestHandler):
     def initialize(self):
         RequestHandler.initialize(self)
-        self._user = None
+        self._user      = None
+        self._manager   = None
 
     def set_default_headers(self):
         origin = self.request.headers.get('Origin', '*')
@@ -91,8 +93,27 @@ class BaseHandler(RequestHandler):
 
         return self._user
 
+    @property
+    def manager(self):
+        if self._manager is None:
+            manager_id_cookie = self.get_secure_cookie("manager")
+            if manager_id_cookie:
+                manager = Manager().get_by_id(manager_id_cookie)
+                if manager:
+                    self._manager = manager
+                    return self._manager
+            self._manager = Manager()
+
+        return self._manager
+
     def set_user_cookie(self):
         self.set_secure_cookie("user", self.user.str_id)
 
     def del_user_cookie(self):
         self.set_secure_cookie("user", "", -1)
+
+    def set_manager_cookie(self):
+        self.set_secure_cookie("manager", self.user.str_id)
+
+    def del_manager_cookie(self):
+        self.set_secure_cookie("manager", "", -1)

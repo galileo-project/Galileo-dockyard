@@ -14,6 +14,10 @@ APIStatus = {
     "STAT_API_USER_PWD_ERR":        (10004,     "User password error"),
     "STAT_API_PWD_EMPTY":           (10005,     "User password empty"),
 
+    "STAT_API_MANAGER_LOGIN":       (10001,     "Manager not login"),
+    "STAT_API_MANAGER_UNEXIST":     (10102,     "Manager not exist"),
+    "STAT_API_MANAGER_PWD_ERR":     (10103,     "Manager password error"),
+
     #WARN
     "STAT_API_GITHUB_OAUTH_FAILED": (10006,     "User GitHub Oauth failed")
 }
