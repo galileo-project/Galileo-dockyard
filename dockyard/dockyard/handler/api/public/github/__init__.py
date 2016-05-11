@@ -11,23 +11,6 @@ class PublicGitHubHandeler(BaseHandler):
         if   path == "list":  self.get_repos()
         elif path == "auth":  self.authorize()
 
-    @coroutine
-    def post(self, path, *args, **kwargs):
-        pass
-
-    @auth
-    @coroutine
-    def put(self, path, *args, **kwargs):
-        pass
-
-    @auth
-    @coroutine
-    def delete(self, path, *args, **kwargs):
-        pass
-
-    def get_repos(self):
-        pass
-
     def authorize(self):
         self.parse_arg_str("code", must=True)
         self.parse_arg_str("state", must=True)
@@ -47,4 +30,4 @@ class PublicGitHubHandeler(BaseHandler):
         self.user["github_scope"]        = ret["scope"]
         self.user["github_token_type"]   = ret["token_type"]
 
-        self.redirect("/")
+        self.success()

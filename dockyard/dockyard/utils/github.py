@@ -37,3 +37,6 @@ class GitHubClient:
         if not self.__oauth:
             self.__oauth = self.__Oauth(self.__request)
         return self.__oauth
+
+    def get_repos(self):
+        pass
