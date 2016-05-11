@@ -1,7 +1,7 @@
 from dockyard.handler.api           import DefaultHandeler
-from dockyard.handler.api.user      import ApiUserHandeler
-from dockyard.handler.api.user.app  import ApiAppHandeler
-from dockyard.handler.api.auth      import ApiAuthHandeler
+from dockyard.handler.api.dockyard.auth import ApiAuthHandeler
+from dockyard.handler.api.dockyard.user import ApiAppHandeler
+from dockyard.handler.api.dockyard.user import ApiUserHandeler
 
 routes = [(r"/api/user",        ApiUserHandeler),
 
