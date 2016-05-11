@@ -34,7 +34,7 @@ class ApiUserHandeler(BaseHandler):
 
         if self.user:
             if self.data["user_pwd"]:
-                self.user["user_pwd"]  = encrypt(self.data["user_pwd"])
+                self.user["user_pwd"] = encrypt(self.data["user_pwd"])
         else:
             return self.error(APIStatus["STAT_API_USER_UNEXIST"])
 

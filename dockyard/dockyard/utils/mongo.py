@@ -1,12 +1,9 @@
 from dockyard.var import GLOBAL
-from dockyard.const import MID, MDELETE, MCREATE, MUPDATE
 from bson.objectid import ObjectId
 import pymongo
 import time
 
 class Mongo:
-    MID = MID
-
     def __init__(self):
         __table_name       = self.__class__.__name__
         self.__db          = GLOBAL.mongo()
@@ -16,6 +13,7 @@ class Mongo:
         self.__index       = 0
         self.__update_data = {}
         self.__update_list = []
+        self.__query       = {}
 
     def __del__(self):
         self.flush()
@@ -55,23 +53,32 @@ class Mongo:
     def __bool__(self):
         return self.exists()
 
+    def set_query(self, query):
+        self.__query.update(query)
+
+    def wrap_query(self, query):
+        if not query:
+            self.__query.update(query)
+        self.__query[GLOBAL.MDELETE] = False
+        return self.__query
+
     def wrapper(self, data):
-        data[MUPDATE] = time.time()
+        data[GLOBAL.MUPDATE] = time.time()
 
-        if not MDELETE in data:
-            data[MDELETE] = False
+        if not GLOBAL.MDELETE in data:
+            data[GLOBAL.MDELETE] = False
 
-        if not MCREATE in data:
-            data[MCREATE] = data[MUPDATE]
+        if not GLOBAL.MCREATE in data:
+            data[GLOBAL.MCREATE] = data[GLOBAL.MUPDATE]
         return data
 
     def unwrapper(self, data):
         if not data:
             return {}
         try:
-            del data[MDELETE]
-            del data[MUPDATE]
-            del data[MCREATE]
+            del data[GLOBAL.MDELETE]
+            del data[GLOBAL.MUPDATE]
+            del data[GLOBAL.MCREATE]
         except KeyError:
             pass
         return data
@@ -79,7 +86,7 @@ class Mongo:
     @property
     def id(self):
         try:
-            _id = self.__data[MID]
+            _id = self.__data[GLOBAL.MID]
             if not isinstance(_id, ObjectId):
                 return ObjectId(_id)
             else:
@@ -90,7 +97,7 @@ class Mongo:
     @property
     def str_id(self):
         try:
-            _id = self.__data[MID]
+            _id = self.__data[GLOBAL.MID]
             if not isinstance(_id, str):
                 return str(_id)
             else:
@@ -99,7 +106,7 @@ class Mongo:
             return ""
 
     def remove(self):
-        self[MDELETE] = True
+        self[GLOBAL.MDELETE] = True
 
     def clear(self):
         self.__data.clear()
@@ -121,9 +128,8 @@ class Mongo:
         elif isinstance(data, dict):
             self.__data = data
 
-    def find(self, query = None, skip = None, limit = None, order = None):
-        query[MDELETE] = False
-        self.__list = self.__table.find(query)
+    def find(self, query=None, skip=None, limit=None, order=None):
+        self.__list = self.__table.find(self.wrap_query(query))
         if order is not None:
             self.__list.sort(order)
         if skip is not None:
@@ -132,9 +138,8 @@ class Mongo:
             self.__list.limit(int(limit))
         return self
 
-    def find_one(self, query):
-        query[MDELETE] = False
-        self.__data   = self.unwrapper(self.__table.find_one(query))
+    def find_one(self, query=None):
+        self.__data   = self.unwrapper(self.__table.find_one(self.wrap_query(query)))
         return self
 
     def all(self, skip = None, limit = None, order = None):
@@ -145,9 +150,9 @@ class Mongo:
 
         if self.__update_data:
             if self.id:
-                self.__table.update_one({MID: self.id}, {"$set": self.__update_data})
+                self.__table.update_one({GLOBAL.MID: self.id}, {"$set": self.__update_data})
             else:
-                self.__data[MID] = self.__table.insert_one(self.__update_data).inserted_id
+                self.__data[GLOBAL.MID] = self.__table.insert_one(self.__update_data).inserted_id
             self.__update_data = {}
 
     def __save_list(self):

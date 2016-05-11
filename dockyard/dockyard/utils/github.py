@@ -26,9 +26,10 @@ class GitHubClient:
 
             return self.__request.post(self.ACCESS_TOKEN_URL, data)
 
-    def __init__(self):
-        self.__request = Request()
-        self.__oauth = None
+    def __init__(self, user):
+        self.__request  = Request()
+        self.__oauth    = None
+        self.__user     = user
 
         self.__request.set_header({"Accept": "application/json"})
 

@@ -17,8 +17,8 @@ class ApiAuthHandeler(BaseHandler):
         if path == "logout":    self.logout()
 
     def login(self):
-        self.parse_arg_str("user_name")
-        self.parse_arg_str("user_pwd")
+        self.parse_arg_str("user_name", True)
+        self.parse_arg_str("user_pwd",  True)
 
         self.user["user_name"] = self.data["user_name"]
 
