@@ -15,6 +15,7 @@ APIStatus = {
     "STAT_API_PWD_EMPTY":           (10005,     "User password empty"),
 
     #WARN
+    "STAT_API_GITHUB_OAUTH_FAILED": (10006,     "User GitHub Oauth failed")
 }
 
 LogStatus = {

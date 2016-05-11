@@ -10,7 +10,7 @@ class ApiUserGitHubHandeler(BaseHandler):
     @coroutine
     @auth
     def get(self, path, *args, **kwargs):
-        if path == "list":  return self.get_repos()
+        if path == "list":  self.get_repos()
 
     def get_repos(self):
         repos = self.user.github.get_repos()
@@ -23,5 +23,10 @@ class ApiUserGitHubHandeler(BaseHandler):
         github_client_id = sys_settings["github_client_id"]
         self.user.github.oauth.authorize(github_client_id,
                                          GLOBAL.GITHUB_OAUTH_REDIRECT, state)
-
         return self.success()
+
+    def get_oauth_status(self):
+        if self.user["github_access_token"]:
+            return self.success()
+        else:
+            return self.error(APIStatus["STAT_API_GITHUB_OAUTH_FAILED"])
