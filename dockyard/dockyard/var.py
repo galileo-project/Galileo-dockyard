@@ -43,4 +43,11 @@ class __GlobalVar:
             self.__data[_name] = Log()
         return self.__data[_name]
 
+    def user_log(self, user):
+        from dockyard.model.logs import Log
+        log = Log()
+        log.set_origin(user.id)
+        return log
+
+
 GLOBAL = __GlobalVar()
