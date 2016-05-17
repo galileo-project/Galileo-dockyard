@@ -1,0 +1,19 @@
+<div>
+    <form class="form-group-lg form-sign center-block" ng-submit="signup.signup()" name="signupForm">
+        <h2>Sign Up</h2>
+
+        <label for="inputEmail" class="sr-only">User email</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="User email" ng-model="signup.email" required>
+
+        <label for="inputName" class="sr-only">User name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="User name" ng-model="signup.name" required>
+
+        <label for="inputPassword1" class="sr-only">Password</label>
+        <input type="password" class="form-control" id="inputPassword1" placeholder="Password" ng-model="signup.password1" required>
+
+        <label for="inputPassword1" class="sr-only">Password again</label>
+        <input type="password" class="form-control" id="inputPassword2" placeholder="Password again" ng-model="signup.password2" required>
+        <p class="alert-danger">{{ signup.msg }}</p>
+        <input type="submit" class="btn btn-block btn-lg btn-block btn-primary" ng-disabled="signupForm.$invalid" value="Sign Up">
+    </form>
+</div>
