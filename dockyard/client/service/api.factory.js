@@ -31,7 +31,8 @@
             userDelete:     userDelete,
             getUser:        getUser,
             getApps:        getApps,
-            getApp:         getApp
+            getApp:         getApp,
+            githubOauth:    githubOauth
         };
 
 
@@ -66,6 +67,10 @@
 
         function getApp() {
 
+        }
+        
+        function githubOauth() {
+            return apiGet()
         }
 
         /**************************

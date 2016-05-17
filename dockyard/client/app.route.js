@@ -24,6 +24,11 @@
                 controller:     "signupCtrl",
                 controllerAs :  "signup"
             })
+            .when("/oauth/github", {
+                templateUrl:    "layout/oauth/github.tpl.html",
+                controller:     "githubOauthCtrl",
+                controllerAs :  "githubOauth"
+            })
             .otherwise("/");
     }
 
