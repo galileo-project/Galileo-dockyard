@@ -74,7 +74,6 @@ class BaseHandler(RequestHandler):
         self.raw_export(data)
 
     def raw_export(self, data):
-        print(self.data)
         if not self.finished:
             self.write(data)
             self.finished = True
