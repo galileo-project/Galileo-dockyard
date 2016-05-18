@@ -11,12 +11,13 @@
         function homeCtrl(dataService, sidebarService) {
             var vm  = this;
 
-            sidebarService.hide();
             active();
 
             vm.name = "home";
 
             function active() {
+                sidebarService.hide();
+
                 dataService.getUser().then(function (msg) {
                     vm.test = msg;
                 });

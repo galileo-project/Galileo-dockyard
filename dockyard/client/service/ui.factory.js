@@ -61,9 +61,9 @@
     function loadingService($rootScope) {
         var loadingService = {};
 
-        loadingService.visible = false;
-        loadingService.show = show;
-        loadingService.hide = hide;
+        loadingService.visible  = false;
+        loadingService.show     = show;
+        loadingService.hide     = hide;
 
         return loadingService;
 

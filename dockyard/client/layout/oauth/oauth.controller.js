@@ -10,11 +10,11 @@
     function githubOauthCtrl($location, dataService, sidebarService) {
         var vm  = this;
 
-        sidebarService.hide();
-
         active();
         
         function active() {
+            sidebarService.hide();
+
             dataService.githubOauth().then(function (msg) {
                 //TODO github oauth
             })
