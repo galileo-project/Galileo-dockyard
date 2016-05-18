@@ -16,7 +16,7 @@
             vm.name = "home";
 
             function active() {
-                sidebarService.hide();
+                sidebarService.show();
 
                 dataService.getUser().then(function (msg) {
                     vm.test = msg;
