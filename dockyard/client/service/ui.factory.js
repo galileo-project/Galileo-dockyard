@@ -89,6 +89,8 @@
         sidebarService.show     = show;
         sidebarService.hide     = hide;
 
+        return sidebarService;
+
         function show() {
             sidebarService.visible = true;
             sendEvent();
