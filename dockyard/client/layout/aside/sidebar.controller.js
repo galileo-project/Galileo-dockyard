@@ -2,13 +2,13 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("sidebarCtrl", ["$scope", "sidebarService", sidebarCtrl]);
+        .controller("sidebarCtrl", ["$scope", "$location", "sidebarService", sidebarCtrl]);
 
 
     /**************************
      *        Controllers      *
      ***************************/
-    function sidebarCtrl($scope, sidebarService, $location) {
+    function sidebarCtrl($scope, $location, sidebarService) {
         var vm = this;
 
         active();
