@@ -7,7 +7,7 @@
     /**************************
      *        Controllers      *
      ***************************/
-    function githubOauthCtrl($location, dataService) {
+    function githubOauthCtrl($location, dataService, sidebarService) {
         var vm  = this;
 
         sidebarService.hide();
