@@ -2,7 +2,7 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("githubOauthCtrl", ["$location", "dataService", githubOauthCtrl]);
+        .controller("githubOauthCtrl", ["$location", "dataService", sidebarService, githubOauthCtrl]);
 
     /**************************
      *        Controllers      *
@@ -10,9 +10,11 @@
     function githubOauthCtrl($location, dataService) {
         var vm  = this;
 
-        activate();
+        sidebarService.hide();
+
+        active();
         
-        function activate() {
+        function active() {
             dataService.githubOauth().then(function (msg) {
                 //TODO github oauth
             })

@@ -2,13 +2,15 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("loginCtrl", loginCtrl);
+        .controller("loginCtrl", ["sidebarService", loginCtrl]);
 
        /**************************
        *        Controllers      *
        ***************************/
-        function loginCtrl() {
+        function loginCtrl(sidebarService) {
             var vm  = this;
+
+            sidebarService.hide();
 
             vm.name = "login"
         }

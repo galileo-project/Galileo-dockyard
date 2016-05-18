@@ -17,7 +17,7 @@
 
     angular
         .module("dockyard.factory.api", [])
-        .factory("dataService",      dataService);
+        .factory("dataService",         dataService);
 
 
     /**********************

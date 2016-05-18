@@ -2,30 +2,29 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("sidebarCtrl", sidebarCtrl);
+        .controller("sidebarCtrl", ["$scope", "sidebarService", sidebarCtrl]);
 
 
     /**************************
      *        Controllers      *
      ***************************/
-    function sidebarCtrl($scope, $location) {
-        var vm   = this;
+    function sidebarCtrl($scope, sidebarService, $location) {
+        var vm = this;
 
         active();
 
         //functions
         function active() {
-            $scope.$on('$routeChangeSuccess', handleSidebar)
+            $scope.$on('handleSidebar', handleSidebar)
 
             function handleSidebar() {
-                var path = $location.path();
-                if(path === '/login' || path === '/signup') {
-                    vm.sidebarURL = "";
-                } else {
+                if(sidebarService.visible) {
                     vm.sidebarURL = "layout/aside/aside.include.html";
+                } else {
+                    vm.sidebarURL = "";
                 }
             }
-        }
+        } //end of active
     }
 
 })();

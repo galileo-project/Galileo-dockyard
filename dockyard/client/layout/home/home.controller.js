@@ -2,20 +2,26 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("homeCtrl", ["dataService", homeCtrl]);
+        .controller("homeCtrl", ["dataService", "sidebarService", homeCtrl]);
 
 
        /**************************
        *        Controllers      *
        ***************************/
-        function homeCtrl(dataService) {
+        function homeCtrl(dataService, sidebarService) {
             var vm  = this;
 
-            vm.name = "home";
-            dataService.getUser().then(function (msg) {
-                vm.test = msg;
-            });
+            sidebarService.hide();
+            active();
 
+            vm.name = "home";
+
+            function active() {
+                dataService.getUser().then(function (msg) {
+                    vm.test = msg;
+                });
+
+            }
         }
 
 })();

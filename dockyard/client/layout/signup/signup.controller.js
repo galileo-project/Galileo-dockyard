@@ -2,15 +2,18 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("signupCtrl", ["$location", "dataService", signupCtrl]);
+        .controller("signupCtrl", ["$location", "dataService", "sidebarService", signupCtrl]);
 
        /**************************
        *        Controllers      *
        ***************************/
-        function signupCtrl($location, dataService) {
+        function signupCtrl($location, dataService, sidebarService) {
             var vm  = this;
 
+            sidebarService.hide();
+
             vm.signup = signup;
+
 
            function signup() {
                var data = {user_name:  vm.name,

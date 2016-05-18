@@ -6,7 +6,8 @@
     angular
         .module("dockyard.factory.ui", [])
         .factory("msgService",      ["$rootScope", msgService])
-        .factory("loadingService",  ["$rootScope", loadingService]);
+        .factory("loadingService",  ["$rootScope", loadingService])
+        .factory("sidebarService",  ["$rootScope", sidebarService]);
 
 
     /**********************
@@ -55,7 +56,7 @@
         function sendMsg() {
             $rootScope.$broadcast("handleMsg");
         }
-    }
+    } //end of msgService
 
     function loadingService($rootScope) {
         var loadingService = {};
@@ -79,5 +80,27 @@
         function sendEvent() {
             $rootScope.$broadcast("handleLoading")
         }
-    }
+    }  //end of loadingService
+
+    function sidebarService($rootScope) {
+        var sidebarService = {};
+
+        sidebarService.visible  = true;
+        sidebarService.show     = show;
+        sidebarService.hide     = hide;
+
+        function show() {
+            sidebarService.visible = true;
+            sendEvent();
+        }
+
+        function hide() {
+            sidebarService.visible = true;
+            sendEvent();
+        }
+
+        function sendEvent() {
+            $rootScope.$broadcast("handleSidebar");
+        }
+    }  //end of sidebarService
 })();
