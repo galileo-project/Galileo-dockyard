@@ -97,7 +97,7 @@
         }
 
         function hide() {
-            sidebarService.visible = true;
+            sidebarService.visible = false;
             sendEvent();
         }
 
