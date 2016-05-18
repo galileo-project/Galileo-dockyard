@@ -1,7 +1,7 @@
 (function(){
     "use strict";
     //dockyard API URL
-    var HOST         = "http://localhost:8080";
+    var HOST         = "http://203.88.167.78:8080";
     var API          = HOST + "/api";
     var USER         = API  + "/user";
 
