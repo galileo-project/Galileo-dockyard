@@ -2,7 +2,7 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("githubOauthCtrl", ["$location", "dataService", sidebarService, githubOauthCtrl]);
+        .controller("githubOauthCtrl", ["$location", "dataService", "sidebarService", githubOauthCtrl]);
 
     /**************************
      *        Controllers      *
