@@ -12,7 +12,7 @@
 
             sidebarService.hide();
 
-            vm.name = "manager"
+            vm.name = "manager";
         }
 
 })();

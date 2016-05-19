@@ -12,7 +12,7 @@
 
             sidebarService.hide();
 
-            vm.name = "login"
+            vm.name = "login";
         }
 
 })();
