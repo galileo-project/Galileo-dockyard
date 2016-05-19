@@ -46,4 +46,12 @@ class __GlobalVar:
             self.__DATA[name] = MsgQueue()
         return self.__DATA[name]
 
+    @property
+    def routes(self):
+        name = "routes"
+        if not self.__DATA.get(name):
+            self.__DATA[name] = []
+        return self.__DATA[name]
+
+
 GLOBAL = __GlobalVar()

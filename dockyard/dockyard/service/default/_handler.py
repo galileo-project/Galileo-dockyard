@@ -12,4 +12,3 @@ class DefaultHandeler(BaseHandler):
 
     def put(self, *args, **kwargs):
         self.success()
-        

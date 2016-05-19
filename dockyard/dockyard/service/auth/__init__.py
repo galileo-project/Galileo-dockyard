@@ -1,6 +1,6 @@
 from dockyard.var import GLOBAL
 
-routes = [(r"/api/user",                "",),
+routes = [("/auth/(.*)",                "",),
           (r"/api/user/github",         ""),
           (r"/api/app/?(.*)",           ""),]
 
