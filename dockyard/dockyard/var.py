@@ -11,7 +11,7 @@ class __GlobalVar:
     LOG_FATAL               = "fatal"
     LOG_SUCCESS             = "success"
     LOG_ERROR               = "error"
-    LOG_PUTS                = "put"
+    LOG_INFO                = "info"
 
     SYS_ORIGIN              = "system"
 
@@ -51,6 +51,13 @@ class __GlobalVar:
         name = "routes"
         if not self.__DATA.get(name):
             self.__DATA[name] = []
+        return self.__DATA[name]
+
+    def logging(self, msg, origin):
+        name = "logging"
+        if not self.__DATA.get(name):
+            from dockyard.service.log import logging
+            self.__DATA[name] = logging()
         return self.__DATA[name]
 
 

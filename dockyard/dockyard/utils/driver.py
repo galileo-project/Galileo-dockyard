@@ -7,10 +7,10 @@ class Driver:
         else:
             return True, stat
 
-    def success(self, msg=None):
+    def succes(self, msg=None):
         return self._export(msg)
 
-    def error(self, stat=None):
+    def err(self, stat=None):
         if stat is None:
             stat = APIStatus["STAT_API_UNKNOWN_ERROR"]
         return self._export(None, stat)
