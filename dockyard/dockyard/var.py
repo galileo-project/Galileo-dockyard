@@ -53,7 +53,7 @@ class __GlobalVar:
             self.__DATA[name] = []
         return self.__DATA[name]
 
-    def logging(self, msg, origin):
+    def logging(self):
         name = "logging"
         if not self.__DATA.get(name):
             from dockyard.service.log import logging
