@@ -1,4 +1,4 @@
-from dockyard.handler import BaseHandler
+from dockyard.utils.handler import BaseHandler
 
 class DefaultHandeler(BaseHandler):
     def get(self, *args, **kwargs):

@@ -1,5 +1,4 @@
-
-from dockyard.handler import BaseHandler
+from dockyard.utils.handler import BaseHandler
 from dockyard.const import APIStatus
 from dockyard.utils import encrypt
 from tornado.gen import coroutine

@@ -1,4 +1,4 @@
-from dockyard.handler import BaseHandler
+from dockyard.utils.handler import BaseHandler
 from dockyard.const.status import APIStatus
 from dockyard.utils.wrapper import auth
 from dockyard.model.sys.settings import SysSettings
