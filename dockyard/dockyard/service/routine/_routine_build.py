@@ -4,7 +4,7 @@ from dockyard.var import GLOBAL
 class __RoutineBuild(_Routine):
     KEY = GLOBAL.CHAN_BUILD
 
-    def _exec(self, msg):
+    def _exec(self, task):
         pass
 
     def resume(self):

@@ -42,8 +42,8 @@ class __GlobalVar:
     def mq(self):
         name = "mq"
         if not self.__DATA.get(name):
-            from dockyard.service.queue import MsgQueue
-            self.__DATA[name] = MsgQueue()
+            from dockyard.service.queue import taskQueue
+            self.__DATA[name] = taskQueue()
         return self.__DATA[name]
 
     @property
