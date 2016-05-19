@@ -1,6 +1,7 @@
 from dockyard.const.status import ExpStatus
 
 class __GlobalVar:
+    __DATA                  = {}
     MID                     = "_id"
     MDELETE                 = "__deleted__"
     MCREATE                 = "__create__"
@@ -22,37 +23,27 @@ class __GlobalVar:
 
     GITHUB_OAUTH_REDIRECT   = ""
 
-    def __init__(self):
-        self.__data = {}
+    #channel
+    CHAN_GLOBAL             = "global_chan"
+    CHAN_BUILD              = "build_chan"
+    CHAN_LOG                = "log_chan"
 
     def mongo(self, host=None, port=None, database=None):
-        _name = "mongo"
-        if not self.__data.get(_name):
+        name = "mongo"
+        if not self.__DATA.get(name):
             from pymongo.mongo_client import MongoClient
             if not host or not port or not database:
                 raise Exception(ExpStatus["STAT_EXP_INIT_MONGO"])
             client = MongoClient(host, port)
-            self.__data[_name] = client[database]
-        return self.__data[_name]
+            self.__DATA[name] = client[database]
+        return self.__DATA[name]
 
     @property
-    def log(self):
-        _name = "log"
-        if not self.__data.get(_name):
-            from dockyard.model.logs import Log
-            self.__data[_name] = Log()
-        return self.__data[_name]
-
-    def user_log(self, user):
-        from dockyard.model.logs import Log
-        log = Log()
-        log.set_origin(user.id)
-        return log
-
-    def app_log(self, app):
-        from dockyard.model.logs import Log
-        log = Log()
-        log.set_origin(app.id)
-        return log
+    def mq(self):
+        name = "mq"
+        if not self.__DATA.get(name):
+            from dockyard.service.queue import MsgQueue
+            self.__DATA[name] = MsgQueue()
+        return self.__DATA[name]
 
 GLOBAL = __GlobalVar()
