@@ -16,3 +16,9 @@ class BuildDriver(Driver):
 
     def del_builds_by_app(self):
         pass
+
+    def get_builds_by_app(self):
+        pass
+
+    def get_build_by_app(self):
+        pass

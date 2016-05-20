@@ -1,7 +1,7 @@
 from dockyard.utils.driver import Driver
 from dockyard.driver.log._model import Log
 
-class _DriverLog(Driver, Log):
+class DriverLog(Driver, Log):
     def error(self, msgs, origin):
         self._error(msgs, origin)
 
@@ -16,3 +16,9 @@ class _DriverLog(Driver, Log):
 
     def info(self, msgs, origin):
         self._info(msgs, origin)
+
+    def get_logs_by_build(self):
+        pass
+
+    def get_logs_by_user(self):
+        pass

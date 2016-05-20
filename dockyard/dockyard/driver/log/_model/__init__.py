@@ -1,66 +1,40 @@
 from dockyard.utils.mongo import Mongo
 from dockyard.var import GLOBAL
 
+
 class Log(Mongo):
+    """
+    _id
+    level
+    msg
+    origin
+    """
     LEVEL  = "level"
     MSG    = "msg"
     ORIGIN = "origin"
 
-    def __init__(self):
-        Mongo.__init__(self)
-        self.__origin = GLOBAL.SYS_ORIGIN
-
     def _warn(self, msgs, origin):
-        if not isinstance(msgs, list):
-            msgs = [msgs]
-
-        for msg in msgs:
-            data = {self.LEVEL:     GLOBAL.LOG_WARN,
-                    self.MSG:       msg,
-                    self.ORIGIN:    origin or self.__origin}
-            self.append(data)
-        self.flush()
+        self.__save(msgs, GLOBAL.LOG_WARN, origin)
 
     def _fatal(self, msgs, origin):
-        if not isinstance(msgs, list):
-            msgs = [msgs]
-
-        for msg in msgs:
-            data = {self.LEVEL:     GLOBAL.LOG_FATAL,
-                    self.MSG:       msg,
-                    self.ORIGIN:    origin or self.__origin}
-            self.append(data)
-        self.flush()
+        self.__save(msgs, GLOBAL.LOG_FATAL, origin)
 
     def _info(self, msgs, origin):
-        if not isinstance(msgs, list):
-            msgs = [msgs]
-
-        for msg in msgs:
-            data = {self.LEVEL:     GLOBAL.LOG_INFO,
-                    self.MSG:       msg,
-                    self.ORIGIN:    origin or self.__origin}
-            self.append(data)
-        self.flush()
+        self.__save(msgs, GLOBAL.LOG_INFO, origin)
 
     def _success(self, msgs, origin):
-        if not isinstance(msgs, list):
-            msgs = [msgs]
-
-        for msg in msgs:
-            data = {self.LEVEL:     GLOBAL.LOG_SUCCESS,
-                    self.MSG:       msg,
-                    self.ORIGIN:    origin or self.__origin}
-            self.append(data)
-        self.flush()
+        self.__save(msgs, GLOBAL.LOG_SUCCESS, origin)
 
     def _error(self, msgs, origin):
+        self.__save(msgs, GLOBAL.LOG_ERROR, origin)
+
+    def __save(self, msgs, level, origin):
         if not isinstance(msgs, list):
             msgs = [msgs]
 
         for msg in msgs:
-            data = {self.LEVEL:     GLOBAL.LOG_ERROR,
+            data = {self.LEVEL:     level,
                     self.MSG:       msg,
-                    self.ORIGIN:    origin or self.__origin}
+                    self.ORIGIN:    origin or GLOBAL.SYS_ORIGIN}
             self.append(data)
         self.flush()
