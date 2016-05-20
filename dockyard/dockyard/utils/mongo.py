@@ -121,7 +121,11 @@ class Mongo:
         self.__update_list.append(data)
 
     def get_raw(self):
-        return self.__list or self.__data
+        return self.__list or self.unwrapper(self.__data)
+
+    @property
+    def attr(self):
+        return self.unwrapper(self.__data)
 
     def set_raw(self, data):
         if isinstance(data, list):

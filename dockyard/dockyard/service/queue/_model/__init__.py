@@ -1,6 +1,7 @@
 from dockyard.utils.mongo import Mongo
 import time
 
+
 class MsgModel(Mongo):
     """
         channel

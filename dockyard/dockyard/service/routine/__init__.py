@@ -1,4 +1,6 @@
 from dockyard.var import GLOBAL
+import pkgutil
+
 
 class _Routine:
     KEY = None
@@ -8,7 +10,7 @@ class _Routine:
 
     def callback(self, msg):
         try:
-            ret = self._exec(msg)
+            ret = self._exec(**msg.attr)
             if ret:
                 msg.received(self.KEY)
         except:
@@ -17,14 +19,12 @@ class _Routine:
     def resume(self):
         raise NotImplemented
 
-    def _exec(self, msg):
+    def _exec(self, **kwargs):
         raise NotImplemented
 
 
-#init routine
-import pkgutil
-
 def init():
+    # init routine
     for loader, mod_name, is_pkg in pkgutil.walk_packages(__path__):
         mod = loader.find_module(mod_name).load_module(mod_name)
         mod.Routine()
