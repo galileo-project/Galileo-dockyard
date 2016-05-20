@@ -60,8 +60,8 @@ class __GlobalVar:
     def logging(self):
         name = "logging"
         if not self.__DATA.get(name):
-            from dockyard.driver.log import DriverLog
-            self.__DATA[name] = DriverLog()
+            from dockyard.driver.log import Log
+            self.__DATA[name] = Log()
         return self.__DATA[name]
 
 
