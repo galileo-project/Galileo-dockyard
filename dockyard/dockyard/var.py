@@ -1,4 +1,4 @@
-from dockyard.const.status import ExpStatus
+from dockyard.const import ExpStatus
 from tornado.ioloop import IOLoop
 
 class __GlobalVar:
