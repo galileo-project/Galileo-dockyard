@@ -1,5 +1,5 @@
+from dockyard.service.interface.app._handler import ApiUserAppHandeler
 from dockyard.var import GLOBAL
-from dockyard.service.app._handler import ApiUserAppHandeler
 
 routes = [(r"/api/app/?(.*)",           ApiUserAppHandeler),]
 

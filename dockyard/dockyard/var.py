@@ -1,4 +1,5 @@
 from dockyard.const.status import ExpStatus
+from tornado.ioloop import IOLoop
 
 class __GlobalVar:
     __DATA                  = {}
@@ -39,12 +40,15 @@ class __GlobalVar:
         return self.__DATA[name]
 
     @property
-    def mq(self):
-        name = "mq"
+    def tq(self):
+        name = "tq"
         if not self.__DATA.get(name):
             from dockyard.service.queue import taskQueue
             self.__DATA[name] = taskQueue()
         return self.__DATA[name]
+
+    def go(self, func, *args, **kwargs):
+        IOLoop.instance().add_callback(func, *args, **kwargs)
 
     @property
     def routes(self):
