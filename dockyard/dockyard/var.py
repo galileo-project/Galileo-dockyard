@@ -1,4 +1,5 @@
 from dockyard.const.status import ExpStatus
+from tornado.ioloop import IOLoop
 
 class __GlobalVar:
     __DATA                  = {}
@@ -11,7 +12,7 @@ class __GlobalVar:
     LOG_FATAL               = "fatal"
     LOG_SUCCESS             = "success"
     LOG_ERROR               = "error"
-    LOG_PUTS                = "put"
+    LOG_INFO                = "info"
 
     SYS_ORIGIN              = "system"
 
@@ -21,9 +22,7 @@ class __GlobalVar:
     LOG_WARN_LEVEL          = "_warn",
     LOG_PUTS_LEVEL          = "_put"
 
-    GITHUB_OAUTH_REDIRECT   = ""
-
-    #channel
+    # channel
     CHAN_GLOBAL             = "global_chan"
     CHAN_BUILD              = "build_chan"
     CHAN_LOG                = "log_chan"
@@ -39,18 +38,30 @@ class __GlobalVar:
         return self.__DATA[name]
 
     @property
-    def mq(self):
-        name = "mq"
+    def task(self):
+        name = "task"
         if not self.__DATA.get(name):
-            from dockyard.service.queue import MsgQueue
-            self.__DATA[name] = MsgQueue()
+            from dockyard.service.task.queue import TaskQueue
+            self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
+
+    @staticmethod
+    def go(func, *args, **kwargs):
+        IOLoop.instance().add_callback(func, *args, **kwargs)
 
     @property
     def routes(self):
         name = "routes"
         if not self.__DATA.get(name):
             self.__DATA[name] = []
+        return self.__DATA[name]
+
+    @property
+    def logging(self):
+        name = "logging"
+        if not self.__DATA.get(name):
+            from dockyard.driver.log import DriverLog
+            self.__DATA[name] = DriverLog()
         return self.__DATA[name]
 
 

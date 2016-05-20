@@ -1,7 +1,9 @@
 from dockyard.var import GLOBAL
 from bson.objectid import ObjectId
+from bson.errors import InvalidId
 import pymongo
 import time
+
 
 class Mongo:
     def __init__(self):
@@ -57,22 +59,27 @@ class Mongo:
         self.__query.update(query)
 
     def wrap_query(self, query):
-        if not query:
+        if query:
             self.__query.update(query)
         self.__query[GLOBAL.MDELETE] = False
         return self.__query
 
-    def wrapper(self, data):
+    def add(self, *args, **kwargs):
+        raise NotImplemented
+
+    @staticmethod
+    def wrapper(data):
         data[GLOBAL.MUPDATE] = time.time()
 
-        if not GLOBAL.MDELETE in data:
+        if GLOBAL.MDELETE not in data:
             data[GLOBAL.MDELETE] = False
 
-        if not GLOBAL.MCREATE in data:
+        if GLOBAL.MCREATE not in data:
             data[GLOBAL.MCREATE] = data[GLOBAL.MUPDATE]
         return data
 
-    def unwrapper(self, data):
+    @staticmethod
+    def unwrapper(data):
         if not data:
             return {}
         try:
@@ -86,27 +93,24 @@ class Mongo:
     @property
     def id(self):
         try:
-            _id = self.__data[GLOBAL.MID]
+            _id = self.__data.get(GLOBAL.MID)
             if not isinstance(_id, ObjectId):
                 return ObjectId(_id)
             else:
                 return _id
-        except:
+        except InvalidId:
             return None
 
     @property
     def str_id(self):
-        try:
-            _id = self.__data[GLOBAL.MID]
-            if not isinstance(_id, str):
-                return str(_id)
-            else:
-                return _id
-        except:
-            return ""
+        _id = self.__data.get(GLOBAL.MID)
+        if not isinstance(_id, str):
+            return str(_id)
+        else:
+            return _id
 
     def remove(self):
-        self[GLOBAL.MDELETE] = True
+        self.__update_data[GLOBAL.MDELETE] = True
 
     def clear(self):
         self.__data.clear()
@@ -120,7 +124,11 @@ class Mongo:
         self.__update_list.append(data)
 
     def get_raw(self):
-        return self.__list or self.__data
+        return self.__list or self.unwrapper(self.__data)
+
+    @property
+    def attr(self):
+        return self.unwrapper(self.__data)
 
     def set_raw(self, data):
         if isinstance(data, list):
@@ -128,7 +136,7 @@ class Mongo:
         elif isinstance(data, dict):
             self.__data = data
 
-    def find(self, query=None, skip=None, limit=None, order=None):
+    def find(self, query, skip=None, limit=None, order=None):
         self.__list = self.__table.find(self.wrap_query(query))
         if order is not None:
             self.__list.sort(order)
@@ -138,17 +146,17 @@ class Mongo:
             self.__list.limit(int(limit))
         return self
 
-    def find_one(self, query=None):
-        self.__data   = self.unwrapper(self.__table.find_one(self.wrap_query(query)))
+    def find_one(self, query):
+        self.__data = self.unwrapper(self.__table.find_one(self.wrap_query(query)))
         return self
 
-    def all(self, skip = None, limit = None, order = None):
+    def all(self, skip=None, limit=None, order=None):
         return self.find({}, skip, limit, order)
 
     def __save_data(self):
-        self.__update_data = self.wrapper(self.__update_data)
-
         if self.__update_data:
+            self.__update_data = self.wrapper(self.__update_data)
+
             if self.id:
                 self.__table.update_one({GLOBAL.MID: self.id}, {"$set": self.__update_data})
             else:
@@ -159,13 +167,14 @@ class Mongo:
         for data in self.__update_list:
             data = self.wrapper(data)
             self.__table.insert_one(data)
+        self.__update_list = []
 
     def flush(self):
         self.__save_data()
         self.__save_list()
         self.clear()
 
-    def exists(self, query = None):
+    def exists(self, query=None):
         if query or self.__update_data:
             self.find_one(query or self.__update_data)
 
@@ -179,30 +188,36 @@ class Mongo:
         return {"$eq": val}
 
     @classmethod
-    def gt(cls, val, eq = True):
+    def gt(cls, val, eq=True):
         if eq:
             return {"$gte": val}
         else:
             return {"$gt": val}
 
     @classmethod
-    def lt(cls, val, eq = True):
+    def lt(cls, val, eq=True):
         if eq:
             return {"$lte": val}
         else:
             return {"$lt": val}
 
     @classmethod
-    def q_or(cls, datas):
-        return {"$or": datas}
+    def q_or(cls, data):
+        if not isinstance(data, list):
+            data = [data]
+        return {"$or": data}
 
     @classmethod
-    def q_in(cls, qrange):
-        return {"$in": qrange}
+    def q_in(cls, data):
+        if not isinstance(data, list):
+            data = [data]
+        return {"$in": data}
 
     @classmethod
-    def q_nin(cls, qrange):
-        return {"$nin": qrange}
+    def q_nin(cls, data):
+        if not isinstance(data, list):
+            data = [data]
+        return {"$nin": data}
 
     @classmethod
     def q_regex(cls, val):

@@ -29,6 +29,11 @@
                 controller:     "githubOauthCtrl",
                 controllerAs :  "githubOauth"
             })
+            .when("/manager", {
+                templateUrl:    "layout/manager/manager.tpl.html",
+                controller:     "managerCtrl",
+                controllerAs :  "manager"
+            })
             .otherwise("/");
     }
 
