@@ -6,16 +6,17 @@ from dockyard.var import GLOBAL
 from dockyard.utils import gen_random
 from dockyard.service.task import init_routine
 
-def main(options):
-    GLOBAL.mongo(options.mongo_host, options.mongo_port, options.database)
+
+def main(opt):
+    GLOBAL.mongo(opt.mongo_host, opt.mongo_port, opt.database)
 
     settings = {"login_url"    : "/auth/login",
-                "debug"        : options.debug,
-                "cookie_secret": "233" if options.debug else gen_random(16)}
+                "debug"        : opt.debug,
+                "cookie_secret": "233" if opt.debug else gen_random(16)}
     app = Application(GLOBAL.routes, **settings)
     server = httpserver.HTTPServer(app)
-    server.bind(options.port, options.address)
-    server.start(options.process)
+    server.bind(opt.port, opt.address)
+    server.start(opt.process)
     init_routine()
 
     IOLoop.instance().start()
