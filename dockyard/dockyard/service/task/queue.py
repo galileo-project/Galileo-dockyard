@@ -1,4 +1,4 @@
-from dockyard.service.queue._model import MsgModel
+from dockyard.service.task._model import MsgModel
 from dockyard.var import GLOBAL
 from tornado.ioloop import IOLoop
 

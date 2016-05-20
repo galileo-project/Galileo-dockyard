@@ -1,4 +1,4 @@
-from dockyard.service.routine import _Routine
+from dockyard.service.task.routine import _Routine
 from dockyard.var import GLOBAL
 
 class __RoutineBuild(_Routine):

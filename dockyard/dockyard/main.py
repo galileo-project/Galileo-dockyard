@@ -4,6 +4,7 @@ from tornado import httpserver
 from tornado.web import Application
 from dockyard.var import GLOBAL
 from dockyard.utils import gen_random
+from dockyard.service.task import init_routine
 
 def main(options):
     GLOBAL.mongo(options.mongo_host, options.mongo_port, options.database)
@@ -15,6 +16,7 @@ def main(options):
     server = httpserver.HTTPServer(app)
     server.bind(options.port, options.address)
     server.start(options.process)
+    init_routine()
 
     IOLoop.instance().start()
 

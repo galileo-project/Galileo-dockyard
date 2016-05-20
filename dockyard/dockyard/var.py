@@ -43,7 +43,7 @@ class __GlobalVar:
     def task(self):
         name = "task"
         if not self.__DATA.get(name):
-            from dockyard.service.queue import TaskQueue
+            from dockyard.service.task import TaskQueue
             self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
 
