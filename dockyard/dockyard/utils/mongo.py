@@ -64,6 +64,9 @@ class Mongo:
         self.__query[GLOBAL.MDELETE] = False
         return self.__query
 
+    def add(self, *args, **kwargs):
+        raise NotImplemented
+
     @staticmethod
     def wrapper(data):
         data[GLOBAL.MUPDATE] = time.time()
