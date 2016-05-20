@@ -2,6 +2,7 @@ from dockyard.service.queue._model import MsgModel
 from dockyard.var import GLOBAL
 from tornado.ioloop import IOLoop
 
+
 class TaskQueue:
     def __init__(self):
         self.__subscriber = {}
@@ -16,7 +17,7 @@ class TaskQueue:
         self.__broadcast(task)
 
     def subscribe(self, channel, subscriber):
-        if not channel in self.__subscriber:
+        if channel not in self.__subscriber:
             self.__subscriber[channel] = subscriber
 
     def __broadcast(self, task):

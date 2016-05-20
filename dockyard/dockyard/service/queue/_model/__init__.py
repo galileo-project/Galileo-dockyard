@@ -20,7 +20,7 @@ class MsgModel(Mongo):
 
     def gets_by_channel(self, channel, receiver):
         self.find_one({"channel":   channel,
-                       "receivers": self.q_nin("")})
+                       "receivers": self.q_nin([receiver])})
 
         if self.exists():
             return self

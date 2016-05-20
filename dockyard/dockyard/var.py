@@ -40,11 +40,11 @@ class __GlobalVar:
         return self.__DATA[name]
 
     @property
-    def tq(self):
-        name = "tq"
+    def task(self):
+        name = "task"
         if not self.__DATA.get(name):
-            from dockyard.service.queue import taskQueue
-            self.__DATA[name] = taskQueue()
+            from dockyard.service.queue import TaskQueue
+            self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
 
     def go(self, func, *args, **kwargs):
@@ -57,11 +57,12 @@ class __GlobalVar:
             self.__DATA[name] = []
         return self.__DATA[name]
 
+    @property
     def logging(self):
         name = "logging"
         if not self.__DATA.get(name):
-            from dockyard.service.log import logging
-            self.__DATA[name] = logging()
+            from dockyard.driver.log import DriverLog
+            self.__DATA[name] = DriverLog()
         return self.__DATA[name]
 
 
