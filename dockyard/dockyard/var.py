@@ -43,11 +43,12 @@ class __GlobalVar:
     def task(self):
         name = "task"
         if not self.__DATA.get(name):
-            from dockyard.service.task import TaskQueue
+            from dockyard.service.task.queue import TaskQueue
             self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
 
-    def go(self, func, *args, **kwargs):
+    @staticmethod
+    def go(func, *args, **kwargs):
         IOLoop.instance().add_callback(func, *args, **kwargs)
 
     @property
