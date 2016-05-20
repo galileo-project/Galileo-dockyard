@@ -1,20 +1,18 @@
 from dockyard.utils.driver import Driver
 
-class UserDriver(Driver):
+
+class BuildDriver(Driver):
     def __init__(self):
         pass
 
     def get_by_id(self):
         pass
 
-    def get_by_name(self):
-        pass
-
-    def get_apps(self):
-        pass
-
     def get_logs(self):
         pass
 
-    def del_user(self):
+    def del_build_by_id(self):
+        pass
+
+    def del_builds_by_app(self):
         pass

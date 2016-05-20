@@ -1,5 +1,5 @@
 from dockyard.utils.driver import Driver
-from dockyard.service.log._model import Log
+from dockyard.driver.log._model import Log
 
 class _DriverLog(Driver, Log):
     def error(self, msgs, origin):
