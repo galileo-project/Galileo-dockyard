@@ -16,9 +16,10 @@ class TaskQueue:
         task = MsgModel().add(GLOBAL.CHAN_GLOBAL, kwargs, expire)
         self.__broadcast(task)
 
-    def subscribe(self, channel, subscriber):
-        if channel not in self.__subscriber:
-            self.__subscriber[channel] = subscriber
+    def subscribe(self, subscriber):
+        if subscriber.KEY:
+            if subscriber.KEY not in self.__subscriber:
+                self.__subscriber[subscriber.KEY] = subscriber
 
     def __broadcast(self, task):
         for subscriber in self.__subscriber.values():

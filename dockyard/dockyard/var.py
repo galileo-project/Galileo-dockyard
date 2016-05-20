@@ -22,9 +22,7 @@ class __GlobalVar:
     LOG_WARN_LEVEL          = "_warn",
     LOG_PUTS_LEVEL          = "_put"
 
-    GITHUB_OAUTH_REDIRECT   = ""
-
-    #channel
+    # channel
     CHAN_GLOBAL             = "global_chan"
     CHAN_BUILD              = "build_chan"
     CHAN_LOG                = "log_chan"
