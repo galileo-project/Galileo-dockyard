@@ -1,13 +1,14 @@
-from dockyard.model.sys.manager import Manager
-from dockyard.model.user import User
+from dockyard.driver.manager import Manager
+from dockyard.driver.user import User
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
-
-from server.dockyard.const import APIStatus
+from dockyard.const import APIStatus
+from dockyard.var import GLOBAL
 
 
 class BaseHandler(RequestHandler):
     def initialize(self):
+        GLOBAL.initialize()
         RequestHandler.initialize(self)
         self._user      = None
         self._manager   = None

@@ -16,7 +16,6 @@ def main(opt):
     server = httpserver.HTTPServer(app)
     server.bind(opt.port, opt.address)
     server.start(opt.process)
-    GLOBAL.initialize()
 
     IOLoop.instance().start()
 
