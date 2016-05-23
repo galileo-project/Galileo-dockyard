@@ -8,7 +8,6 @@ from dockyard.var import GLOBAL
 
 class BaseHandler(RequestHandler):
     def initialize(self):
-        GLOBAL.initialize()
         RequestHandler.initialize(self)
         self._user      = None
         self._manager   = None
