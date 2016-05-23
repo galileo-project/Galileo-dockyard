@@ -6,6 +6,7 @@ from server.dockyard.const import ExpStatus
 class __GlobalVar:
     __DATA                  = {}
     __INITIATED             = False
+
     MID                     = "_id"
     MDELETE                 = "__deleted__"
     MCREATE                 = "__create__"
@@ -48,9 +49,12 @@ class __GlobalVar:
             self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
 
-    @staticmethod
-    def go(func, *args, **kwargs):
-        IOLoop.instance().add_callback(func, *args, **kwargs)
+    @classmethod
+    def go(cls, func, *args, **kwargs):
+        name = "go"
+        if not cls.__DATA[name]:
+            cls.__DATA[name] = IOLoop.instance()
+        cls.__DATA[name].add_callback(func, *args, **kwargs)
 
     @property
     def routes(self):
