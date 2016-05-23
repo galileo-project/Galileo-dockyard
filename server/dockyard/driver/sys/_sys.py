@@ -1,10 +1,14 @@
 from dockyard.utils.driver import Driver
+from dockyard.const import APIStatus
 from dockyard.driver.sys._model._settings import SysSettings
 
 
 class SysDriver(Driver, SysSettings):
     def get_github_client_id(self):
-        pass
+        if self.exists():
+            pass
+        else:
+            return self.err(APIStatus[""])
 
     def get_github_client_secret(self):
         pass

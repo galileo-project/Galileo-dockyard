@@ -3,7 +3,7 @@ from dockyard.driver.app._model import App
 
 
 class AppDriver(Driver, App):
-    def get_by_user(self, user):
+    def gets_by_user(self, user):
         pass
 
     def get_latest_build(self):

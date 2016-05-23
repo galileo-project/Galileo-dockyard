@@ -3,10 +3,10 @@ ExpStatus = {
 }
 
 APIStatus = {
-    #SUCCESS code equal to 0
+    #API SUCCESS code less than 10000 to 0
     "STAT_API_SUCCESS":                 (0,         None),
 
-    #ERROR code greater than 0 and less than 30000
+    #ERROR code greater than 10000 and less than 30000
     "STAT_API_UNKNOWN_ERROR":           (1,         "Unknown error"),
     "STAT_API_DATA_INVALID":            (2,         "Data invalid"),
 

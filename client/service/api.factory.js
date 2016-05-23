@@ -107,40 +107,45 @@
             return ret.then(apiHandleSuccess, apiHandleError);
         }
 
-        // msg handle
+        // handle api error
         function apiHandleError(msg) {
-            var err, code;
             loadingService.hide();
 
+            return _wrapperMsg(true, info);
+        }
+
+        // handle api success
+        function apiHandleSuccess(msg) {
+            loadingService.hide();
+
+            if(msg.code !== 0){
+                return apiHandleError(msg);
+            } else {
+                return _wrapperMsg(false, msg.data);
+            }
+        }
+
+        function _handleMsg(msg) {
+            var info, code;
+
             if(msg.status === -1) {
-                err  = "Unknown error";
+                info = "Unknown error";
                 code = 1;
             } else {
-                err  = msg.error;
+                info = msg.info;
                 code = msg.code;
             }
 
             if(code < 30000){
-                msgService.error(err);
+                msgService.error(info);
             } else if(code < 80000) {
-                msgService.warn(err);
+                msgService.warn(info);
             } else {
-                msgService.info(err);
-            }
-
-            return wrapperMsg(true, err);
-        }
-
-        function apiHandleSuccess(msg) {
-            loadingService.hide();
-            if(msg.code !== 0){
-                return apiHandleError(msg);
-            } else {
-                return wrapperMsg(false, msg.msg);
+                msgService.info(info);
             }
         }
 
-        function wrapperMsg(err, msg) {
+        function _wrapperMsg(err, msg) {
             return {
                 err: err,
                 msg: msg

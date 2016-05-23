@@ -59,19 +59,23 @@ class BaseHandler(RequestHandler):
     def data_invalid(self):
         self.error(APIStatus["STAT_API_DATA_INVALID"])
 
-    def error(self, status = None):
+    def error(self, status=None):
         if not status:
             status = APIStatus["STAT_API_UNKNOWN_ERROR"]
         self.export(None, status)
 
-    def success(self, data = None):
-        status = APIStatus["STAT_API_SUCCESS"]
+    def success(self, data=None):
+        if isinstance(data, tuple):
+            status = data
+            data   = None
+        else:
+            status = APIStatus["STAT_API_SUCCESS"]
         self.export(data, status)
 
     def export(self, msg, status):
         data = {"code":     status[0],
-                "msg":      msg,
-                "error":    status[1]}
+                "data":     msg,
+                "info":     status[1]}
         self.raw_export(data)
 
     def raw_export(self, data):
