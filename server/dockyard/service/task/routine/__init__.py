@@ -6,7 +6,7 @@ class _Routine:
     KEY = None
 
     def __init__(self):
-        GLOBAL.mq.subscribe(self)
+        GLOBAL.task.subscribe(self)
 
     def callback(self, task):
         try:
