@@ -41,8 +41,9 @@ class __GlobalVar:
         return self.__DATA[name]
 
     @property
-    def task(self):
-        name = "task"
+    def tq(self):
+        # return singleton instance of task queue
+        name = "tq"
         if not self.__DATA.get(name):
             from dockyard.service.task import TaskQueue
             self.__DATA[name] = TaskQueue()
@@ -77,7 +78,7 @@ class __GlobalVar:
             from dockyard.service.task import init_routine
             init_queue()
             init_routine()
-            self.task.resume()
+            self.tq.resume()
 
 
 GLOBAL = __GlobalVar()
