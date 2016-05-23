@@ -1,6 +1,6 @@
 from dockyard.utils.driver import Driver
 from dockyard.driver.app import App
-from dockyard.driver.log import Log
+from dockyard.var import GLOBAL
 from dockyard.utils.github import GitHubClient
 from dockyard.driver.user._model import User
 from dockyard.const import APIStatus
@@ -30,7 +30,7 @@ class UserDriver(Driver, User):
 
     def get_logs(self):
         if self.exists():
-            err, msg = Log().get_logs_by_user(self)
+            err, msg = GLOBAL.logging.get_logs_by_user(self)
             if err:
                 return self.err(msg)
             else:

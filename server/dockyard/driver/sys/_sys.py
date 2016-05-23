@@ -1,6 +1,6 @@
 from dockyard.utils.driver import Driver
 from dockyard.const import APIStatus
-from dockyard.driver.log import Log
+from dockyard.var import GLOBAL
 from dockyard.driver.sys._model._settings import System
 
 
@@ -46,7 +46,7 @@ class SysDriver(Driver, System):
 
     def get_logs(self):
         if self.exists():
-            err, msg = Log().gets_sys_log()
+            err, msg = GLOBAL.logging.gets_sys_log()
             if err:
                 return self.err(msg)
             else:
