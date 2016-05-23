@@ -1,4 +1,4 @@
-from server.dockyard.utils.driver import Driver
+from dockyard.utils.driver import Driver
 
 
 class BuildDriver(Driver):

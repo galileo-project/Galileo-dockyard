@@ -1,5 +1,4 @@
 import pkgutil
-
 from server.dockyard.var import GLOBAL
 
 
@@ -8,18 +7,14 @@ class _Routine:
 
     def __init__(self):
         GLOBAL.mq.subscribe(self)
-        self.resume()
 
-    def callback(self, msg):
+    def callback(self, task):
         try:
-            ret = self._exec(**msg.attr)
+            ret = self._exec(**task.attr["msg"])
             if ret:
-                msg.received(self.KEY)
+                task.received(self.KEY)
         except:
             pass
-
-    def resume(self):
-        raise NotImplemented
 
     def _exec(self, **kwargs):
         raise NotImplemented

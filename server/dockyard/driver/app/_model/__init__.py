@@ -1,4 +1,4 @@
-from server.dockyard.utils import Mongo
+from dockyard.utils.mongo import Mongo
 
 
 class App(Mongo):

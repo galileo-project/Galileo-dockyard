@@ -1,6 +1,5 @@
 from dockyard.driver.log._model import Log
-
-from server.dockyard.utils.driver import Driver
+from dockyard.utils.driver import Driver
 
 
 class DriverLog(Driver, Log):

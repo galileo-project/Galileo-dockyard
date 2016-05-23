@@ -1,8 +1,7 @@
-from dockyard.model.user.app import UserApp
+from dockyard.driver.app import App
 from dockyard.var import GLOBAL
-
-from server.dockyard.utils import GitHubClient
-from server.dockyard.utils import Mongo
+from dockyard.utils.github import GitHubClient
+from dockyard.utils.mongo import Mongo
 
 
 class User(Mongo):
@@ -23,5 +22,5 @@ class User(Mongo):
     @property
     def app(self):
         if not self.__app:
-            self.__app = UserApp(self)
+            self.__app = App().get_by_user(self)
         return self.__app

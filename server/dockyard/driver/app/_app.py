@@ -1,4 +1,4 @@
-from server.dockyard.utils.driver import Driver
+from dockyard.utils.driver import Driver
 
 
 class AppDriver(Driver):
@@ -8,7 +8,7 @@ class AppDriver(Driver):
     def get_by_id(self):
         pass
 
-    def get_user(self):
+    def get_by_user(self, user):
         pass
 
     def get_latest_build(self):
