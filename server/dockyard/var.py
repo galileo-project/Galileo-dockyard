@@ -5,6 +5,7 @@ from server.dockyard.const import ExpStatus
 
 class __GlobalVar:
     __DATA                  = {}
+    __INITIATED             = False
     MID                     = "_id"
     MDELETE                 = "__deleted__"
     MCREATE                 = "__create__"
@@ -67,8 +68,11 @@ class __GlobalVar:
         return self.__DATA[name]
 
     def initialize(self):
-        from dockyard.service.task import init_routine
-        init_routine()
-        self.task.resume()
+        if not self.__INITIATED:
+            self.__INITIATED = True
+            from dockyard.service.task import init_routine
+            init_routine()
+            self.task.resume()
+
 
 GLOBAL = __GlobalVar()
