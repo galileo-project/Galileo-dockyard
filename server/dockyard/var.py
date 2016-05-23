@@ -73,8 +73,8 @@ class __GlobalVar:
     def initialize(self):
         if not self.__INITIATED:
             self.__INITIATED = True
-            from dockyard.service.task import init_routine
-            init_routine()
+            from dockyard.service.task import init_task
+            init_task()
             self.task.resume()
 
 
