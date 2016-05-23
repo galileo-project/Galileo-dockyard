@@ -1,13 +1,8 @@
 from dockyard.utils.driver import Driver
+from dockyard.driver.app._model.build import Build
 
 
-class BuildDriver(Driver):
-    def __init__(self):
-        pass
-
-    def get_by_id(self):
-        pass
-
+class BuildDriver(Driver, Build):
     def get_logs(self):
         pass
 

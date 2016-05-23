@@ -138,6 +138,9 @@ class Mongo:
         elif isinstance(data, dict):
             self.__data = data
 
+    def get_by_id(self, _id):
+        return self.find_one({GLOBAL.MID: _id})
+
     def find(self, query, skip=None, limit=None, order=None):
         self.__list = self.__table.find(self.wrap_query(query))
         if order is not None:

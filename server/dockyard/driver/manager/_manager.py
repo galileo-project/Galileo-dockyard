@@ -1,10 +1,8 @@
 from dockyard.utils.driver import Driver
+from dockyard.driver.manager._model import Manager
 
 
-class ManagerDriver(Driver):
-    def __init__(self):
-        pass
-
+class ManagerDriver(Driver, Manager):
     def get_users(self):
         pass
 

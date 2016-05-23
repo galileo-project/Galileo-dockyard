@@ -1,13 +1,8 @@
 from dockyard.utils.driver import Driver
+from dockyard.driver.app._model import App
 
 
-class AppDriver(Driver):
-    def __init__(self):
-        pass
-
-    def get_by_id(self):
-        pass
-
+class AppDriver(Driver, App):
     def get_by_user(self, user):
         pass
 

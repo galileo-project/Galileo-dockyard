@@ -1,10 +1,8 @@
-from server.dockyard.utils.driver import Driver
+from dockyard.utils.driver import Driver
+from dockyard.driver.sys._model._settings import SysSettings
 
 
-class SysDriver(Driver):
-    def __init__(self):
-        pass
-
+class SysDriver(Driver, SysSettings):
     def get_github_client_id(self):
         pass
 
