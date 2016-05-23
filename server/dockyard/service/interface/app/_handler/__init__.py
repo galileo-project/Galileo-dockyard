@@ -1,7 +1,6 @@
 from dockyard.utils.wrapper import auth
 from tornado.gen import coroutine
-
-from server.dockyard.utils.handler import BaseHandler
+from dockyard.service.interface import BaseHandler
 
 
 class ApiUserAppHandeler(BaseHandler):

@@ -1,5 +1,5 @@
 from dockyard.utils import encrypt
-from dockyard.utils.handler import BaseHandler
+from dockyard.service.interface import BaseHandler
 from dockyard.utils.wrapper import auth
 from tornado.gen import coroutine
 

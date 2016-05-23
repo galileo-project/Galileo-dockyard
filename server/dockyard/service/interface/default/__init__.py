@@ -1,6 +1,5 @@
 from dockyard.var import GLOBAL
-
-from server.dockyard.service.interface.default import DefaultHandeler
+from dockyard.service.interface.default._handler import DefaultHandeler
 
 routes = [(r"/(.*)",                DefaultHandeler)]
 

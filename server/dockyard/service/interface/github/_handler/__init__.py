@@ -1,5 +1,5 @@
-from dockyard.model.sys.settings import SysSettings
-from dockyard.utils.handler import BaseHandler
+from dockyard.driver.sys import System
+from dockyard.service.interface import BaseHandler
 from dockyard.utils.wrapper import auth
 from tornado.gen import coroutine
 
@@ -14,7 +14,7 @@ class PublicGitHubHandeler(BaseHandler):
         self.parse_arg_str("code",  must=True)
         self.parse_arg_str("state", must=True)
 
-        sys_settings = SysSettings()
+        sys_settings = System()
 
         github_redirect_uri  = sys_settings["github_redirect_uri"]
         github_client_id     = sys_settings["github_client_id"]
