@@ -43,7 +43,7 @@ class __GlobalVar:
     def task(self):
         name = "task"
         if not self.__DATA.get(name):
-            from server.dockyard.service.task import TaskQueue
+            from dockyard.service.task import TaskQueue
             self.__DATA[name] = TaskQueue()
         return self.__DATA[name]
 
@@ -66,5 +66,9 @@ class __GlobalVar:
             self.__DATA[name] = Log()
         return self.__DATA[name]
 
+    def initialize(self):
+        from dockyard.service.task import init_routine
+        init_routine()
+        self.task.resume()
 
 GLOBAL = __GlobalVar()

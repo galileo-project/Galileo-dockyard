@@ -5,8 +5,6 @@ from tornado.ioloop import IOLoop
 from tornado.options import define, options
 from tornado.web import Application
 
-from server.dockyard.service.task import init_routine
-
 
 def main(opt):
     GLOBAL.mongo(opt.mongo_host, opt.mongo_port, opt.database)
@@ -18,7 +16,7 @@ def main(opt):
     server = httpserver.HTTPServer(app)
     server.bind(opt.port, opt.address)
     server.start(opt.process)
-    init_routine()
+    GLOBAL.initialize()
 
     IOLoop.instance().start()
 
