@@ -39,8 +39,11 @@ class UserDriver(Driver, User):
             return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     def del_user(self):
-        self.remove()
-        return self.succes()
+        if self.exists():
+            self.remove()
+            return self.succes()
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     @property
     def github(self):
