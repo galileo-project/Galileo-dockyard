@@ -21,7 +21,7 @@ APIStatus = {
     "STAT_API_MANAGER_UNEXIST":         (10202,     "Manager not exist"),
     "STAT_API_MANAGER_PWD_ERR":         (10203,     "Manager password error"),
 
-    "STAT_API_SYS_SETTINGS_UNEXIST":    (10301,     "Manager password error"),
+    "STAT_API_SYS_OBJ_UNEXIST":         (10301,     "System object not exist"),
 
     #WARN code greater than 30000 and less than 80000
     "STAT_API_GITHUB_OAUTH_FAILED":     (30101,     "User GitHub Oauth failed"),
