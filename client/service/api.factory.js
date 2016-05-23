@@ -120,10 +120,12 @@
                 code = msg.code;
             }
 
-            if(code < 2000){
+            if(code < 30000){
                 msgService.error(err);
-            } else {
+            } else if(code < 80000) {
                 msgService.warn(err);
+            } else {
+                msgService.info(err);
             }
 
             return wrapperMsg(true, err);
