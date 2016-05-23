@@ -1,11 +1,11 @@
 from dockyard.var import GLOBAL
-from dockyard.service.task._tasks import _Task
+from dockyard.service.task._queue import _Queue
 
 
-class __TaskBuild(_Task):
+class __QueueBuild(_Queue):
     KEY = GLOBAL.CHAN_BUILD
 
     def _exec(self, arg=None):
         pass
 
-Task = __TaskBuild
+Queue = __QueueBuild

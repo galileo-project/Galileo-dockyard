@@ -2,10 +2,10 @@ import pkgutil
 from server.dockyard.var import GLOBAL
 
 
-class _Task:
+class _Queue:
     KEY = None
 
-    def __init__(self):
+    def subscribe(self):
         GLOBAL.task.subscribe(self)
 
     def callback(self, task):
@@ -21,7 +21,7 @@ class _Task:
 
 
 def init():
-    # init tasks
+    # init queue
     for loader, mod_name, is_pkg in pkgutil.walk_packages(__path__):
         mod = loader.find_module(mod_name).load_module(mod_name)
-        mod.Task()
+        mod.Queue().subscribe()
