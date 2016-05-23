@@ -3,8 +3,10 @@ ExpStatus = {
 }
 
 APIStatus = {
-    #ERROR
+    #SUCCESS code equal to 0
     "STAT_API_SUCCESS":                 (0,         None),
+
+    #ERROR code greater than 0 and less than 30000
     "STAT_API_UNKNOWN_ERROR":           (1,         "Unknown error"),
     "STAT_API_DATA_INVALID":            (2,         "Data invalid"),
 
@@ -20,11 +22,11 @@ APIStatus = {
 
     "STAT_API_SYS_SETTINGS_UNEXIST":    (10201,     "Manager password error"),
 
-    #WARN
+    #WARN code greater than 30000 and less than 80000
     "STAT_API_GITHUB_OAUTH_FAILED":     (30006,     "User GitHub Oauth failed"),
     "STAT_API_LOG_UNEXIST":             (30007,     "Log not exist")
 
-    #INFO grate than 80000
+    #INFO code greater than 80000
 }
 
 LogStatus = {
