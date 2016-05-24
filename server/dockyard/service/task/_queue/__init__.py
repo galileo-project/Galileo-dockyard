@@ -1,12 +1,12 @@
 import pkgutil
-from server.dockyard.var import GLOBAL
+from dockyard.var import GLOBAL
 
 
-class _Routine:
+class _Queue:
     KEY = None
 
-    def __init__(self):
-        GLOBAL.mq.subscribe(self)
+    def subscribe(self):
+        GLOBAL.tq.subscribe(self)
 
     def callback(self, task):
         try:
@@ -21,7 +21,7 @@ class _Routine:
 
 
 def init():
-    # init routine
+    # init queue
     for loader, mod_name, is_pkg in pkgutil.walk_packages(__path__):
         mod = loader.find_module(mod_name).load_module(mod_name)
-        mod.Routine()
+        mod.Queue().subscribe()

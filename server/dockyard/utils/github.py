@@ -1,4 +1,4 @@
-from server.dockyard.utils.request import Request
+from dockyard.utils.request import Request
 
 
 class GitHubClient:
@@ -44,3 +44,15 @@ class GitHubClient:
 
     def get_orgs(self):
         pass
+
+    @property
+    def name(self):
+        return None
+
+    @property
+    def description(self):
+        return None
+
+    @property
+    def git_url(self):
+        return None

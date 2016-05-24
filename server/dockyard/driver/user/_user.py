@@ -1,35 +1,75 @@
 from dockyard.utils.driver import Driver
 from dockyard.driver.app import App
+from dockyard.var import GLOBAL
 from dockyard.utils.github import GitHubClient
 from dockyard.driver.user._model import User
+from dockyard.const import APIStatus
+from dockyard.utils import encrypt
 
 
 class UserDriver(Driver, User):
     def __init__(self):
         User.__init__(self)
         self.__github = None
-        self.__app    = None
 
-    def get_by_name(self):
-        pass
+    def add(self, name, email, password):
+        self.find_one({"email": email})
+        if self.exists():
+            return self.err(APIStatus["STAT_API_USER_EXIST"])
+
+        self["name"]     = name
+        self["email"]    = email
+        self["password"] = password
+        return self.succes()
+
+    def verify(self, pwd):
+        if self.exists():
+            if self["password"] == encrypt(pwd):
+                return self.succes()
+            else:
+                return self.err(APIStatus["STAT_API_USER_PWD_ERR"])
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
+
+    def get_by_email(self, email):
+        self.find_one({"email":  email})
+        if self.exists():
+            return self.succes(self)
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     def get_apps(self):
-        pass
+        if self.exists():
+            err, msg = App().gets_by_user(self)
+            if err:
+                return self.err(msg)
+            else:
+                return self.succes(msg)
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     def get_logs(self):
-        pass
+        if self.exists():
+            err, msg = GLOBAL.logging.get_logs_by_user(self)
+            if err:
+                return self.err(msg)
+            else:
+                return self.succes(msg)
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     def del_user(self):
-        pass
+        if self.exists():
+            self.remove()
+            return self.succes()
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
     @property
     def github(self):
-        if not self.__github:
-            self.__github = GitHubClient(self)
-        return self.__github
-
-    @property
-    def app(self):
-        if not self.__app:
-            self.__app = App().get_by_user(self)
-        return self.__app
+        if self.exists():
+            if not self.__github:
+                self.__github = GitHubClient(self)
+            return self.succes(self.__github)
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])

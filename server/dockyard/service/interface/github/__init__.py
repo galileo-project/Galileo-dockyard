@@ -3,4 +3,5 @@ from dockyard.service.interface.github._handler import PublicGitHubHandeler
 
 routes = [(r"/api/public/github/(.*)",        PublicGitHubHandeler)]
 
-GLOBAL.routes.extend(routes)
+def init():
+    GLOBAL.routes.extend(routes)

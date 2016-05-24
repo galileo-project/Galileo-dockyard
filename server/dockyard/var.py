@@ -1,11 +1,14 @@
+import threading
 from tornado.ioloop import IOLoop
-
-from server.dockyard.const import ExpStatus
+from dockyard.const import ExpStatus
+import logging
 
 
 class __GlobalVar:
+    __INSTANCE              = None
     __DATA                  = {}
     __INITIATED             = False
+    __LOCK                  = threading.Lock()
 
     MID                     = "_id"
     MDELETE                 = "__deleted__"
@@ -31,22 +34,27 @@ class __GlobalVar:
     CHAN_BUILD              = "build_chan"
     CHAN_LOG                = "log_chan"
 
+    def __new_instance(self, name, cls, *args, **kwargs):
+        if not self.__DATA.get(name):
+            self.__DATA[name] = cls(*args, **kwargs)
+        return self.__DATA[name]
+
     def mongo(self, host=None, port=None, database=None):
         name = "mongo"
         if not self.__DATA.get(name):
             from pymongo.mongo_client import MongoClient
             if not host or not port or not database:
                 raise Exception(ExpStatus["STAT_EXP_INIT_MONGO"])
-            client = MongoClient(host, port)
-            self.__DATA[name] = client[database]
-        return self.__DATA[name]
+            self.__new_instance(name, MongoClient, host, port)
+        return self.__DATA[name][database]
 
     @property
-    def task(self):
-        name = "task"
+    def tq(self):
+        # return singleton instance of task queue
+        name = "tq"
         if not self.__DATA.get(name):
             from dockyard.service.task import TaskQueue
-            self.__DATA[name] = TaskQueue()
+            self.__new_instance(name, TaskQueue)
         return self.__DATA[name]
 
     @classmethod
@@ -68,15 +76,38 @@ class __GlobalVar:
         name = "logging"
         if not self.__DATA.get(name):
             from server.dockyard.driver.log import Log
-            self.__DATA[name] = Log()
+            self.__new_instance(name, Log)
         return self.__DATA[name]
+
+    @staticmethod
+    def puts(*args, **kwargs):
+        logging.info(*args, **kwargs)
 
     def initialize(self):
         if not self.__INITIATED:
-            self.__INITIATED = True
-            from dockyard.service.task import init_routine
-            init_routine()
-            self.task.resume()
+            with self.__LOCK:
+                if not self.__INITIATED:
+                    self.__INITIATED = True
+                    from dockyard.service.task import init_queue
+                    from dockyard.service.task import init_routine
+                    from dockyard.service.interface import init_interface
+
+                    self.puts("Init task queue ...")
+                    init_queue()
+                    self.puts("Init routine ...")
+                    init_routine()
+                    self.puts("Init interface ...")
+                    init_interface()
+                    self.puts("Resume task queue ...")
+                    self.tq.resume()
+
+    @classmethod
+    def instance(cls, *args, **kwargs):
+        if cls.__INSTANCE is None:
+            with cls.__LOCK:
+                if cls.__INSTANCE is None:
+                    cls.__INSTANCE = cls(*args, **kwargs)
+        return cls.__INSTANCE
 
 
-GLOBAL = __GlobalVar()
+GLOBAL = __GlobalVar.instance()

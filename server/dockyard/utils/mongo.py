@@ -1,10 +1,8 @@
 import time
-
 import pymongo
 from bson.errors import InvalidId
 from bson.objectid import ObjectId
-
-from server.dockyard.var import GLOBAL
+from dockyard.var import GLOBAL
 
 
 class Mongo:
@@ -139,6 +137,8 @@ class Mongo:
             self.__data = data
 
     def get_by_id(self, _id):
+        if isinstance(_id, ObjectId):
+            _id = ObjectId(_id)
         return self.find_one({GLOBAL.MID: _id})
 
     def find(self, query, skip=None, limit=None, order=None):
@@ -169,10 +169,17 @@ class Mongo:
             self.__update_data = {}
 
     def __save_list(self):
-        for data in self.__update_list:
-            data = self.wrapper(data)
-            self.__table.insert_one(data)
-        self.__update_list = []
+        if self.__update_data.get(GLOBAL.MDELETE) is True:
+            for data in self.__list:
+                data = self.wrapper(data)
+                data[GLOBAL.MDELETE] = True
+                self.__table.update_one({GLOBAL.MID: data[GLOBAL.MID]}, {"$set": data})
+            self.__list = []
+        else:
+            for data in self.__update_list:
+                data = self.wrapper(data)
+                self.__table.insert_one(data)
+                self.__update_list = []
 
     def flush(self):
         self.__save_data()

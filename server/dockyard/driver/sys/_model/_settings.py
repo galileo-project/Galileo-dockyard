@@ -1,7 +1,7 @@
 from dockyard.utils.mongo import Mongo
 
 
-class SysSettings(Mongo):
+class System(Mongo):
     """
     _id
     github_client_id

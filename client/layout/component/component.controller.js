@@ -25,13 +25,13 @@
                 vm.msg     = msgService.message;
                 vm.msgType = msgService.msgType;
             }
-        }
+        } //end of active
 
         function handleClick() {
             vm.visible = false;
         }
         
-    }
+    } // end of msgbox ctrl
 
     function loadingCtrl($scope, loadingService){
         var vm = this;
@@ -46,6 +46,6 @@
                 vm.visible = loadingService.visible;
             }
         }
-    }
+    } // end of loading ctrl
 
 })();

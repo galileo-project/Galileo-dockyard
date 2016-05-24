@@ -3,4 +3,5 @@ from dockyard.service.interface.default._handler import DefaultHandeler
 
 routes = [(r"/(.*)",                DefaultHandeler)]
 
-GLOBAL.routes.extend(routes)
+def init():
+    GLOBAL.routes.extend(routes)

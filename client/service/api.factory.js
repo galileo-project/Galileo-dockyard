@@ -1,5 +1,13 @@
 (function(){
     "use strict";
+    // API status code
+    var CODE_API_SUCCESS   = 0;        // code equal to 0
+    var CODE_SUCCESS       = 10000;    // less than 10000
+    var CODE_UNKNOWN_ERROR = 10001;    // code equal to 10001
+    var CODE_ERROR         = 30000;    // less than 30000 and greater than 10000
+    var CODE_WARN          = 80000;    // less than 80000 and greater than 30000
+    var CODE_INFO          = 99999;    // less than 99999 and greater than 80000
+
     //dockyard API URL
     var HOST         = "http://203.88.167.78:8080";
     var API          = HOST + "/api";
@@ -107,38 +115,48 @@
             return ret.then(apiHandleSuccess, apiHandleError);
         }
 
-        // msg handle
+        // handle api error
         function apiHandleError(msg) {
-            var err, code;
+            loadingService.hide();
+            _handleMsg(msg);
+            return _wrapperMsg(true, msg.info);
+        }
+
+        // handle api success
+        function apiHandleSuccess(msg) {
             loadingService.hide();
 
-            if(msg.status === -1) {
-                err  = "Unknown error";
-                code = 1;
+            if(msg.code >= CODE_SUCCESS){
+                return apiHandleError(msg);
             } else {
-                err  = msg.error;
+                _handleMsg(msg);
+                return _wrapperMsg(false, msg.data);
+            }
+        }
+
+        function _handleMsg(msg) {
+            var info, code;
+
+            if(msg.status === -1) {
+                info = "Unknown error";
+                code = CODE_UNKNOWN_ERROR;
+            } else {
+                info = msg.info;
                 code = msg.code;
             }
 
-            if(code < 2000){
-                msgService.error(err);
-            } else {
-                msgService.warn(err);
-            }
-
-            return wrapperMsg(true, err);
-        }
-
-        function apiHandleSuccess(msg) {
-            loadingService.hide();
-            if(msg.code !== 0){
-                return apiHandleError(msg);
-            } else {
-                return wrapperMsg(false, msg.msg);
+            if(code < CODE_SUCCESS){
+                msgService.success(info);
+            } else if(code < CODE_ERROR){
+                msgService.error(info);
+            } else if(code <= CODE_WARN) {
+                msgService.warn(info);
+            } else if(code <= CODE_INFO){
+                msgService.info(info);
             }
         }
 
-        function wrapperMsg(err, msg) {
+        function _wrapperMsg(err, msg) {
             return {
                 err: err,
                 msg: msg

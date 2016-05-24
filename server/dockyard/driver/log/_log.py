@@ -1,5 +1,7 @@
 from dockyard.driver.log._model import Log
 from dockyard.utils.driver import Driver
+from dockyard.const import APIStatus
+from dockyard.var import GLOBAL
 
 
 class DriverLog(Driver, Log):
@@ -24,7 +26,25 @@ class DriverLog(Driver, Log):
         return self.succes()
 
     def get_logs_by_build(self, build):
-        pass
+        self.find({"origin":    build.id})
+
+        if self.exists():
+            return self.succes(self)
+        else:
+            return self.err(APIStatus["STAT_API_LOG_UNEXIST"])
 
     def get_logs_by_user(self, user):
-        pass
+        self.find({"origin":    user.id})
+
+        if self.exists():
+            return self.succes(self)
+        else:
+            return self.err(APIStatus["STAT_API_LOG_UNEXIST"])
+
+    def gets_sys_log(self):
+        self.find({"origin":    GLOBAL.SYS_ORIGIN})
+
+        if self.exists():
+            return self.succes(self)
+        else:
+            return self.err(APIStatus["STAT_API_LOG_UNEXIST"])
