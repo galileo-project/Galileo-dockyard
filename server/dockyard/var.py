@@ -4,6 +4,7 @@ from server.dockyard.const import ExpStatus
 
 
 class __GlobalVar:
+    __INSTANCE              = None
     __DATA                  = {}
     __INITIATED             = False
     __LOCK                  = threading.Lock()
@@ -89,5 +90,13 @@ class __GlobalVar:
                     init_routine()
                     self.tq.resume()
 
+    @classmethod
+    def instance(cls, *args, **kwargs):
+        if cls.__INSTANCE is None:
+            with cls.__LOCK:
+                if cls.__INSTANCE is None:
+                    cls.__INSTANCE = cls(*args, **kwargs)
+        return cls.__INSTANCE
 
-GLOBAL = __GlobalVar()
+
+GLOBAL = __GlobalVar.instance()
