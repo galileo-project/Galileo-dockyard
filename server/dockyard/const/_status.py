@@ -11,17 +11,20 @@ APIStatus = {
     "STAT_API_UNKNOWN_ERROR":           (10001,     "Unknown error"),
     "STAT_API_DATA_INVALID":            (10002,     "Data invalid"),
 
-    "STAT_API_USER_EXIST":              (10101,     "User email already exist"),
+    "STAT_API_USER_EXIST":              (10101,     "User already exist"),
     "STAT_API_USER_UNEXIST":            (10102,     "User not exist"),
     "STAT_API_USER_LOGIN":              (10103,     "User not login"),
     "STAT_API_USER_PWD_ERR":            (10104,     "User password error"),
-    "STAT_API_PWD_EMPTY":               (10105,     "User password empty"),
+    "STAT_API_USER_PWD_EMPTY":          (10105,     "User password empty"),
 
     "STAT_API_MANAGER_LOGIN":           (10201,     "Manager not login"),
     "STAT_API_MANAGER_UNEXIST":         (10202,     "Manager not exist"),
-    "STAT_API_MANAGER_PWD_ERR":         (10203,     "Manager password error"),
+    "STAT_API_MANAGER_EXIST":           (10203,     "Manager already exist"),
+    "STAT_API_MANAGER_PWD_ERR":         (10204,     "Manager password error"),
 
     "STAT_API_APP_UNEXIST":             (10303,     "App not exist"),
+
+    "STAT_API_BUILD_UNEXIST":           (10403,     "Build information not exist"),
 
     "STAT_API_SYS_OBJ_UNEXIST":         (10301,     "System object not exist"),
 

@@ -4,6 +4,7 @@ from dockyard.var import GLOBAL
 from dockyard.utils.github import GitHubClient
 from dockyard.driver.user._model import User
 from dockyard.const import APIStatus
+from dockyard.utils import encrypt
 
 
 class UserDriver(Driver, User):
@@ -11,8 +12,27 @@ class UserDriver(Driver, User):
         User.__init__(self)
         self.__github = None
 
-    def get_by_name(self, name):
-        self.find_one({"name":  name})
+    def add(self, name, email, password):
+        self.find_one({"email": email})
+        if self.exists():
+            return self.err(APIStatus["STAT_API_USER_EXIST"])
+
+        self["name"]     = name
+        self["email"]    = email
+        self["password"] = password
+        return self.succes()
+
+    def verify(self, pwd):
+        if self.exists():
+            if self["password"] == encrypt(pwd):
+                return self.succes()
+            else:
+                return self.err(APIStatus["STAT_API_USER_PWD_ERR"])
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])
+
+    def get_by_email(self, email):
+        self.find_one({"email":  email})
         if self.exists():
             return self.succes(self)
         else:
