@@ -126,6 +126,8 @@
 
         // handle api success
         function apiHandleSuccess(msg) {
+            // TODO debug
+            console.log(msg);
             loadingService.hide();
 
             if(msg.code >= CODE_SUCCESS){

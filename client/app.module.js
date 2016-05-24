@@ -5,4 +5,4 @@
                              "dockyard.factory.ui", "dockyard.factory.api",
                              "dockyard.config"]);
 
-})()
+})();

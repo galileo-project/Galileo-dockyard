@@ -1,12 +1,12 @@
 <div>
-    <form class="form-group-lg form-sign center-block">
+    <form class="form-group-lg form-sign center-block" ng-submit="login.login()" name="loginForm">
         <h2>Sign in</h2>
 
         <label for="inputName" class="sr-only">User name</label>
-        <input type="text" class="form-control" id="inputName" placeholder="User name">
+        <input type="text" class="form-control" id="inputName" placeholder="User name" ng-model="login.name">
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        <input type="password" class="form-control" id="inputPassword" ng-model="login.password" placeholder="Password">
 
         <div class="checkbox">
             <label>

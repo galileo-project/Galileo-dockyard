@@ -23,28 +23,33 @@
     <script src="layout/home/home.controller.js"></script>
     <script src="layout/login/login.controller.js"></script>
     <script src="layout/signup/signup.controller.js"></script>
-    <script src="layout/aside/sidebar.controller.js"></script>
     <script src="layout/oauth/oauth.controller.js"></script>
     <script src="layout/manager/manager.controller.js"></script>
     <script src="layout/component/component.controller.js"></script>
 </head>
 <body>
-    <header ng-include="'layout/header/header.include.html'"></header>
-    <aside ng-controller="sidebarCtrl as sidebar" ng-include="sidebar.sidebarURL"></aside>
+    <nav ng-include="'layout/component/header.include.html'"></nav>
+
+    <div class="container-fluid" ng-controller="layOutCtrl as layOut">
+        <div class="row">
+            <aside class="{{ layOut.sidebarClass }}" ng-include="layOut.sidebarURL"></aside>
+            <div class="{{ layOut.mainClass }}" ng-view>
+                <noscript>
+                  <div style="width: 60%; margin: auto;">
+                    <div>
+                      <h1>Oops!</h1>
+                      <p>Looks like you have JavaScript disabled.</p>
+                      <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
+                      <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
+                      <h3>Thank you!</h3>
+                    </div>
+                  </div>
+                </noscript>
+            </div>
+        </div>
+    </div>
+
     <div ng-controller="msgBoxCtrl as msgBox" ng-include="'layout/component/msgbox.tpl.html'"></div>
     <div ng-controller="loadingCtrl as loading" ng-show="loading.visible" class="loading" ng-include="'assets/img/loading.svg'"></div>
-    <div class="container" ng-view>
-        <noscript>
-          <div style="width: 60%; margin: auto;">
-            <div>
-              <h1>Oops!</h1>
-              <p>Looks like you have JavaScript disabled.</p>
-              <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
-              <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
-              <h3>Thank you!</h3>
-            </div>
-          </div>
-        </noscript>
-    </div>
 </body>
 </html>
