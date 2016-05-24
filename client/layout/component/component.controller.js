@@ -21,9 +21,11 @@
             $scope.$on("handleMsg", handleReceive);
 
             function handleReceive() {
-                vm.visible = true;
-                vm.msg     = msgService.message;
-                vm.msgType = msgService.msgType;
+                if(msgService.message !== null) {
+                    vm.visible = true;
+                    vm.msg = msgService.message;
+                    vm.msgType = msgService.msgType;
+                }
             }
         } //end of active
 
