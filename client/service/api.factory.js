@@ -68,7 +68,7 @@
         }
 
         function getUser() {
-            return apiGet(GET_USER);
+            return apiGet(USER);
         }
 
         function getApps() {
