@@ -1,12 +1,12 @@
 import pkgutil
-from server.dockyard.var import GLOBAL
+from dockyard.var import GLOBAL
 
 
 class _Queue:
     KEY = None
 
     def subscribe(self):
-        GLOBAL.task.subscribe(self)
+        GLOBAL.tq.subscribe(self)
 
     def callback(self, task):
         try:

@@ -1,4 +1,4 @@
-from server.dockyard.utils.request import Request
+from dockyard.utils.request import Request
 
 
 class GitHubClient:

@@ -1,6 +1,7 @@
 import threading
 from tornado.ioloop import IOLoop
-from server.dockyard.const import ExpStatus
+from dockyard.const import ExpStatus
+import logging
 
 
 class __GlobalVar:
@@ -34,9 +35,8 @@ class __GlobalVar:
     CHAN_LOG                = "log_chan"
 
     def __new_instance(self, name, cls, *args, **kwargs):
-        with self.__LOCK:
-            if not self.__DATA.get(name):
-                self.__DATA[name] = cls(*args, **kwargs)
+        if not self.__DATA.get(name):
+            self.__DATA[name] = cls(*args, **kwargs)
         return self.__DATA[name]
 
     def mongo(self, host=None, port=None, database=None):
@@ -79,6 +79,10 @@ class __GlobalVar:
             self.__new_instance(name, Log)
         return self.__DATA[name]
 
+    @staticmethod
+    def puts(*args, **kwargs):
+        logging.info(*args, **kwargs)
+
     def initialize(self):
         if not self.__INITIATED:
             with self.__LOCK:
@@ -86,8 +90,15 @@ class __GlobalVar:
                     self.__INITIATED = True
                     from dockyard.service.task import init_queue
                     from dockyard.service.task import init_routine
+                    from dockyard.service.interface import init_interface
+
+                    self.puts("Init task queue ...")
                     init_queue()
+                    self.puts("Init routine ...")
                     init_routine()
+                    self.puts("Init interface ...")
+                    init_interface()
+                    self.puts("Resume task queue ...")
                     self.tq.resume()
 
     @classmethod

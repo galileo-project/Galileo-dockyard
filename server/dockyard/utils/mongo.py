@@ -1,10 +1,8 @@
 import time
-
 import pymongo
 from bson.errors import InvalidId
 from bson.objectid import ObjectId
-
-from server.dockyard.var import GLOBAL
+from dockyard.var import GLOBAL
 
 
 class Mongo:

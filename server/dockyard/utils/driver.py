@@ -1,4 +1,4 @@
-from server.dockyard.const import APIStatus
+from dockyard.const import APIStatus
 
 class Driver:
     def _export(self, msg, stat=None):

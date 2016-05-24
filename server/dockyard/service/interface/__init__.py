@@ -4,6 +4,7 @@ from tornado.gen import coroutine
 from tornado.web import RequestHandler
 from dockyard.const import APIStatus
 from dockyard.var import GLOBAL
+import pkgutil
 
 
 class BaseHandler(RequestHandler):
@@ -121,3 +122,13 @@ class BaseHandler(RequestHandler):
 
     def del_manager_cookie(self):
         self.set_secure_cookie("manager", "", -1)
+
+
+def init_interface():
+    # init routes
+    for loader, mod_name, is_pkg in pkgutil.walk_packages(__path__):
+        mod = loader.find_module(mod_name).load_module(mod_name)
+        try:
+            mod.init()
+        except AttributeError:
+            pass

@@ -12,16 +12,17 @@ def main(opt):
     settings = {"login_url"    : "/auth/login",
                 "debug"        : opt.debug,
                 "cookie_secret": "233" if opt.debug else gen_random(16)}
+
+    GLOBAL.initialize()
     app = Application(GLOBAL.routes, **settings)
     server = httpserver.HTTPServer(app)
     server.bind(opt.port, opt.address)
     server.start(opt.process)
-    GLOBAL.initialize()
 
     IOLoop.instance().start()
 
 if __name__ == "__main__":
-    define("address",       "0.0.0.0",          str,    "dockyard address")
+    define("address",       "127.0.0.1",          str,    "dockyard address")
     define("port",          8080,               int,    "dockyard port")
     define("process",       1,                  int,    "process")
     define("debug",         True,               bool,   "debug")

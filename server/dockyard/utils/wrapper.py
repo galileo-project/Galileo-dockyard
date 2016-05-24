@@ -1,4 +1,4 @@
-from server.dockyard.const import APIStatus
+from dockyard.const import APIStatus
 
 def auth(func):
     def _exec(self, *args, **kwargs):

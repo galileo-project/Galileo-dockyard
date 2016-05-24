@@ -1,7 +1,9 @@
-from server.dockyard.var import GLOBAL
+from dockyard.var import GLOBAL
+from dockyard.service.interface.user._handler import ApiUserHandeler
+from dockyard.service.interface.user._handler.auth import ApiAuthHandeler
 
-routes = [(r"/api/user",                "",),
-          (r"/api/user/github",         ""),
-          (r"/api/app/?(.*)",           ""),]
+routes = [(r"/api/user",                ApiUserHandeler),
+          (r"/auth/login",              ApiAuthHandeler),]
 
-GLOBAL.routes.extend(routes)
+def init():
+    GLOBAL.routes.extend(routes)
