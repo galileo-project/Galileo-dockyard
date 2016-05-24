@@ -22,7 +22,7 @@ def main(opt):
     IOLoop.instance().start()
 
 if __name__ == "__main__":
-    define("address",       "127.0.0.1",          str,    "dockyard address")
+    define("address",       "0.0.0.0",          str,    "dockyard address")
     define("port",          8080,               int,    "dockyard port")
     define("process",       1,                  int,    "process")
     define("debug",         True,               bool,   "debug")
