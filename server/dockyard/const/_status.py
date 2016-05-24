@@ -21,6 +21,8 @@ APIStatus = {
     "STAT_API_MANAGER_UNEXIST":         (10202,     "Manager not exist"),
     "STAT_API_MANAGER_PWD_ERR":         (10203,     "Manager password error"),
 
+    "STAT_API_APP_UNEXIST":             (10303,     "App not exist"),
+
     "STAT_API_SYS_OBJ_UNEXIST":         (10301,     "System object not exist"),
 
     #WARN code greater than 30000 and less than 80000
