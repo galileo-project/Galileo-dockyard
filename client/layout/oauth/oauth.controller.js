@@ -20,6 +20,6 @@
             })
         }
 
-    } // github oauth ctrl end
+    } // end of github oauth ctrl
 
 })();

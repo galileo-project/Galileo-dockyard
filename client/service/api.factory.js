@@ -11,17 +11,19 @@
     //dockyard API URL
     var HOST         = "http://203.88.167.78:8080";
     var API          = HOST + "/api";
-    var USER         = API  + "/user";
+    var PUBLIC       = API + "/public";
 
+    var USER         = API  + "/user";
     var USER_LOGIN   = HOST + "/auth/login";
     var USER_SIGNUP  = USER;
     var USER_CH_PWD  = USER;
     var USER_DELETE  = USER;
-    var GET_USER     = USER;
 
     var APP          = API + "/app";
     var GET_APPS     = APP + "/list";
     var GET_APP      = APP;
+
+    var GITHUB       = PUBLIC + "/github";
 
     angular
         .module("dockyard.factory.api", [])
