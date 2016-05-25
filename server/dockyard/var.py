@@ -10,10 +10,11 @@ class __GlobalVar:
     __INITIATED             = False
     __LOCK                  = threading.Lock()
 
-    MID                     = "_id"
+    MID                     = "__id__"
     MDELETE                 = "__deleted__"
     MCREATE                 = "__create__"
     MUPDATE                 = "__update__"
+    MKEY                    = "__key__"
 
     LOG_WARN                = "warn"
     LOG_FATAL               = "fatal"

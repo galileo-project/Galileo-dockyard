@@ -53,6 +53,10 @@ class SysDriver(Driver, System):
                 return self.succes(msg)
         else:
             return self.err(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
-            
 
-
+    @property
+    def settings(self):
+        if self.exists():
+            return self.succes(self.attr)
+        else:
+            return self.err(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
