@@ -25,6 +25,9 @@
 
     var GITHUB       = PUBLIC + "/github";
 
+    var MANAGER      = API + "/manager";
+    var SETTINGS     = MANAGER + "/settings";
+
     angular
         .module("dockyard.factory.api", [])
         .factory("dataService",         dataService);
@@ -40,8 +43,13 @@
             userChPwd:      userChPwd,
             userDelete:     userDelete,
             getUser:        getUser,
+            
             getApps:        getApps,
             getApp:         getApp,
+            
+            getSettings:    getSettings,
+            updateSettings: updateSettings,
+            
             githubOauth:    githubOauth
         };
 
@@ -49,8 +57,6 @@
         /***************************
          *      api functions      *
          ***************************/
-
-
         function userLogin(data) {
             return apiPost(USER_LOGIN, data);
         }
@@ -81,6 +87,17 @@
         
         function githubOauth() {
             return apiGet()
+        }
+        
+        function getSettings() {
+            return apiGet(SETTINGS);
+        }
+        
+        function updateSettings(github_client_id, github_client_secret, github_redirect_uri) {
+            var data = {github_client_id:       github_client_id,
+                        github_client_secret:   github_client_secret,
+                        github_redirect_uri:    github_redirect_uri};
+            return apiPost(SETTINGS, data);
         }
 
         /**************************
