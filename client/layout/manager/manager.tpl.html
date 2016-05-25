@@ -1,17 +1,12 @@
-<div>
-    <h3 class="text-center">System Settings Page</h3>
-    <div class="container">
-        <form class="form-group-lg form-sign center-block">
-            <label for="inputGithubId">Github client id:</label>
-            <input type="text" id="inputGithubId" class="form-control"/>
+<div class="container-fluid" ng-controller="managerCtrl as manager">
+    <div class="col-sm-3 sidebar-wrapper row">
+        <ul>
+            <li data-target="settings" class="btn-pointer" ng-click="manager.updatePage($event)">Settings</li>
+            <li data-target="users" class="btn-pointer btn-block" ng-click="manager.updatePage($event)">Users</li>
+        </ul>
+    </div>
 
-            <label for="inputGithubSecrect">Github client secret:</label>
-            <input type="text" id="inputGithubSecrect" class="form-control"/>
-
-            <label for="inputGithubRedirectUri">Github redirect uri:</label>
-            <input type="text" id="inputGithubRedirectUri" class="form-control"/>
-            <p></p>
-            <input type="submit" class="btn btn-block btn-lg btn-block btn-primary" value="Save">
-        </form>
+    <div class="col-sm-9 col-sm-offset-2">
+        <div ng-include="manager.subPage"></div>
     </div>
 </div>
