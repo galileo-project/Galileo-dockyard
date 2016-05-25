@@ -1,3 +1,8 @@
+.btn-pointer {
+    cursor: pointer;
+    min-height: 50px;
+}
+
 .sidebar-wrapper {
     height: 100%;
     width: 300px;
@@ -11,7 +16,13 @@
 .sidebar-wrapper li{
     padding: 5px;
     margin: 0 0 2px 0;
+    min-height: 30px;
     border-left: 8px solid #4cae4c;
+    background-color: #ffffff;
+}
+
+.sidebar-wrapper li a{
+    line-height: 30px;
 }
 
 .sidebar-wrapper ul{

@@ -4,7 +4,7 @@
         .module("dockyard.core")
         .controller("msgBoxCtrl",  ["$scope", "msgService",     msgBoxCtrl])
         .controller("loadingCtrl", ["$scope", "loadingService", loadingCtrl])
-        .controller("layOutCtrl",  ["$scope", "$location", "sidebarService", layOutCtrl]);
+        .controller("layOutCtrl",  ["$scope", "sidebarService", layOutCtrl]);
 
 
     /**************************
@@ -23,9 +23,9 @@
 
             function handleReceive() {
                 if(msgService.message !== null) {
-                    vm.visible = true;
-                    vm.msg = msgService.message;
-                    vm.msgType = msgService.msgType;
+                    vm.visible  = true;
+                    vm.msg      = msgService.message;
+                    vm.msgType  = msgService.msgType;
                 }
             }
         } //end of active
@@ -51,7 +51,7 @@
         }
     } // end of loading ctrl
 
-    function layOutCtrl($scope, $location, sidebarService) {
+    function layOutCtrl($scope, sidebarService) {
         var vm = this;
 
         active();
@@ -61,14 +61,13 @@
 
             function handleSidebar() {
                 if(sidebarService.visible) {
-                    vm.sidebarURL   = "layout/aside/aside.include.html";
-                    vm.sidebarClass = "col-sm-3 col-md-2 ng-scope";
+                    vm.sidebarURL   = "layout/component/aside.include.html";
+                    vm.sidebarClass = "col-sm-3 col-md-2";
                     vm.mainClass    = "col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2"
                 } else {
                     vm.sidebarURL   = "";
                     vm.sidebarClass = "";
-                    vm.mainClass    = "container-fluid"
-
+                    vm.mainClass    = "container-fluid";
                 }
             }
         } // end of active

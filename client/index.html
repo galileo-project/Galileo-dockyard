@@ -30,21 +30,24 @@
 <body>
     <nav ng-include="'layout/component/header.include.html'"></nav>
 
-    <div class="container-fluid" ng-controller="layOutCtrl as layOut">
+    <div ng-controller="layOutCtrl as layOut" class="container-fluid">
         <div class="row">
             <aside class="{{ layOut.sidebarClass }}" ng-include="layOut.sidebarURL"></aside>
-            <div class="{{ layOut.mainClass }}" ng-view>
-                <noscript>
-                  <div style="width: 60%; margin: auto;">
-                    <div>
-                      <h1>Oops!</h1>
-                      <p>Looks like you have JavaScript disabled.</p>
-                      <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
-                      <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
-                      <h3>Thank you!</h3>
-                    </div>
-                  </div>
-                </noscript>
+
+            <div class="{{ layOut.mainClass }}">
+                <div ng-view>
+                    <noscript>
+                      <div style="width: 60%; margin: auto;">
+                        <div>
+                          <h1>Oops!</h1>
+                          <p>Looks like you have JavaScript disabled.</p>
+                          <p>The Galileo dockyard webclient needs JavaScript to work properly.</p>
+                          <h2>Please enable JavaScript to get the best Galileo dockyard experience.</h2>
+                          <h3>Thank you!</h3>
+                        </div>
+                      </div>
+                    </noscript>
+                </div>
             </div>
         </div>
     </div>
