@@ -26,9 +26,7 @@
 
            function saveSettings() {
                dataService.updateSettings(vm.github_client_id, vm.github_client_secret, vm.github_redirect_uri)
-                          .then(function (msg) {
-
-               });
+                          .then(function (msg) {});
            } //end of saveSettings
 
            function active() {
@@ -41,9 +39,11 @@
                vm.subPage = "layout/manager/manager.settings.include.html";
                //load settings data
                dataService.getSettings().then(function (msg) {
-                   vm.github_client_id      = msg.data.github_client_id;
-                   vm.github_client_secret  = msg.data.github_client_secret;
-                   vm.github_redirect_uri   = msg.data.github_redirect_uri;
+                   if(!msg.err) {
+                       vm.github_client_id      = msg.data.github_client_id;
+                       vm.github_client_secret  = msg.data.github_client_secret;
+                       vm.github_redirect_uri   = msg.data.github_redirect_uri;
+                   }
                });
            } // end of settings
 

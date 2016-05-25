@@ -177,10 +177,10 @@
             }
         }
 
-        function _wrapperMsg(err, msg) {
+        function _wrapperMsg(err, data) {
             return {
-                err: err,
-                msg: msg
+                err:  err,
+                data: data
             };
         }
     }
