@@ -2,7 +2,7 @@ import threading
 from tornado.ioloop import IOLoop
 from dockyard.const import ExpStatus
 import logging
-
+import copy
 
 class __GlobalVar:
     __INSTANCE              = None
@@ -37,7 +37,13 @@ class __GlobalVar:
 
     def __new_instance(self, name, cls, *args, **kwargs):
         if not self.__DATA.get(name):
-            self.__DATA[name] = cls(*args, **kwargs)
+            if kwargs.get("database"):
+                db = copy.deepcopy(kwargs["database"])
+                del kwargs["database"]
+                self.__DATA[name] = cls(*args, **kwargs)
+                self.__DATA[name] = self.__DATA[name][db]
+            else:
+                self.__DATA[name] = cls(*args, **kwargs)
         return self.__DATA[name]
 
     def mongo(self, host=None, port=None, database=None):
@@ -46,8 +52,8 @@ class __GlobalVar:
             from pymongo.mongo_client import MongoClient
             if not host or not port or not database:
                 raise Exception(ExpStatus["STAT_EXP_INIT_MONGO"])
-            self.__new_instance(name, MongoClient, host, port)
-        return self.__DATA[name][database]
+            self.__new_instance(name, MongoClient, host, port, database=database)
+        return self.__DATA[name]
 
     @property
     def tq(self):

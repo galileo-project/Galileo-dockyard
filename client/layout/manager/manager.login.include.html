@@ -1,0 +1,13 @@
+<div>
+    <form class="form-group-lg form-sign center-block" ng-submit="manager.login()" name="loginForm">
+        <h2>Manager sign in</h2>
+
+        <label for="inputName" class="sr-only">User name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Manager name" ng-model="manager.name">
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" class="form-control" id="inputPassword" ng-model="manager.password" placeholder="Manager password">
+        <p></p>
+        <button type="submit" class="btn btn-block btn-lg btn-primary">Sign in</button>
+    </form>
+</div>

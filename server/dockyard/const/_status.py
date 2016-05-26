@@ -10,6 +10,7 @@ APIStatus = {
     #ERROR code greater than 10000 and less than 30000
     "STAT_API_UNKNOWN_ERROR":           (10001,     "Unknown error"),
     "STAT_API_DATA_INVALID":            (10002,     "Data invalid"),
+    "STAT_API_NOT_FOUND":               (10003,     "Api not found"),
 
     "STAT_API_USER_EXIST":              (10101,     "User already exist"),
     "STAT_API_USER_UNEXIST":            (10102,     "User not exist"),

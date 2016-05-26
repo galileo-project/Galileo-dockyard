@@ -132,3 +132,6 @@ def init_interface():
             mod.init()
         except AttributeError:
             pass
+
+    from dockyard.service.interface.default import routes as default_routes
+    GLOBAL.routes.extend(default_routes)

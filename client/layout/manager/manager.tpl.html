@@ -1,5 +1,5 @@
 <div class="container-fluid" ng-controller="managerCtrl as manager">
-    <div class="col-sm-3 sidebar-wrapper row">
+    <div class="col-sm-3 sidebar-wrapper row" ng-show="manager.managerSideVisible">
         <ul>
             <li data-target="settings" class="btn-pointer" ng-click="manager.updatePage($event)">Settings</li>
             <li data-target="users" class="btn-pointer btn-block" ng-click="manager.updatePage($event)">Users</li>

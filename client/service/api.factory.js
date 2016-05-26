@@ -9,7 +9,7 @@
     var CODE_INFO          = 99999;    // less than 99999 and greater than 80000
 
     //dockyard API URL
-    var HOST         = "http://203.88.167.78:8080";
+    var HOST         = "http://127.0.0.1:8080";
     var API          = HOST + "/api";
     var PUBLIC       = API + "/public";
 
@@ -27,6 +27,7 @@
 
     var MANAGER      = API + "/manager";
     var SETTINGS     = MANAGER + "/settings";
+    var MANAGER_AUTH = MANAGER + "/auth";
 
     angular
         .module("dockyard.factory.api", [])
@@ -49,6 +50,7 @@
             
             getSettings:    getSettings,
             updateSettings: updateSettings,
+            managerLogin:   managerLogin,
             
             githubOauth:    githubOauth
         };
@@ -98,6 +100,13 @@
                         github_client_secret:   github_client_secret,
                         github_redirect_uri:    github_redirect_uri};
             return apiPost(SETTINGS, data);
+        }
+        
+        function managerLogin(name, password) {
+            var data = {name:       name,
+                        password:   password};
+            
+            return apiPost(MANAGER_AUTH, data)
         }
 
         /**************************
