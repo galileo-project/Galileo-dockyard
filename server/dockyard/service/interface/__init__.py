@@ -60,6 +60,13 @@ class BaseHandler(RequestHandler):
     def data_invalid(self):
         self.error(APIStatus["STAT_API_DATA_INVALID"])
 
+    def return_driver(self, m):
+        err, msg = m
+        if err:
+            return self.error(msg)
+        else:
+            return self.success(msg)
+
     def error(self, status=None):
         if not status:
             status = APIStatus["STAT_API_UNKNOWN_ERROR"]
@@ -118,7 +125,7 @@ class BaseHandler(RequestHandler):
         self.set_secure_cookie("user", "", -1)
 
     def set_manager_cookie(self):
-        self.set_secure_cookie("manager", self.user.str_id)
+        self.set_secure_cookie("manager", self.manager.str_id)
 
     def del_manager_cookie(self):
         self.set_secure_cookie("manager", "", -1)

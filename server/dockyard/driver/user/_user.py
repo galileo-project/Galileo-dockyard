@@ -19,7 +19,7 @@ class UserDriver(Driver, User):
 
         self["name"]     = name
         self["email"]    = email
-        self["password"] = password
+        self["password"] = encrypt(password)
         return self.succes()
 
     def verify(self, pwd):
@@ -65,6 +65,10 @@ class UserDriver(Driver, User):
         else:
             return self.err(APIStatus["STAT_API_USER_UNEXIST"])
 
+    def del_user_by_id(self, _id):
+        self.get_by_id(_id)
+        return self.del_user()
+
     @property
     def github(self):
         if self.exists():
@@ -73,3 +77,7 @@ class UserDriver(Driver, User):
             return self.succes(self.__github)
         else:
             return self.err(APIStatus["STAT_API_USER_UNEXIST"])
+
+    def all(self, skip=None, limit=None, order=None):
+        User.all(self, skip, limit, order)
+        return self.succes(self.raw)

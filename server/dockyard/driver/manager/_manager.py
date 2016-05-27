@@ -42,9 +42,10 @@ class ManagerDriver(Driver, Manager):
 
     def add(self, name, password):
         self.find_one({"name": name})
+
         if self.exists():
             return self.err(APIStatus["STAT_API_MANAGER_EXIST"])
 
         self["name"]     = name
-        self["password"] = password
+        self["password"] = encrypt(password)
         return self.succes()

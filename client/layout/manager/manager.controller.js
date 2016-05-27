@@ -2,12 +2,12 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("managerCtrl", ["sidebarService", "dataService", managerCtrl]);
+        .controller("managerCtrl", ["sidebarService", "dataService", "$cookies", managerCtrl]);
 
        /**************************
        *        Controllers      *
        ***************************/
-        function managerCtrl(sidebarService, dataService) {
+        function managerCtrl(sidebarService, dataService, $cookies) {
             var vm  = this;
 
            vm.updatePage    = UpdatePage;
@@ -29,7 +29,6 @@
 
                if(target === "settings") {
                    onSettings();
-                   console.log("update page");
                } else if(target === "users") {
                    onUsers();
                }
@@ -43,8 +42,14 @@
            function active() {
                vm.subPage = "layout/manager/manager.settings.include.html";
                sidebarService.hide();
-               console.log("active");
-               onLogin();
+
+               onUsers();
+               // if($cookies.get("manager")){
+               //     onLogin();
+               // } else {
+               //     onUsers();
+               // }
+
            } //end of active
 
            /***********handler include page**************/
@@ -69,6 +74,11 @@
            function onUsers() {
                vm.subPage            = "layout/manager/manager.users.include.html";
                vm.managerSideVisible = true;
+               dataService.managerUsers().then(function (msg) {
+                   if(!msg.err) {
+                       vm.users = msg.data;
+                   }
+               });
            } // end of users
 
         } //end of managerCtrl

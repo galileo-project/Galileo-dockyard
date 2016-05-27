@@ -13,7 +13,7 @@ def main(opt):
                 "debug"        : opt.debug,
                 "cookie_secret": "233" if opt.debug else gen_random(16)}
 
-    GLOBAL.initialize()
+    GLOBAL.initialize(opt)
     app = Application(GLOBAL.routes, **settings)
     server = httpserver.HTTPServer(app)
     server.bind(opt.port, opt.address)
@@ -30,6 +30,10 @@ if __name__ == "__main__":
     define("mongo_host",    "127.0.0.1",        str,    "mongodb host")
     define("mongo_port",    27017,              int,    "mongodb port")
     define("database",      "dockyard",         str,    "mongodb name")
+
+    define("add_manager",   False,              bool,   "add manager")
+    define("manager",       "admin",            str,    "manager name")
+    define("password",      "123456",           str,    "manager password")
 
     options.parse_command_line()
     main(options)

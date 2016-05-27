@@ -7,15 +7,30 @@ from dockyard.var import GLOBAL
 
 class Mongo:
     def __init__(self):
-        __table_name       = self.__class__.__name__
+        self.__table_name  = self.__class__.__name__
         self.__db          = GLOBAL.mongo()
-        self.__table       = self.__db[__table_name]
+        self.__table       = self.__db[self.__table_name]
         self.__data        = {}
         self.__list        = []
         self.__index       = 0
         self.__update_data = {}
         self.__update_list = []
         self.__query       = {}
+        self.__init_kv_model()
+
+    def __init_kv_model(self):
+        if self.__key:
+            self.find_one({GLOBAL.MKEY: self.__key})
+        if not self.exists():
+            self[GLOBAL.MKEY] = self.__key
+
+    @property
+    def __key(self):
+        try:
+            key = self.KEY
+        except:
+            key = None
+        return key
 
     def __del__(self):
         self.flush()
@@ -79,22 +94,36 @@ class Mongo:
         return data
 
     @staticmethod
-    def unwrapper(data):
-        if not data:
-            return {}
-        try:
-            del data[GLOBAL.MDELETE]
-            del data[GLOBAL.MUPDATE]
-            del data[GLOBAL.MCREATE]
-        except KeyError:
-            pass
+    def __unwrapper(data):
+        for it in [GLOBAL.MDELETE, GLOBAL.MUPDATE, GLOBAL.MCREATE]:
+            try:
+                del data[it]
+            except:
+                pass
+            data[GLOBAL.MID] = str(data[GLOBAL.MID])
         return data
+
+    @staticmethod
+    def unwrapper(data):
+        if isinstance(data, dict):
+            return Mongo.__unwrapper(data)
+        elif data is None:
+            return {}
+        else:
+            ret = []
+            for it in data:
+                res = Mongo.__unwrapper(it)
+                ret.append(res)
+            return ret
+
 
     @property
     def id(self):
         try:
             _id = self.__data.get(GLOBAL.MID)
-            if not isinstance(_id, ObjectId):
+            if _id is None:
+                return None
+            elif not isinstance(_id, ObjectId):
                 return ObjectId(_id)
             else:
                 return _id
@@ -123,12 +152,14 @@ class Mongo:
         self.__list.append(data)
         self.__update_list.append(data)
 
-    def get_raw(self):
-        return self.__list or self.unwrapper(self.__data)
-
     @property
-    def attr(self):
-        return self.unwrapper(self.__data)
+    def raw(self):
+        if self.__data:
+            return self.unwrapper(self.__data)
+        elif self.__list:
+            return self.unwrapper(self.__list)
+        else:
+            return {}
 
     def set_raw(self, data):
         if isinstance(data, list):
@@ -142,13 +173,15 @@ class Mongo:
         return self.find_one({GLOBAL.MID: _id})
 
     def find(self, query, skip=None, limit=None, order=None):
-        self.__list = self.__table.find(self.wrap_query(query))
+        items = self.__table.find(self.wrap_query(query))
         if order is not None:
-            self.__list.sort(order)
+            items.sort(order)
         if skip is not None:
-            self.__list.skip(int(skip))
+            items.skip(int(skip))
         if limit is not None:
-            self.__list.limit(int(limit))
+            items.limit(int(limit))
+
+        self.__list = self.unwrapper(items)
         return self
 
     def find_one(self, query):
@@ -156,7 +189,7 @@ class Mongo:
         return self
 
     def all(self, skip=None, limit=None, order=None):
-        return self.find({}, skip, limit, order)
+        self.find({}, skip, limit, order)
 
     def __save_data(self):
         if self.__update_data:
@@ -187,7 +220,7 @@ class Mongo:
         self.clear()
 
     def exists(self, query=None):
-        if query or self.__update_data:
+        if query:
             self.find_one(query or self.__update_data)
 
         if self.__data or self.__list:

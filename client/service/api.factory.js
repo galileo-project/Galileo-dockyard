@@ -9,25 +9,27 @@
     var CODE_INFO          = 99999;    // less than 99999 and greater than 80000
 
     //dockyard API URL
-    var HOST         = "http://127.0.0.1:8080";
-    var API          = HOST + "/api";
-    var PUBLIC       = API + "/public";
+    var HOST                = "http://127.0.0.1:8080";
+    var API                 = HOST + "/api";
+    var PUBLIC              = API + "/public";
 
-    var USER         = API  + "/user";
-    var USER_LOGIN   = HOST + "/auth/login";
-    var USER_SIGNUP  = USER;
-    var USER_CH_PWD  = USER;
-    var USER_DELETE  = USER;
+    var USER                = API  + "/user";
+    var USER_LOGIN          = HOST + "/auth/login";
+    var USER_SIGNUP         = USER;
+    var USER_CH_PWD         = USER;
+    var USER_DELETE         = USER;
 
-    var APP          = API + "/app";
-    var GET_APPS     = APP + "/list";
-    var GET_APP      = APP;
+    var APP                 = API + "/app";
+    var GET_APPS            = APP + "/list";
+    var GET_APP             = APP;
 
-    var GITHUB       = PUBLIC + "/github";
+    var GITHUB              = PUBLIC + "/github";
 
-    var MANAGER      = API + "/manager";
-    var SETTINGS     = MANAGER + "/settings";
-    var MANAGER_AUTH = MANAGER + "/auth";
+    var MANAGER             = API + "/manager";
+    var SETTINGS            = MANAGER + "/settings";
+    var MANAGER_AUTH        = MANAGER + "/auth/login";
+    var MANAGER_USERS       = MANAGER + "/user";
+    var MANAGER_DEL_USER    = MANAGER + "/user";
 
     angular
         .module("dockyard.factory.api", [])
@@ -51,6 +53,7 @@
             getSettings:    getSettings,
             updateSettings: updateSettings,
             managerLogin:   managerLogin,
+            managerUsers:   managerUsers,
             
             githubOauth:    githubOauth
         };
@@ -103,10 +106,20 @@
         }
         
         function managerLogin(name, password) {
-            var data = {name:       name,
-                        password:   password};
+            var data = {manager_name:       name,
+                        manager_pwd:        password};
             
             return apiPost(MANAGER_AUTH, data)
+        }
+
+        function managerUsers() {
+            return apiGet(MANAGER_USERS)
+        }
+
+        function managerDelUser(uid) {
+            var data = {uid: uid};
+
+            return apiDelete()
         }
 
         /**************************

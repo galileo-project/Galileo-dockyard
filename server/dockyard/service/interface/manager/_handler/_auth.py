@@ -1,13 +1,11 @@
-from dockyard.utils import encrypt
 from dockyard.service.interface import BaseHandler
 from dockyard.utils.wrapper import auth_manager
 from tornado.gen import coroutine
-from dockyard.const import APIStatus
 
 
 class ApiAuthHandeler(BaseHandler):
     @coroutine
-    def post(self, path):
+    def post(self, path=None):
         if path == "login":     self.login()
 
     @auth_manager
@@ -19,15 +17,13 @@ class ApiAuthHandeler(BaseHandler):
         self.parse_arg_str("manager_name", True)
         self.parse_arg_str("manager_pwd",  True)
 
-        self.user["manager_name"] = self.data["manager_name"]
+        err, msg = self.manager.verify(self.data["manager_name"], self.data["manager_pwd"])
 
-        if not self.manager:
-            return self.error(APIStatus["STAT_API_MANAGER_UNEXIST"])
-        if self.user["manager_pwd"] != encrypt(self.data["manager_pwd"]):
-            return self.error(APIStatus["STAT_API_MANAGER_PWD_ERR"])
-
-        self.set_manager_cookie()
-        self.success()
+        if err:
+            return self.error(msg)
+        else:
+            self.set_manager_cookie()
+            self.success()
 
     def logout(self):
         self.del_manager_cookie()

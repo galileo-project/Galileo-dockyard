@@ -10,7 +10,7 @@ class _Queue:
 
     def callback(self, task):
         try:
-            ret = self._exec(**task.attr["msg"])
+            ret = self._exec(**task.raw["msg"])
             if ret:
                 task.received(self.KEY)
         except:

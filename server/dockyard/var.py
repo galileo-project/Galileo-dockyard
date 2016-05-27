@@ -9,8 +9,9 @@ class __GlobalVar:
     __DATA                  = {}
     __INITIATED             = False
     __LOCK                  = threading.Lock()
+    __DEBUG                 = False
 
-    MID                     = "__id__"
+    MID                     = "_id"
     MDELETE                 = "__deleted__"
     MCREATE                 = "__create__"
     MUPDATE                 = "__update__"
@@ -56,6 +57,14 @@ class __GlobalVar:
         return self.__DATA[name]
 
     @property
+    def system(self):
+        name = "system"
+        if not self.__DATA.get(name):
+            from dockyard.driver.sys import System
+            self.__new_instance(name, System)
+        return self.__DATA[name]
+
+    @property
     def tq(self):
         # return singleton instance of task queue
         name = "tq"
@@ -90,11 +99,25 @@ class __GlobalVar:
     def puts(*args, **kwargs):
         logging.info(*args, **kwargs)
 
-    def initialize(self):
+    @classmethod
+    def debug(cls, *args, **kwargs):
+        if GLOBAL.__DEBUG:
+            cls.puts(*args, **kwargs)
+
+    def __init_options(self, opt):
+        self.__DEBUG = opt.debug
+        from dockyard.driver.manager import Manager
+        if opt.add_manager:
+            err, msg = Manager().add(opt.manager, opt.password)
+            if err:  GLOBAL.puts(msg[1])
+            else:    GLOBAL.puts("Add manager %s " % opt.manager)
+
+    def initialize(self, opt):
         if not self.__INITIATED:
             with self.__LOCK:
                 if not self.__INITIATED:
                     self.__INITIATED = True
+                    self.__init_options(opt)
                     from dockyard.service.task import init_queue
                     from dockyard.service.task import init_routine
                     from dockyard.service.interface import init_interface

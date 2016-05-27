@@ -17,16 +17,12 @@ class ApiUserHandeler(BaseHandler):
         self.parse_arg_str("user_pwd",      True)
         self.parse_arg_str("user_email",    True)
 
-        self.user["user_email"] = self.data["user_email"]
-        self.user["user_name"]  = self.data["user_name"]
-        self.user["user_pwd"]   = encrypt(self.data["user_pwd"])
+        ret = self.user.add(self.data["user_name"], self.data["user_email"], self.data["user_pwd"])
 
-        if self.user:
-            self.user.clear()
-            return self.error(APIStatus["STAT_API_USER_EXIST"])
+        if not ret[0]:
+            self.set_user_cookie()
 
-        self.set_user_cookie()
-        return self.success(self.user.get_raw())
+        return self.return_driver(ret)
 
     @auth
     @coroutine

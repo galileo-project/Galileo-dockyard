@@ -10,6 +10,7 @@ def auth(func):
 
 def auth_manager(func):
     def _exec(self, *args, **kwargs):
+        return func(self, *args, **kwargs)
         if not self.manager:
             return self.error(APIStatus["STAT_API_MANAGER_LOGIN"])
         else:
