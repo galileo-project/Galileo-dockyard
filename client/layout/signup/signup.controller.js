@@ -16,16 +16,12 @@
 
 
            function signup() {
-               var data = {user_name:  vm.name,
-                           user_email: vm.email,
-                           user_pwd:   vm.password1};
-
                if(vm.password1 !== vm.password2){
                    vm.msg = "Password invalid";
                } else {
                    vm.msg = "";
 
-                   dataService.userSignUp(data).then(function (msg) {
+                   dataService.user.signup(vm.name, vm.email, vm.password1).then(function (msg) {
                        if(!msg.err){
                            $location.path("/");
                        }

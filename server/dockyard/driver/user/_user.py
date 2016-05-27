@@ -67,6 +67,7 @@ class UserDriver(Driver, User):
 
     def del_user_by_id(self, _id):
         self.get_by_id(_id)
+        print(self.exists())
         return self.del_user()
 
     @property
@@ -81,3 +82,10 @@ class UserDriver(Driver, User):
     def all(self, skip=None, limit=None, order=None):
         User.all(self, skip, limit, order)
         return self.succes(self.raw)
+
+    def update_password(self, password):
+        if self.exists():
+            self["password"] = encrypt(password)
+            return self.succes()
+        else:
+            return self.err(APIStatus["STAT_API_USER_UNEXIST"])

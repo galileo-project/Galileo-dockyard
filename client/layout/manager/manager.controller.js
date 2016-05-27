@@ -33,6 +33,9 @@
                } else if(target === "users") {
                    onUsers();
                }
+               else if(target == "logs") {
+                   onLogs();
+               }
            } //end of update page
 
            function saveSettings() {
@@ -42,8 +45,9 @@
 
            function delUser(e) {
                var uid = e.target.dataset.uid;
-               console.log(uid);
-               dataService.manager.del_user_by_id(uid).then(function (msg) {})
+               dataService.manager.del_user_by_id(uid).then(function (msg) {
+                   onUsers();
+               });
            } // end of delUser
 
            function active() {
@@ -80,12 +84,22 @@
            function onUsers() {
                vm.subPage            = "layout/manager/manager.users.include.html";
                vm.managerSideVisible = true;
-               dataService.user.all().then(function (msg) {
+               dataService.manager.all().then(function (msg) {
                    if(!msg.err) {
                        vm.users = msg.data;
                    }
                });
            } // end of users
+
+           function onLogs() {
+               vm.subPage            = "layout/manager/manager.logs.include.html";
+               vm.managerSideVisible = true;
+               dataService.sys.get_sys_logs().then(function (msg) {
+                   if(!msg.err) {
+                       vm.logs = msg.data;
+                   }
+               });
+           }
 
         } //end of managerCtrl
 

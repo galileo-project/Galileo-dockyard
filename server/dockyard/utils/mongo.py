@@ -169,7 +169,7 @@ class Mongo:
             self.__data = data
 
     def get_by_id(self, _id):
-        if isinstance(_id, ObjectId):
+        if not isinstance(_id, ObjectId):
             _id = ObjectId(_id)
         return self.find_one({GLOBAL.MID: _id})
 

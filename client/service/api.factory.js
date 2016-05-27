@@ -28,8 +28,14 @@
     var MANAGER             = API + "/manager";
     var SETTINGS            = MANAGER + "/settings";
     var MANAGER_AUTH        = MANAGER + "/auth/login";
-    var MANAGER_USERS       = MANAGER + "/user";
-    var MANAGER_DEL_USER    = MANAGER + "/user";
+
+    var MANAGER_USER        = MANAGER + "/user";
+    var MANAGER_USER_ALL    = MANAGER_USER;
+    var MANAGER_USER_DEL    = MANAGER_USER;
+
+    var MANAGER_SYS         = MANAGER + "/sys";
+    var MANAGER_SYS_SET     = MANAGER_SYS + "/settings";
+    var MANAGER_SYS_LOGS    = MANAGER_SYS + "/logs";
 
     angular
         .module("dockyard.factory.api", [])
@@ -41,21 +47,22 @@
     ***********************/
     function apiService($http, msgService, loadingService, $httpParamSerializerJQLike) {
         return {
-            userLogin:      userLogin,
-            userSignUp:     userSignUp,
-            userChPwd:      userChPwd,
-            userDelete:     userDelete,
-            getUser:        getUser,
+            userLogin:          userLogin,
+            userSignUp:         userSignUp,
+            userChPwd:          userChPwd,
+            getUser:            getUser,
             
-            getApps:        getApps,
-            getApp:         getApp,
+            getApps:            getApps,
+            getApp:             getApp,
             
-            getSettings:    getSettings,
-            updateSettings: updateSettings,
-            managerLogin:   managerLogin,
-            managerUsers:   managerUsers,
+            getSettings:        getSettings,
+            updateSettings:     updateSettings,
+            managerLogin:       managerLogin,
+            managerUsers:       managerUsers,
+            managerSysLogs:     managerSysLogs,
+            managerUserDelete:  managerUserDelete,
             
-            githubOauth:    githubOauth
+            githubOauth:        githubOauth
         };
 
 
@@ -66,17 +73,17 @@
             return apiPost(USER_LOGIN, data);
         }
 
-        function userSignUp(data) {
+        function userSignUp(name, email, password) {
+            var data = {
+                name:       name,
+                email:      email,
+                password:   password
+            };
             return apiPost(USER_SIGNUP, data);
         }
 
         function userChPwd() {
 
-        }
-
-        function userDelete(uid) {
-            var data = {uid: uid};
-            return apiDelete(USER_DELETE ,data)
         }
 
         function getUser() {
@@ -96,25 +103,33 @@
         }
         
         function getSettings() {
-            return apiGet(SETTINGS);
+            return apiGet(MANAGER_SYS_SET);
         }
         
         function updateSettings(github_client_id, github_client_secret, github_redirect_uri) {
             var data = {github_client_id:       github_client_id,
                         github_client_secret:   github_client_secret,
                         github_redirect_uri:    github_redirect_uri};
-            return apiPost(SETTINGS, data);
+            return apiPost(MANAGER_SYS_SET, data);
         }
         
         function managerLogin(name, password) {
             var data = {manager_name:       name,
                         manager_pwd:        password};
-            
             return apiPost(MANAGER_AUTH, data)
         }
 
         function managerUsers() {
-            return apiGet(MANAGER_USERS)
+            return apiGet(MANAGER_USER_ALL)
+        }
+
+        function managerSysLogs() {
+            return apiGet(MANAGER_SYS_LOGS);
+        }
+
+        function managerUserDelete(uid) {
+            var data = {uid: uid};
+            return apiDelete(MANAGER_USER_DEL ,data)
         }
         
         /**************************

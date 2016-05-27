@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="page-header">
+        <h3 class="text-center">System logs Management</h3>
+    </div>
+
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Level</th>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="log in manager.logs">
+                <td>{{ log.level }}</td>
+                <td>{{ log.msg }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

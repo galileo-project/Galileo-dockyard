@@ -9,15 +9,15 @@ class ApiUserHandeler(BaseHandler):
     @auth
     @coroutine
     def get(self, *args, **kwargs):
-        self.success(self.user.get_raw())
+        self.success(self.user.raw)
 
     @coroutine
     def post(self, *args, **kwargs):
-        self.parse_arg_str("user_name",     True)
-        self.parse_arg_str("user_pwd",      True)
-        self.parse_arg_str("user_email",    True)
+        self.parse_arg_str("name",     True)
+        self.parse_arg_str("password", True)
+        self.parse_arg_str("email",    True)
 
-        ret = self.user.add(self.data["user_name"], self.data["user_email"], self.data["user_pwd"])
+        ret = self.user.add(self.data["name"], self.data["email"], self.data["password"])
 
         if not ret[0]:
             self.set_user_cookie()
@@ -27,18 +27,6 @@ class ApiUserHandeler(BaseHandler):
     @auth
     @coroutine
     def put(self, *args, **kwargs):
-        self.parse_arg_str("user_pwd", False)
-
-        if self.user:
-            if self.data["user_pwd"]:
-                self.user["user_pwd"] = encrypt(self.data["user_pwd"])
-        else:
-            return self.error(APIStatus["STAT_API_USER_UNEXIST"])
-
-        return self.success(self.user.get_raw())
-
-    @auth
-    @coroutine
-    def delete(self, *args, **kwargs):
-        self.user.remove()
-        return self.success()
+        self.parse_arg_str("password", True)
+        ret = self.user.update_password(self.data["password"])
+        return self.return_driver(ret)

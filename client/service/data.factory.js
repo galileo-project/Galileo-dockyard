@@ -8,15 +8,19 @@
         var cache = new CacheDriver();
         var user    = {
             auth:           userAuth,
-            all:            userAll
+            signup:         userSignup
         };
         var sys     = {
-            get_settings:   SysgetSettings,
-            save_settings:  SysSaveSettings
+            get_settings:   sysgetSettings,
+            get_sys_logs:   sysGetSysLogs,
+            save_settings:  sysSaveSettings
         };
-        var app     = {};
+        var app     = {
+
+        };
         var manager = {
             auth:           managerAuth,
+            all:            userAll,
             del_user_by_id: userDelById
         };
 
@@ -33,16 +37,22 @@
             return "auth";
         }
         function userDelById(uid) {
-            return apiService.userDelete(uid);
+            return apiService.managerUserDelete(uid);
         }
         function userAll() {
             return apiService.managerUsers();
         }
-        function SysgetSettings() {
+        function userSignup(name, email, password) {
+            return apiService.userSignUp(name, email, password);
+        }
+        function sysgetSettings() {
             return apiService.getSettings();
         }
-        function SysSaveSettings(github_client_id, github_client_secret, github_redirect_uri) {
+        function sysSaveSettings(github_client_id, github_client_secret, github_redirect_uri) {
             return apiService.updateSettings(github_client_id, github_client_secret, github_redirect_uri);
+        }
+        function sysGetSysLogs() {
+            return apiService.managerSysLogs();
         }
         function managerAuth(name, password) {
             return apiService.managerLogin(name, password);

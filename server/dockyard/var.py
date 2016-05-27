@@ -91,7 +91,7 @@ class __GlobalVar:
     def logging(self):
         name = "logging"
         if not self.__DATA.get(name):
-            from server.dockyard.driver.log import Log
+            from dockyard.driver.log import Log
             self.__new_instance(name, Log)
         return self.__DATA[name]
 

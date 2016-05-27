@@ -16,5 +16,6 @@ class ApiUsersHandeler(BaseHandler):
     def delete(self, path=None):
         self.parse_arg_str("uid", True)
 
-        ret = User().del_user_by_id(self.data["uid"])
+        user = User()
+        ret = user.del_user_by_id(self.data["uid"])
         self.return_driver(ret)
