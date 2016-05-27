@@ -100,7 +100,7 @@ class Mongo:
                 del data[it]
             except:
                 pass
-            if hasattr(data, GLOBAL.MID):
+            if GLOBAL.MID in data:
                 data[GLOBAL.MID] = str(data[GLOBAL.MID])
         return data
 
