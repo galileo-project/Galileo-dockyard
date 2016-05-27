@@ -33,7 +33,7 @@
     <nav ng-include="'layout/component/header.include.html'"></nav>
 
     <div ng-controller="layOutCtrl as layOut" class="container-fluid main-container">
-        <div class="row">
+        <div class="row main-row-container">
             <aside class="{{ layOut.sidebarClass }}" ng-include="layOut.sidebarURL"></aside>
 
             <div class="{{ layOut.mainClass }}">
