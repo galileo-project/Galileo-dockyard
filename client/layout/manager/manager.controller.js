@@ -50,7 +50,6 @@
                vm.subPage = "layout/manager/manager.settings.include.html";
                sidebarService.hide();
 
-               console.log($cookies.getAll());
                if(!$cookies.get("manager")){
                    onLogin();
                } else {
