@@ -9,7 +9,7 @@
     var CODE_INFO          = 99999;    // less than 99999 and greater than 80000
 
     //dockyard API URL
-    var HOST                = "http://127.0.0.1:8080";
+    var HOST                = window.location.origin;
     var API                 = HOST + "/api";
     var PUBLIC              = API + "/public";
 
