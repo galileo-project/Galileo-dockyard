@@ -33,13 +33,13 @@
 
     angular
         .module("dockyard.factory.api", [])
-        .factory("__apiService",         __apiService);
+        .factory("apiService",         apiService);
 
 
     /**********************
     *       functions     *
     ***********************/
-    function __apiService($http, msgService, loadingService, $httpParamSerializerJQLike) {
+    function apiService($http, msgService, loadingService, $httpParamSerializerJQLike) {
         return {
             userLogin:      userLogin,
             userSignUp:     userSignUp,
@@ -74,8 +74,9 @@
 
         }
 
-        function userDelete() {
-
+        function userDelete(uid) {
+            var data = {uid: uid};
+            return apiDelete(USER_DELETE ,data)
         }
 
         function getUser() {
@@ -115,13 +116,7 @@
         function managerUsers() {
             return apiGet(MANAGER_USERS)
         }
-
-        function managerDelUser(uid) {
-            var data = {uid: uid};
-
-            return apiDelete()
-        }
-
+        
         /**************************
          *       Common function   *
          * *************************/
@@ -145,6 +140,23 @@
             var ret = $http({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 method:  'POST',
+                url:     url,
+                data:    $httpParamSerializerJQLike(data)
+            }).then(function (response) {
+                return response.data;
+            }, function (response) {
+                return response;
+            });
+
+            return ret.then(apiHandleSuccess, apiHandleError);
+        }
+
+        function apiDelete(url, data) {
+            loadingService.show();
+
+            var ret = $http({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method:  'DELETE',
                 url:     url,
                 data:    $httpParamSerializerJQLike(data)
             }).then(function (response) {

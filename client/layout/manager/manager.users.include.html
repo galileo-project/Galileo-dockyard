@@ -17,7 +17,7 @@
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        <button class="btn btn-danger">Delete</button>
+                        <button data-uid="{{ user._id }}" class="btn btn-danger" ng-click="manager.delUser($event)">Delete</button>
                     </td>
                 </tr>
             </tbody>

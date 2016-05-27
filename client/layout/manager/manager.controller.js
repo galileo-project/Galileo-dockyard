@@ -13,14 +13,11 @@
            vm.updatePage    = UpdatePage;
            vm.saveSettings  = saveSettings;
            vm.login         = login;
-           //active();
-
-           dataService.cache.set("test", "TEST");
-           console.log(dataService.user.auth("a", "b"));
-           console.log(dataService.cache.get("test"));
+           vm.delUser       = delUser;
+           active();
 
            function login() {
-               dataService.managerLogin(vm.name, vm.password)
+               dataService.manager.auth(vm.name, vm.password)
                    .then(function (msg) {
                        if(!msg.err) {
                            onUsers();
@@ -39,20 +36,26 @@
            } //end of update page
 
            function saveSettings() {
-               dataService.updateSettings(vm.github_client_id, vm.github_client_secret, vm.github_redirect_uri)
+               dataService.sys.save_settings(vm.github_client_id, vm.github_client_secret, vm.github_redirect_uri)
                           .then(function (msg) {});
            } //end of saveSettings
+
+           function delUser(e) {
+               var uid = e.target.dataset.uid;
+               console.log(uid);
+               dataService.manager.del_user_by_id(uid).then(function (msg) {})
+           } // end of delUser
 
            function active() {
                vm.subPage = "layout/manager/manager.settings.include.html";
                sidebarService.hide();
 
-               onUsers();
-               // if($cookies.get("manager")){
-               //     onLogin();
-               // } else {
-               //     onUsers();
-               // }
+               console.log($cookies.getAll());
+               if(!$cookies.get("manager")){
+                   onLogin();
+               } else {
+                   onUsers();
+               }
 
            } //end of active
 
@@ -66,7 +69,7 @@
                vm.subPage = "layout/manager/manager.settings.include.html";
                vm.managerSideVisible = true;
                //load settings data
-               dataService.getSettings().then(function (msg) {
+               dataService.sys.get_settings().then(function (msg) {
                    if(!msg.err && msg.data !== null) {
                        vm.github_client_id      = msg.data.github_client_id;
                        vm.github_client_secret  = msg.data.github_client_secret;
@@ -78,7 +81,7 @@
            function onUsers() {
                vm.subPage            = "layout/manager/manager.users.include.html";
                vm.managerSideVisible = true;
-               dataService.managerUsers().then(function (msg) {
+               dataService.user.all().then(function (msg) {
                    if(!msg.err) {
                        vm.users = msg.data;
                    }

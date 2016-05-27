@@ -34,6 +34,11 @@
                 controller:     "managerCtrl",
                 controllerAs :  "manager"
             })
+            .when("/user", {
+                templateUrl:    "layout/user/user.tpl.html",
+                controller:     "userCtrl",
+                controllerAs :  "user"
+            })
             .otherwise("/");
     }
 
