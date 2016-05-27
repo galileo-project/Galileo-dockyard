@@ -33,13 +33,13 @@
 
     angular
         .module("dockyard.factory.api", [])
-        .factory("dataService",         dataService);
+        .factory("__apiService",         __apiService);
 
 
     /**********************
     *       functions     *
     ***********************/
-    function dataService($http, msgService, loadingService, $httpParamSerializerJQLike) {
+    function __apiService($http, msgService, loadingService, $httpParamSerializerJQLike) {
         return {
             userLogin:      userLogin,
             userSignUp:     userSignUp,

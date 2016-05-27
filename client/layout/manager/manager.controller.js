@@ -2,18 +2,22 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("managerCtrl", ["sidebarService", "dataService", "$cookies", managerCtrl]);
+        .controller("managerCtrl", ["dataService", "sidebarService", "$cookies", managerCtrl]);
 
        /**************************
        *        Controllers      *
        ***************************/
-        function managerCtrl(sidebarService, dataService, $cookies) {
+        function managerCtrl(dataService, sidebarService, $cookies) {
             var vm  = this;
 
            vm.updatePage    = UpdatePage;
            vm.saveSettings  = saveSettings;
            vm.login         = login;
-           active();
+           //active();
+
+           dataService.cache.set("test", "TEST");
+           console.log(dataService.user.auth("a", "b"));
+           console.log(dataService.cache.get("test"));
 
            function login() {
                dataService.managerLogin(vm.name, vm.password)

@@ -3,6 +3,6 @@
     angular
         .module("dockyard", ["ngRoute", "ngCookies", "dockyard.core", "dockyard.route",
                              "dockyard.factory.ui", "dockyard.factory.api",
-                             "dockyard.config"]);
+                             "dockyard.config", "dockyard.factory.data"]);
 
 })();
