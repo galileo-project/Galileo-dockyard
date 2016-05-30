@@ -182,11 +182,11 @@ class Mongo:
         if limit is not None:
             items.limit(int(limit))
 
-        self.__list = self.unwrapper(items)
+        self.__list = items
         return self
 
     def find_one(self, query):
-        self.__data = self.unwrapper(self.__table.find_one(self.wrap_query(query)))
+        self.__data = self.__table.find_one(self.wrap_query(query))
         return self
 
     def all(self, skip=None, limit=None, order=None):

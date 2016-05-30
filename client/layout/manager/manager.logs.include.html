@@ -3,9 +3,14 @@
         <h3 class="text-center">System Logs Management</h3>
     </div>
 
-    <div class="logging-content">
-        <div ng-repeat="log in manager.logs">
-            <p class="logging-{{ log.level }}" title="{{ log.datetime }}"><span class="logging-no">{{$index + 1}}</span><span>{{ log.msg }}</span></p>
+    <div>
+        <div class="logging-content">
+            <div ng-repeat="log in manager.logs">
+                <p class="logging-{{ log.level }}" title="{{ log.datetime }}">
+                    <span class="logging-no">{{$index + 1}}</span>
+                    <span>{{ log.msg }}</span>
+                </p>
+            </div>
         </div>
     </div>
 </div>
