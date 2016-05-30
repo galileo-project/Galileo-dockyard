@@ -115,3 +115,44 @@
 .login-with img{
     height: 40px;
 }
+
+/*-------logging-----*/
+.logging-content {
+    background-color: #2c2c2c;
+    max-height: 750px;
+    overflow-y: scroll;
+}
+.logging-content p {
+    color: #f1f1f1;
+    cursor: default;
+    margin: 0;
+    padding: 0 0 0 10px;
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+.logging-content p:hover {
+    background-color: #3f3f3f;
+}
+.logging-content p span {
+    color: #f1f1f1;
+}
+.logging-no {
+    color: #e1e1e1;
+    display: inline-block;
+    width: 40px;
+}
+p.logging-info{
+    border-left-color: #b7bfc8;
+}
+p.logging-warn{
+    border-left-color: #f0ad4e;
+}
+p.logging-fatal{
+    border-left-color: #860106;
+}
+p.logging-success{
+    border-left-color: #57ba6a;
+}
+p.logging-error{
+    border-left-color: #ff6543;
+}

@@ -1,6 +1,6 @@
 from dockyard.var import GLOBAL
 from dockyard.utils.mongo import Mongo
-
+from dockyard.utils.times import datetime_string
 
 class Log(Mongo):
     """
@@ -8,6 +8,7 @@ class Log(Mongo):
     level
     msg
     origin
+    datetime
     """
     LEVEL  = "level"
     MSG    = "msg"
@@ -35,6 +36,7 @@ class Log(Mongo):
         for msg in msgs:
             data = {self.LEVEL:     level,
                     self.MSG:       msg,
-                    self.ORIGIN:    origin or GLOBAL.SYS_ORIGIN}
+                    self.ORIGIN:    origin or GLOBAL.SYS_ORIGIN,
+                    "datetime":     datetime_string()}
             self.append(data)
         self.flush()

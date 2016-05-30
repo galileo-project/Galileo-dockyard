@@ -95,7 +95,7 @@ class Mongo:
 
     @staticmethod
     def __unwrapper(data):
-        for it in [GLOBAL.MDELETE, GLOBAL.MUPDATE, GLOBAL.MCREATE]:
+        for it in [GLOBAL.MDELETE, GLOBAL.MUPDATE, GLOBAL.MCREATE, "password"]:
             try:
                 del data[it]
             except:

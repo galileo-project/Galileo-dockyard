@@ -97,7 +97,14 @@ class __GlobalVar:
 
     @staticmethod
     def puts(*args, **kwargs):
-        logging.info(*args, **kwargs)
+        string = ""
+        if kwargs:
+            string += str(kwargs)
+        if args:
+            string += str(args[len(args) - 1])
+
+        logging.info(string)
+        GLOBAL.logging.info(string, GLOBAL.SYS_ORIGIN)
 
     @classmethod
     def debug(cls, *args, **kwargs):

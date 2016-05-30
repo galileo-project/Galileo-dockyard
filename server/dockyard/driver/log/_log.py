@@ -4,7 +4,7 @@ from dockyard.const import APIStatus
 from dockyard.var import GLOBAL
 
 
-class DriverLog(Driver, Log):
+class LogDriver(Driver, Log):
     def error(self, msgs, origin):
         self._error(msgs, origin)
         return self.succes()
@@ -41,10 +41,10 @@ class DriverLog(Driver, Log):
         else:
             return self.err(APIStatus["STAT_API_LOG_UNEXIST"])
 
-    def gets_sys_log(self):
+    def get_sys_logs(self):
         self.find({"origin":    GLOBAL.SYS_ORIGIN})
 
         if self.exists():
-            return self.succes(self)
+            return self.succes(self.raw)
         else:
             return self.err(APIStatus["STAT_API_LOG_UNEXIST"])

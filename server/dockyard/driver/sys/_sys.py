@@ -46,7 +46,7 @@ class SysDriver(Driver, System):
 
     def get_logs(self):
         if self.exists():
-            err, msg = GLOBAL.logging.gets_sys_log()
+            err, msg = GLOBAL.logging.get_sys_logs()
             if err:
                 return self.err(msg)
             else:
