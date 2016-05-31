@@ -2,19 +2,18 @@ from dockyard.utils.driver import Driver
 from dockyard.driver.app._model.build import Build
 from dockyard.const import APIStatus
 from dockyard.var import GLOBAL
-import time
+from dockyard.utils.times import timestamp
+from dockyard.utils.wrapper import exists
 
 
 class BuildDriver(Driver, Build):
+    @exists(APIStatus["STAT_API_BUILD_UNEXIST"])
     def get_logs(self):
-        if self.exists():
-            err, msg = GLOBAL.logging.get_logs_by_build(self)
-            if err:
-                return self.err(msg)
-            else:
-                return self.succes(msg)
+        err, msg = GLOBAL.logging.get_logs_by_build(self)
+        if err:
+            return self.err(msg)
         else:
-            return self.err(APIStatus["STAT_API_BUILD_UNEXIST"])
+            return self.succes(msg)
 
     def get_builds_by_app(self, app):
         self.find({"app_id": app.id})
@@ -57,9 +56,8 @@ class BuildDriver(Driver, Build):
         self["build_no"] = app["build_times"]
         return self.succes()
 
+    @exists(APIStatus["STAT_API_BUILD_UNEXIST"])
     def build(self):
-        if self.exists():
-            self["timestamp"] = time.time()
-            # TODO build
-        else:
-            return self.err(APIStatus["STAT_API_BUILD_UNEXIST"])
+        self["timestamp"] = timestamp()
+        # TODO build
+        return self.succes()

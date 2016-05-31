@@ -3,6 +3,7 @@ from dockyard.driver.manager._model import Manager
 from dockyard.driver.user import User
 from dockyard.const import APIStatus
 from dockyard.utils import encrypt
+from dockyard.utils.wrapper import exists
 
 
 class ManagerDriver(Driver, Manager):
@@ -24,12 +25,10 @@ class ManagerDriver(Driver, Manager):
         else:
             return self.err(APIStatus["STAT_API_MANAGER_UNEXIST"])
 
+    @exists(APIStatus["STAT_API_MANAGER_UNEXIST"])
     def update_pwd(self, pwd):
-        if self.exists():
-            self["password"] = encrypt(pwd)
-            return self.succes()
-        else:
-            return self.err(APIStatus["STAT_API_MANAGER_UNEXIST"])
+        self["password"] = encrypt(pwd)
+        return self.succes()
 
     def del_user_by_uid(self, uid):
         user = User().get_by_id(uid)

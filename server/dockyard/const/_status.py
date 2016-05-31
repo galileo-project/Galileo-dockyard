@@ -29,6 +29,8 @@ APIStatus = {
 
     "STAT_API_SYS_OBJ_UNEXIST":         (10301,     "System object not exist"),
 
+    "STAT_API_TASK_UNEXIST":            (10401,     "Task not exist"),
+
     #WARN code greater than 30000 and less than 80000
     "STAT_API_GITHUB_OAUTH_FAILED":     (30101,     "User GitHub Oauth failed"),
     "STAT_API_LOG_UNEXIST":             (30102,     "Log not exist")
