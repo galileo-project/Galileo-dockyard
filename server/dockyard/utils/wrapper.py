@@ -8,6 +8,7 @@ def auth(func):
             return func(self, *args, **kwargs)
     return _exec
 
+
 def auth_manager(func):
     def _exec(self, *args, **kwargs):
         if not self.manager:
@@ -15,6 +16,7 @@ def auth_manager(func):
         else:
             return func(self, *args, **kwargs)
     return _exec
+
 
 def exists(status):
     def _exec(func):

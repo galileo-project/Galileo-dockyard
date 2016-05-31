@@ -1,8 +1,8 @@
-import time
 import pymongo
 from bson.errors import InvalidId
 from bson.objectid import ObjectId
 from dockyard.var import GLOBAL
+from dockyard.utils.times import timestamp
 
 
 class Mongo:
@@ -84,7 +84,7 @@ class Mongo:
 
     @staticmethod
     def wrapper(data):
-        data[GLOBAL.MUPDATE] = time.time()
+        data[GLOBAL.MUPDATE] = timestamp()
 
         if GLOBAL.MDELETE not in data:
             data[GLOBAL.MDELETE] = False
@@ -170,6 +170,8 @@ class Mongo:
 
     def get_by_id(self, _id):
         if not isinstance(_id, ObjectId):
+            if isinstance(_id, bytes):
+                _id = _id.decode()
             _id = ObjectId(_id)
         return self.find_one({GLOBAL.MID: _id})
 
