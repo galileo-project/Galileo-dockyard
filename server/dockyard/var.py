@@ -104,7 +104,7 @@ class __GlobalVar:
             string += str(args[len(args) - 1])
 
         logging.info(string)
-        GLOBAL.system.info(string)
+        GLOBAL.system.log_info(string)
 
     @classmethod
     def debug(cls, *args, **kwargs):
