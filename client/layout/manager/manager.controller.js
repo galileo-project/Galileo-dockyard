@@ -2,12 +2,12 @@
     "use strict";
     angular
         .module("dockyard.core")
-        .controller("managerCtrl", ["dataService", "sidebarService", "$cookies", managerCtrl]);
+        .controller("managerCtrl", ["dataService", "sidebarService", managerCtrl]);
 
        /**************************
        *        Controllers      *
        ***************************/
-        function managerCtrl(dataService, sidebarService, $cookies) {
+        function managerCtrl(dataService, sidebarService) {
             var vm  = this;
 
            vm.updatePage    = UpdatePage;
@@ -54,7 +54,7 @@
                vm.subPage = "layout/manager/manager.settings.include.html";
                sidebarService.hide();
 
-               if(!$cookies.get("manager")){
+               if(!dataService.cookie.get("manager")){
                    onLogin();
                } else {
                    onUsers();

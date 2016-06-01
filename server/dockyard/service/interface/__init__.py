@@ -96,13 +96,11 @@ class BaseHandler(RequestHandler):
     def user(self):
         if self._user is None:
             user_id_cookie = self.get_secure_cookie("user")
+            print(user_id_cookie)
             if user_id_cookie:
-                user = User().get_by_id(user_id_cookie)
-                if user:
-                    self._user = user
-                    return self._user
-            self._user = User()
-
+                self._user = User().get_by_id(user_id_cookie)
+            else:
+                self._user = User()
         return self._user
 
     @property
@@ -110,15 +108,13 @@ class BaseHandler(RequestHandler):
         if self._manager is None:
             manager_id_cookie = self.get_secure_cookie("manager")
             if manager_id_cookie:
-                manager = Manager().get_by_id(manager_id_cookie)
-                if manager:
-                    self._manager = manager
-                    return self._manager
-            self._manager = Manager()
-
+                self._manager = Manager().get_by_id(manager_id_cookie)
+            else:
+                self._manager = Manager()
         return self._manager
 
     def set_user_cookie(self):
+        print(self.user.str_id)
         self.set_secure_cookie("user", self.user.str_id)
 
     def del_user_cookie(self):

@@ -14,13 +14,14 @@ class UserDriver(Driver, User):
         self.__github = None
 
     def add(self, name, email, password):
-        self.find_one({"email": email})
+        self.find_one({"name": name})
         if self.exists():
             return self.err(APIStatus["STAT_API_USER_EXIST"])
 
         self["name"]     = name
         self["email"]    = email
         self["password"] = encrypt(password)
+        self.flush()
         return self.succes()
 
     @exists(APIStatus["STAT_API_USER_UNEXIST"])

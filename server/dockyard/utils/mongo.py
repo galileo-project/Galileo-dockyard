@@ -39,7 +39,7 @@ class Mongo:
         return self.__data.get(item, None)
 
     def __setitem__(self, key, value):
-        if not value == self[key] and not value is None:
+        if value != self[key] and value is not None:
             self.__update_data[key] = value
             self.__data[key]        = value
 
@@ -169,14 +169,21 @@ class Mongo:
             self.__data = data
 
     def get_by_id(self, _id):
-        if not isinstance(_id, ObjectId):
-            if isinstance(_id, bytes):
-                _id = _id.decode()
-            _id = ObjectId(_id)
+        if _id is None:
+            return self
+        try:
+            if not isinstance(_id, ObjectId):
+                if isinstance(_id, bytes):
+                    _id = _id.decode()
+                _id = ObjectId(_id)
+        except InvalidId:
+            return self
+        except AttributeError:
+            return self
         return self.find_one({GLOBAL.MID: _id})
 
     def find(self, query, skip=None, limit=None, order=None):
-        items = self.__table.find(self.wrap_query(query))
+        items = self.__table.find(self.wrap_query(query)) or []
         if order is not None:
             items.sort(order)
         if skip is not None:
@@ -188,7 +195,7 @@ class Mongo:
         return self
 
     def find_one(self, query):
-        self.__data = self.__table.find_one(self.wrap_query(query))
+        self.__data = self.__table.find_one(self.wrap_query(query)) or {}
         return self
 
     def all(self, skip=None, limit=None, order=None):
@@ -220,7 +227,7 @@ class Mongo:
     def flush(self):
         self.__save_data()
         self.__save_list()
-        self.clear()
+        #self.clear()
 
     def exists(self, query=None):
         if query:
