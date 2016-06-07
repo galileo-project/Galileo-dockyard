@@ -13,7 +13,8 @@
             exists:         userExists,
             info:           userInfo,
             id:             userCurrId,
-            apps:           userApps
+            apps:           userApps,
+            oauth:          userOauth
         };
         var sys     = {
             get_settings:   sysgetSettings,
@@ -74,6 +75,9 @@
         }
         function userApps() {
 
+        }
+        function userOauth(){
+            return apiService.githubOauth()
         }
 
         //app api

@@ -1,4 +1,5 @@
 from dockyard.utils.request import Request
+from urllib.parse import urlencode
 
 
 class GitHubClient:
@@ -15,7 +16,7 @@ class GitHubClient:
                     "state":        state,
                     "scope":        scope,
                     "allow_signup": allow_signup}
-            return self.__request.get(self.AUTH_URL, data)
+            return  "%s?%s" % (self.AUTH_URL, urlencode(data))
 
         def access_token(self, client_id, client_secret, code, redirect_uri, state):
             data = {"client_id":        client_id,

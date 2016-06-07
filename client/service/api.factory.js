@@ -24,6 +24,7 @@
     var GET_APP             = APP;
 
     var GITHUB              = PUBLIC + "/github";
+    var GET_OAUTH           = GITHUB + "/oauth"
 
     var MANAGER             = API + "/manager";
     var SETTINGS            = MANAGER + "/settings";
@@ -99,7 +100,7 @@
         }
         
         function githubOauth() {
-            return apiGet()
+            return apiGet(GET_OAUTH)
         }
         
         function getSettings() {

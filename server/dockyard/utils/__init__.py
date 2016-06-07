@@ -11,4 +11,4 @@ def encrypt(data):
     return md5(md5_str + sha1_str + data).hexdigest()
 
 def gen_random(length=5):
-    return random.sample("qwertyuiopasdfghjklzxcvbnm1234567890", length)
+    return "".join(random.sample("qwertyuiopasdfghjklzxcvbnm1234567890", length))

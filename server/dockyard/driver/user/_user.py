@@ -64,11 +64,10 @@ class UserDriver(Driver, User):
         return self.del_user()
 
     @property
-    @exists(APIStatus["STAT_API_USER_UNEXIST"])
     def github(self):
         if not self.__github:
             self.__github = GitHubClient(self)
-        return self.succes(self.__github)
+        return self.__github
 
     def all(self, skip=None, limit=None, order=None):
         User.all(self, skip, limit, order)
