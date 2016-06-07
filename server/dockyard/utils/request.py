@@ -1,5 +1,5 @@
+from dockyard.var import GLOBAL
 import requests
-import json
 
 class Request(object):
     GITHUB_URL = ""
@@ -11,10 +11,12 @@ class Request(object):
         self.__header = header
 
     def get(self, url, data=None):
+        GLOBAL.puts("Request: ", data)
         response = requests.get(url=url, params=data)
         return self.__parse(response)
 
     def post(self, url, data):
+        GLOBAL.puts("Request: ", data)
         response = requests.post(url, data=data)
         return self.__parse(response)
 
@@ -28,5 +30,5 @@ class Request(object):
         pass
 
     def __parse(self, response):
-        print(response)
+        GLOBAL.puts("Response: ", response.text)
         return response.json()
