@@ -20,7 +20,7 @@ class SysDriver(Driver, System):
 
     @exists(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
     def set_github_client_id(self, client_id):
-        self["github_redirect_uri"] = client_id
+        self["github_client_id"] = client_id
         self.flush()
         return self.succes()
 
