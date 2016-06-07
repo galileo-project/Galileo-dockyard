@@ -11,7 +11,6 @@
     //dockyard API URL
     var HOST                = window.location.origin;
     var API                 = HOST + "/api";
-    var PUBLIC              = API + "/public";
 
     var USER                = API  + "/user";
     var USER_LOGIN          = HOST + "/auth/login";
@@ -23,7 +22,7 @@
     var GET_APPS            = APP + "/list";
     var GET_APP             = APP;
 
-    var GITHUB              = PUBLIC + "/github";
+    var GITHUB              = API + "/github";
     var GET_OAUTH           = GITHUB + "/oauth"
 
     var MANAGER             = API + "/manager";
