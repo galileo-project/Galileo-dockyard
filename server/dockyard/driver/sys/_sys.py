@@ -21,16 +21,19 @@ class SysDriver(Driver, System):
     @exists(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
     def set_github_client_id(self, client_id):
         self["github_redirect_uri"] = client_id
+        self.flush()
         return self.succes()
 
     @exists(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
     def set_github_client_secret(self, client_secret):
         self["github_client_secret"] = client_secret
+        self.flush()
         return self.succes()
 
     @exists(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
     def set_github_redirect_uri(self, uri):
         self["github_redirect_uri"] = uri
+        self.flush()
         return self.succes()
 
     @exists(APIStatus["STAT_API_SYS_OBJ_UNEXIST"])
