@@ -17,7 +17,7 @@
             function active() {
                 sidebarService.show();
                 if(dataService.cookie.get("user") === null){
-                    $location.path("#/login");
+                    $location.path("/login");
                 }
 
                 dataService.user.info().then(function (msg) {
