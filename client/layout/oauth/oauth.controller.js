@@ -19,7 +19,12 @@
 
             if(code && state){
                 dataService.user.github.auth(code, state).then(function(msg){
-                    $window.location.href = "/";
+                    if(!msg.err){
+                        $window.location.href = "/";
+                    } else {
+                        $location.path("/login");
+                    }
+
                 })
             }else{
                 dataService.user.github.oauth().then(function (msg) {
