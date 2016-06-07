@@ -22,6 +22,7 @@ class ApiGitHubHandeler(BaseHandler):
                                                   self.data["code"], github_redirect_uri,
                                                   self.data["state"])
 
+        print(ret)
         self.user["github_access_token"] = ret["access_token"]
         self.user["github_scope"]        = ret["scope"]
         self.user["github_token_type"]   = ret["token_type"]

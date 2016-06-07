@@ -191,7 +191,7 @@ class Mongo:
         if limit is not None:
             items.limit(int(limit))
 
-        self.__list = items
+        self.__list = list(items)
         return self
 
     def find_one(self, query):
