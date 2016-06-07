@@ -14,12 +14,13 @@ class ApiGitHubHandeler(BaseHandler):
         self.parse_arg_str("code",  must=True)
         self.parse_arg_str("state", must=True)
 
-        github_redirect_uri  = GLOBAL.system["github_redirect_uri"]
-        github_client_id     = GLOBAL.system["github_client_id"]
-        github_client_secret = GLOBAL.system["github_client_secret"]
+        err, github_redirect_uri  = GLOBAL.system.get_github_redirect_uri()
+        err, github_client_id     = GLOBAL.system.get_github_client_id()
+        err, github_client_secret = GLOBAL.system.get_github_client_secret()
 
         ret = self.user.github.oauth.access_token(github_client_id, github_client_secret,
-                                                  self.data["code"], github_redirect_uri, self.data["state"])
+                                                  self.data["code"], github_redirect_uri,
+                                                  self.data["state"])
 
         self.user["github_access_token"] = ret["access_token"]
         self.user["github_scope"]        = ret["scope"]

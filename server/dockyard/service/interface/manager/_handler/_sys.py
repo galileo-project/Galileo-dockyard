@@ -21,9 +21,13 @@ class ApiSysHandeler(BaseHandler):
         self.parse_arg_str("github_redirect_uri",   False)
         self.parse_arg_str("github_client_id",      False)
 
-        GLOBAL.system["github_redirect_uri"]  = self.data["github_redirect_uri"]
-        GLOBAL.system["github_client_id"]     = self.data["github_client_id"]
-        GLOBAL.system["github_client_secret"] = self.data["github_client_secret"]
+        ret_uri = GLOBAL.system.set_github_redirect_uri(self.data["github_redirect_uri"])
+        ret_id = GLOBAL.system.set_github_client_id(self.data["github_client_id"])
+        ret_secret = GLOBAL.system.set_github_client_secret(self.data["github_client_secret"])
+
+        for ret in [ret_uri, ret_id, ret_secret]:
+            if ret[0]:
+                return self.return_driver(ret)
         return self.success()
 
     @coroutine
