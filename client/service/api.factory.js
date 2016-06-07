@@ -24,6 +24,7 @@
 
     var GITHUB              = API + "/github";
     var GET_OAUTH           = GITHUB + "/oauth"
+    var GITHUB_AUTH         = GITHUB + "/auth"
 
     var MANAGER             = API + "/manager";
     var SETTINGS            = MANAGER + "/settings";
@@ -62,7 +63,8 @@
             managerSysLogs:     managerSysLogs,
             managerUserDelete:  managerUserDelete,
             
-            githubOauth:        githubOauth
+            githubOauth:        githubOauth,
+            githubAuth:         githubAuth
         };
 
 
@@ -100,6 +102,10 @@
         
         function githubOauth() {
             return apiGet(GET_OAUTH)
+        }
+
+        function githubAuth(code, state) {
+            return apiGet(GITHUB_AUTH + "?code="+code+"&state="+state)
         }
         
         function getSettings() {

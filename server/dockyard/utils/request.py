@@ -12,12 +12,10 @@ class Request(object):
 
     def get(self, url, data=None):
         response = requests.get(url=url, params=data)
-
         return self.__parse(response)
 
     def post(self, url, data):
-        response = requests.post(url, data)
-
+        response = requests.post(url, data=data)
         return self.__parse(response)
 
     def put(self):
@@ -30,4 +28,5 @@ class Request(object):
         pass
 
     def __parse(self, response):
-        return json.loads(response.json())
+        print(response)
+        return response.json()

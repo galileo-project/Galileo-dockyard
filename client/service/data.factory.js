@@ -14,7 +14,8 @@
             info:           userInfo,
             id:             userCurrId,
             apps:           userApps,
-            oauth:          userOauth
+             github:        {oauth:    userOauth,
+                            auth:      userGithubAuth}
         };
         var sys     = {
             get_settings:   sysgetSettings,
@@ -77,7 +78,10 @@
 
         }
         function userOauth(){
-            return apiService.githubOauth()
+            return apiService.githubOauth();
+        }
+        function userGithubAuth(code, state){
+            return apiService.githubAuth(code, state);
         }
 
         //app api
