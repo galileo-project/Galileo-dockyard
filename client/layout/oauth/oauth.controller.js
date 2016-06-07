@@ -19,7 +19,7 @@
 
             if(code && state){
                 dataService.user.github.auth(code, state).then(function(msg){
-                    console.log(msg);
+                    $window.location.href = "/";
                 })
             }else{
                 dataService.user.github.oauth().then(function (msg) {
