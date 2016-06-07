@@ -26,7 +26,7 @@ class ApiGitHubHandeler(BaseHandler):
         self.user["github_scope"]        = ret["scope"]
         self.user["github_token_type"]   = ret["token_type"]
 
-        self.success()
+        self.redirect("/")
 
     def get_oauth(self):
         err, client_id      = GLOBAL.system.get_github_client_id()
