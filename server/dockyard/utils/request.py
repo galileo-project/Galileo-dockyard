@@ -5,19 +5,19 @@ class Request(object):
     GITHUB_URL = ""
 
     def __init__(self):
-        self.__header = None
+        self.__headers = None
 
     def set_header(self, header):
-        self.__header = header
+        self.__headers = header
 
     def get(self, url, data=None):
         GLOBAL.puts("Request: ", data)
-        response = requests.get(url=url, params=data)
+        response = requests.get(url=url, params=data, hearders=self.__headers)
         return self.__parse(response)
 
     def post(self, url, data):
         GLOBAL.puts("Request: ", data)
-        response = requests.post(url, data=data)
+        response = requests.post(url, data=data, hearders=self.__headers)
         return self.__parse(response)
 
     def put(self):
