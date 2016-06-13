@@ -2,6 +2,15 @@ head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/assert/css/style.css')
+    script(src='/assert/js/angular.min.js')
+
+    script(src='/dockyard.module.js')
+
+    script(src='/service/pagelet.service.js')
+    script(src='/service/api.service.js')
+
+    script(src='/controller/dockyard.controller.js')
+    script(src='/controller/manager.controller.js')
     script.
         function bigPipeSet(id, html) {var element = document.getElementById(id);element.innerHTML = html;}
