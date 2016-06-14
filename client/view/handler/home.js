@@ -7,7 +7,8 @@ function homeHandler(req, res, next) {
     var bp = new BigPipe(req, res, next);
     bp.push(pagelets.head);
     bp.push(pagelets.layout.home);
-    bp.push(pagelets.menu);   
+    bp.push(pagelets.menu);
+    bp.push(pagelets.sidebar);
     bp.finish(); 
 }
 
