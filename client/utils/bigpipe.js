@@ -11,8 +11,8 @@ class BigPipe {
 
     setHead() {
         this._res.writeHead(200, {
-            'Content-Type':       'text/html',
-            'Transfer-Encoding' : 'chunked'
+            'Content-Type':      'text/html',
+            'Transfer-Encoding': 'chunked'
         });
     }
 
@@ -20,9 +20,20 @@ class BigPipe {
         pagelet(this._req, this._res, this._next, data);
     }
 
-    finish() {
-        this._res.end('</body></html>');
+    send(pagelet, data) {
+        pagelet(this._req, this._res, this._next, data);
+        this.finish(false);
     }
+
+    finish(withTag) {
+        if(withTag || typeof withTag === 'undefined'){
+            this._res.end('</body></html>');
+        } else {
+            this._res.end();
+        }
+    }
+
+    
 }
 
 module.exports = BigPipe;
