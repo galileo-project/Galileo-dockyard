@@ -2,15 +2,19 @@
 
 
 class BigPipe {
-    constructor(req, res, next) {
-        this._req  = req;
-        this._res  = res;
-        this._next = next;
+    constructor(req, res, next, status) {
+        if(typeof status === 'undefined'){
+            status = 200;
+        }
+        this._req    = req;
+        this._res    = res;
+        this._next   = next;
+        this._status = status
         this.setHead()
     }
 
     setHead() {
-        this._res.writeHead(200, {
+        this._res.writeHead(this._status, {
             'Content-Type':      'text/html',
             'Transfer-Encoding': 'chunked'
         });
