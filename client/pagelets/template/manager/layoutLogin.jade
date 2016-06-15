@@ -1,0 +1,6 @@
+div
+    form.form-group-lg.form-sign.center-block(ng-submit="login.login()" name="loginForm")
+        h2 Manager Sign In
+        input.form-control#inputName(type="text" placeholder="Manager name" ng-model="manager.name")
+        input.form-control#inputPassword(type="password" ng-model="manager.password" placeholder="Manager password")
+        button.btn.btn-block.btn-lg.btn-primary(type="submit") Sign in
