@@ -1,9 +1,11 @@
 'use strict';
 
-var login = require('./layout/layoutLogin.js')
+var login = require('./layout/login.js')
+var home = require('./layout/home.js')
 
 var layout = {
-    login:  login
+    login:  login,
+    home:   home
 }
 
 module.exports = {

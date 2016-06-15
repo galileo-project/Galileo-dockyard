@@ -2,8 +2,14 @@ var express = require('express');
 var router = express.Router();
 
 var home = require('./handler/home.js');
+var login = require('./handler/login.js');
+var manager = require('./handler/manager/index.js');
 
-/* GET home page. */
-router.get('/', home.home);
+
+router.get('/',                 home.home);
+router.get('/login',            login.login);
+
+router.get('/manager/login',    manager.login);
+router.get('/manager',          manager.home);
 
 module.exports = router;
